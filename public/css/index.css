@@ -1,0 +1,43 @@
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.login-form {
+    margin: 50px auto;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login-form button {
+    width: 100%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #45a049;
+}

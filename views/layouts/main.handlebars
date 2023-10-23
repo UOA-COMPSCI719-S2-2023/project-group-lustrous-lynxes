@@ -6,11 +6,28 @@
     {{#if title}}
     <title>{{title}}</title>
     {{else}}
-    <title>Default title.</title>
+    <title>Lustrous Lynxes</title>
     {{/if}}
+
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
+    <header>
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="#">Article</a>
+        </nav>
+
+        <div class="login-form">
+            <form action="#">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </header>
+
     {{{body}}}
 </body>
 
