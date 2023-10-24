@@ -40,6 +40,13 @@ create table rate (
     FOREIGN KEY (articleId) references articles (id)
 );
 
+create table images (
+    filName VARCHAR(50) NOT NULL,
+    heading VARCHAR(100) NOT NULL,
+    articleId INTEGER NOT NULL,
+    FOREIGN KEY (articleId) references articles (id)
+);
+
 /* INSERT DUMMY DATA*/
 
 insert into users (id, username, fName, lName, password, description, avatar) values
