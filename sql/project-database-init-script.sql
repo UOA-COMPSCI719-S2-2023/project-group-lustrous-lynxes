@@ -1,3 +1,4 @@
+drop table if exists images;
 drop table if exists comment;
 drop table if exists rate;
 drop table if exists articles;
@@ -10,7 +11,7 @@ create table users (
     lName VARCHAR(50) NOT NULL,
     password BLOB NOT NULL,
     description VARCHAR(260),
-    avatar INTEGER NOT NULL,
+    avatar VARCHAR(50) NOT NULL,
     token BLOB
 );
 
@@ -50,9 +51,9 @@ create table images (
 /* INSERT DUMMY DATA*/
 
 insert into users (id, username, fName, lName, password, description, avatar) values
-(1, "doggy", "Molly", "Leslie", "dogzRule1", "Puppy kitty ipsum dolor sit good dog throw wet nose.", 1 ),
-(2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", 2),
-(3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", 8);
+(1, "doggy", "Molly", "Leslie", "dogzRule1", "Puppy kitty ipsum dolor sit good dog throw wet nose.", "avocado.png" ),
+(2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "donut.png"),
+(3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", "spaghetti.png");
 
 insert into articles (id, authorId, content) values 
 (1, 1, "Title: Chinese omelette
