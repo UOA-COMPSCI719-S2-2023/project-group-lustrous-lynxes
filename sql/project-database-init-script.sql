@@ -20,6 +20,7 @@ create table articles (
     authorId INTEGER NOT NULL,
     content TEXT NOT NULL,
     avRating REAL,
+    title VARCHAR(80),
     FOREIGN KEY (authorId) references users (id)
 );
 
@@ -28,6 +29,7 @@ create table comment (
     authorId INTEGER NOT NULL,
     articleId INTEGER NOT NULL,
     content VARCHAR(260) NOT NULL,
+    likes INTEGER,
     FOREIGN KEY (authorId) references users (id),
     FOREIGN KEY (articleId) references articles (id)
 );
@@ -43,7 +45,7 @@ create table rate (
 
 create table images (
     filName VARCHAR(50) NOT NULL,
-    heading VARCHAR(100) NOT NULL,
+    caption VARCHAR(100) NOT NULL,
     articleId INTEGER NOT NULL,
     FOREIGN KEY (articleId) references articles (id)
 );
@@ -55,8 +57,8 @@ insert into users (id, username, fName, lName, password, description, avatar) va
 (2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "donut.png"),
 (3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", "spaghetti.png");
 
-insert into articles (id, authorId, content) values 
-(1, 1, "Title: Chinese omelette
+insert into articles (id, authorId, content, title) values 
+(1, 1, "
 Serves: 2
 Source: http://www.taste.com.au/recipes/18343/chinese+omelette
 Course: Breakfast
@@ -81,9 +83,9 @@ Beat eggs and 2 tablespoons cold water in a bowl until combined. Season with pep
 
 Heat a wok over medium-high heat. Spray with oil. Pour half of egg mixture into the wok. Swirl to coat. Cook for 30 seconds or until just set. Slide omelette onto a plate. Cover to keep warm. Repeat with remaining egg mixture.
 
-Spread snow pea mixture over one half of each omelette. Fold in half to enclose filling. Drizzle with sauce. Serve."),
+Spread snow pea mixture over one half of each omelette. Fold in half to enclose filling. Drizzle with sauce. Serve.", "Chinese omelette"),
 
-(2, 2, "Title: Breakfast BLT salad
+(2, 2, "
 Serves: 6
 Source: http://www.taste.com.au/recipes/15948/breakfast+blt+salad
 Photo Url: https://plantoeat.s3.amazonaws.com/recipes/5276106/5c67dac89883485d55e9b7f294e05dc947806a3f-original.jpg?1446878018
@@ -109,9 +111,9 @@ Heat remaining oil in a large non-stick frying pan over medium-high heat. Add ba
 Place garlic, mayonnaise and lemon juice in the bowl of a food processor and process until smooth. Taste and season with salt and pepper.
 
 Combine tomatoes, bacon, rocket and avocado in a bowl. Sprinkle with chives and drizzle with dressing to serve.
-"),
+", "Breakfast BLT salad"),
 
-(3, 2, "Title: Double Chocolate Peanut Butter Brownies
+(3, 2, "
 Serves: 13
 Source: https://www.melskitchencafe.com/chocolate-peanut-butter-brownies/
 Photo Url: https://plantoeat.s3.amazonaws.com/recipes/17891995/de53bf71fba0cf4f3a1759aa6901af42c9af89ee-original.jpg?1543892786
@@ -140,9 +142,9 @@ Spread the batter evenly in the pan.
 
 Bake for 20-24 minutes until a toothpick inserted in the center comes out with a few moist crumbs. Don’t overbake!
 
-Let the brownies cool completely in the pan. Cut into squares and serve chilled or at room temperature. The baked and cooled brownies freeze well."),
+Let the brownies cool completely in the pan. Cut into squares and serve chilled or at room temperature. The baked and cooled brownies freeze well.", "Double Chocolate Peanut Butter Brownies"),
 
-(4, 3, "Title: Cake Eyeballs
+(4, 3, "
 Serves: 30
 Source: https://www.foodnetwork.com/recipes/ree-drummond/cake-eyeballs-2269193
 Photo Url: https://plantoeat.s3.amazonaws.com/recipes/17930670/21d7b72bd878b633046ebd19308c233a0e6c757a-original.jpg?1544147755
@@ -164,9 +166,9 @@ Next, roll the mixture into 1 1/2-inch balls (a small ice cream scoop helps with
 
 When the cake balls are nice and firm, place the white chocolate in a heatproof bowl set over a pan of simmering water. (Don&#39;t let the bowl touch the water.) Stir occasionally until the chocolate is melted and smooth. Remove the bowl from the pan. Add the cake balls one at a time to the melted white chocolate and gently roll to coat. Using a fork, lift out the cake balls, then tap the fork against the side of the bowl to remove the excess chocolate. With a toothpick, push the ball off of the fork and back onto the parchment-lined baking sheet. Let set at room temperature, 10 to 15 minutes. Decorate with gel icing to look like eyeballs.
 
-Photograph by Coral Von Zumwalt"),
+Photograph by Coral Von Zumwalt", "Cake Eyeballs"),
 
-(5, 1, "Title: Sugar Free Gingerbread Men
+(5, 1, "
 Description: Sugar free gingerbread men are the perfect treat to take to festive parties or why not make them all year round for a crunchy cookie?
 Serves: 30
 Source: https://www.ditchthecarbs.com/sugar-free-gingerbread-men/
@@ -209,15 +211,15 @@ Add the vanilla and add sweetener to taste. Mix.
 
 Allow to cool slightly and thicken enough to be able to be piped onto the gingerbread men.
 
-If the icing/frosting is too thick, add a few drops of water, if too thin, allow to cool in the fridge to allow the butter and cream cheese to solidify slightly.");
+If the icing/frosting is too thick, add a few drops of water, if too thin, allow to cool in the fridge to allow the butter and cream cheese to solidify slightly.", "Sugar Free Gingerbread Men");
 
-insert into comment (id, authorId, articleId, content) values
-(1, 2, 3, "So Good!!!"),
-(2, 3, 4, "Yuck!!!!"),
-(3, 1, 2, "I want to try this"),
-(4, 2, 1, "how much time does this take?"),
-(5, 2, 5, "ooohhhh"),
-(6, 1, 4, "can I use coconut flour?");
+insert into comment (id, authorId, articleId, content, likes) values
+(1, 2, 3, "So Good!!!", 2),
+(2, 3, 4, "Yuck!!!!", 1),
+(3, 1, 2, "I want to try this", 5),
+(4, 2, 1, "how much time does this take?", 3),
+(5, 2, 5, "ooohhhh", 1),
+(6, 1, 4, "can I use coconut flour?", 1);
 
 insert into rate (authorId, articleId, rating) values
 (1, 2, 5),
@@ -226,4 +228,11 @@ insert into rate (authorId, articleId, rating) values
 (3, 1, 2),
 (2, 4, 1),
 (3, 5, 3);
+
+insert into images (articleId, caption, filName) values
+(1, "Good Fat", "avocado.png"),
+(2, "ding dong", "bell-pepper.png"),
+(3, "hmm donuts", "donut.png"),
+(4, "smells like Rotorua", "egg.png"),
+(5, "Love burgers", "burger.png");
     
