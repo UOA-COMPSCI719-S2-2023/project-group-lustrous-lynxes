@@ -3,6 +3,12 @@ drop table if exists comment;
 drop table if exists rate;
 drop table if exists articles;
 drop table if exists users;
+drop table if exists avatars;
+
+create table avatars (
+    filName VARCHAR(50) NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL   
+);
 
 create table users (
     id INTEGER NOT NULL PRIMARY KEY,
@@ -12,7 +18,8 @@ create table users (
     password BLOB NOT NULL,
     description VARCHAR(260),
     avatar VARCHAR(50) NOT NULL,
-    token BLOB
+    token BLOB,
+    FOREIGN KEY (avatar) references avatars (filName)
 );
 
 create table articles (
@@ -50,12 +57,20 @@ create table images (
     FOREIGN KEY (articleId) references articles (id)
 );
 
-/* INSERT DUMMY DATA*/
+insert into avatars (filName, name) values 
+("avocado.png", "avocado"),
+("bell-pepper.png", "bell-pepper"),
+("donut.png", "donut"), 
+("egg.png", "egg"),
+("hamburger.png", "hamburger"),
+("pizza.png", "pizza"),
+("spaghetti.png", "spaghetti"),
+("strawberry.png", "strawberry");
 
 insert into users (id, username, fName, lName, password, description, avatar) values
-(1, "doggy", "Molly", "Leslie", "dogzRule1", "Puppy kitty ipsum dolor sit good dog throw wet nose.", "avocado.png" ),
-(2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "donut.png"),
-(3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", "spaghetti.png");
+(1, "doggy", "Molly", "Leslie", "dogzRule1", "Puppy kitty ipsum dolor sit good dog throw wet nose.", "bell-pepper.png"),
+(2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "pizza.png"),
+(3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", "strawberry.png");
 
 insert into articles (id, authorId, content, title) values 
 (1, 1, "
@@ -236,3 +251,4 @@ insert into images (articleId, caption, filName) values
 (4, "smells like Rotorua", "egg.png"),
 (5, "Love burgers", "burger.png");
     
+

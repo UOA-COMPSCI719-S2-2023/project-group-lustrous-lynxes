@@ -31,3 +31,6 @@ from users u, images i, articles a
 where u.id = a.authorId
 and a.id = i.articleId
 order by u.fName;
+
+
+
