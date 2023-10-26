@@ -3,6 +3,7 @@ const router = express.Router();
 
 
 const authUser = require("../middleware/auth-middleware.js");
+const newUser = require("../middleware/new-account-middleware.js");
 
 //render home page. User remains logged in until logged out
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -31,6 +32,12 @@ router.get("/logout",authUser.removeToken, (req, res) => {
 //Render form to create account
 router.get("/create-account",(req,res)=>{
     res.render("create-account");
+});
+
+//check against db if username is already taken.
+router.get("/new/:input",async (req,res) =>{
+    const userExists = await newUser.checkUsernameExists(req.params.input);
+    res.send(userExists);
 });
 
 module.exports = router;
