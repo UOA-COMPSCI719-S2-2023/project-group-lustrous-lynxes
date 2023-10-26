@@ -4,15 +4,17 @@ async function checkNewUserInput(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
+    
     if (password == confirmPassword){
-        if (!checkUsernameExists(username)){
-            next();
+        if (await checkUsernameExists(username)){
+            res.setToastMessage("Username already exists.");
+            res.redirect("./create-account");
         }else{
             next();
         }
     }else{
-        console.log("password does not match");
-        next();
+        res.setToastMessage("Password does not match confirmation.");
+        res.redirect("./create-account");
     }
 }
 

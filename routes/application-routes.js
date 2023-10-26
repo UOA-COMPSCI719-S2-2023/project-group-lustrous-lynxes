@@ -34,6 +34,10 @@ router.get("/create-account",(req,res)=>{
     res.render("create-account");
 });
 
+router.post("/create-account",newUser.checkNewUserInput,(req,res)=>{
+    res.render("account-details");
+});
+
 //check against db if username is already taken.
 router.get("/new/:input",async (req,res) =>{
     const userExists = await newUser.checkUsernameExists(req.params.input);
