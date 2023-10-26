@@ -1,5 +1,6 @@
 window.addEventListener("load", () =>{
     const usernameInput = document.querySelector("#username");
+    const serverResponse = document.querySelector("#checkExists");
 
     //Everytime an input is made in form trigger event listener
     usernameInput.addEventListener("input", async () => {
@@ -7,13 +8,16 @@ window.addEventListener("load", () =>{
         try {
             //make call to server
             const response = await fetch(`./new/${currentInput}`);
+            //reponse will be json {value: boolean}
             const json = await response.json();
+            //Get boolean of key "value" from json
             const usernameExists = json.value;
-            //If the username exists change inner.HTML to reflect this
+            //If the username exists change inner.HTML to reflect this.
             if (usernameExists) {
-                document.querySelector("#checkExists").innerHTML= "Username Taken";
+                serverResponse.innerHTML= "Username Taken";
             } else {
-                document.querySelector("#checkExists").innerHTML= "";
+            //If it does not exist remove the HTML response
+                serverResponse.innerHTML= "";
             }
           } catch (error) {
             console.error(error);
