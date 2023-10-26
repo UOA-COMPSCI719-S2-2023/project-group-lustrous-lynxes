@@ -38,7 +38,6 @@ async function addUserToLocals(req, res, next) {
 
 function verifyAuthenticated(req, res, next) {
     //If res.locals user exists verfication accepted call next
-    console.log(res.locals.user);
     if (res.locals.user) {
         next();
     }
@@ -48,6 +47,7 @@ function verifyAuthenticated(req, res, next) {
     }
 }
 async function removeToken(req, res, next){
+    //Remove token from Database upon logging out.
     userDao.removeUserToken(res.locals.user);
     next();
 }

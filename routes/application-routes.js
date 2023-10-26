@@ -7,7 +7,6 @@ const {checkLoginCredentials, verifyAuthenticated,removeToken,checkIfLoggedIn} =
 //render home page. User remains logged in until logged out
 router.get("/", verifyAuthenticated, (req, res) => {
     res.locals.title = "Lustrous Lynxes";
-    console.log(res.locals.user);
     res.render("account");
 });
 
