@@ -38,6 +38,7 @@ async function addUserToLocals(req, res, next) {
 
 function verifyAuthenticated(req, res, next) {
     //If res.locals user exists verfication accepted call next
+    console.log(res.locals.user);
     if (res.locals.user) {
         next();
     }
@@ -46,10 +47,15 @@ function verifyAuthenticated(req, res, next) {
         res.redirect("./login");
     }
 }
+async function removeToken(req, res, next){
+    userDao.removeUserToken(res.locals.user);
+    next();
+}
 
 
 module.exports = {
     checkLoginCredentials,
     verifyAuthenticated,
-    addUserToLocals
+    addUserToLocals,
+    removeToken
 }

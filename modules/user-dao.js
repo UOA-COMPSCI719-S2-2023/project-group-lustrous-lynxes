@@ -31,9 +31,19 @@ async function retrieveUserByToken(token) {
     return testData;
 }
 
+async function removeUserToken(user) {
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+        update users
+        set token = null
+        where id = ${user.id}`);
+}
+
 // Export functions.
 module.exports = {
     retrieveUserCredentials,
     updateUserToken,
-    retrieveUserByToken
+    retrieveUserByToken,
+    removeUserToken
 };

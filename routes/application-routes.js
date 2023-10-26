@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 
-const {checkLoginCredentials, verifyAuthenticated} = require("../middleware/auth-middleware.js");
+const {checkLoginCredentials, verifyAuthenticated,removeToken} = require("../middleware/auth-middleware.js");
 
 //render home page. User remains logged in until logged out
 router.get("/", verifyAuthenticated, (req, res) => {
     res.locals.title = "Lustrous Lynxes";
+    console.log(res.locals.user);
     res.render("account");
 });
 
@@ -21,7 +22,7 @@ router.post("/login", checkLoginCredentials, (req, res) => {
 });
 
 //Logout Clicked
-router.get("/logout", (req, res) => {
+router.get("/logout",removeToken, (req, res) => {
     res.clearCookie("authToken");
     res.locals.user = null;
     res.setToastMessage("Successfully logged out!");
