@@ -42,7 +42,7 @@ async function removeUserToken(user) {
 async function retrieveUserName(username){
     const db = await dbPromise;
 
-    const user = await db.get(SQL`select username from user
+    const user = await db.get(SQL`select username from users
     where username = ${username}`);
 
     return user;

@@ -11,11 +11,11 @@ window.addEventListener("load", () =>{
             //make call to server
             const usernameExists = await fetch(`./new/${currentInput}`);
             console.log(usernameExists);
-            //if (usernameExists) {
-             // message.innerHTML = "Username is available!";
-            //} else {
-             // message.innerHTML = "Username is already taken.";
-            //}
+            if (usernameExists) {
+             console.log(true);
+            } else {
+            console.log(false);
+            }
           } catch (error) {
             console.error("Error checking username availability:", error);
             return;

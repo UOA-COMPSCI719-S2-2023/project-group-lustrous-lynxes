@@ -18,6 +18,7 @@ async function checkNewUserInput(req, res, next) {
 
 async function checkUsernameExists(username){
     const userName = await userDao.retrieveUserName(username);
+    console.log("processing middleware");
     if (userName == undefined){
         return false;
     }else{
