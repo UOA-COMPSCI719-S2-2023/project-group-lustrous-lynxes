@@ -1,11 +1,14 @@
 const userDao = require("../modules/user-dao.js");
 
-async function checkNewUserInput(req, res, next) {
+//Check new-account form input is correct.
+async function checkFormInput(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     
+    //Password matches password
     if (password == confirmPassword){
+        //Check if username exists in database.
         if (await checkUsernameExists(username)){
             res.setToastMessage("Username already exists.");
             res.redirect("./create-account");
@@ -18,6 +21,7 @@ async function checkNewUserInput(req, res, next) {
     }
 }
 
+//
 async function checkUsernameExists(username){
     const userName = await userDao.retrieveUserName(username);
     if (userName == undefined){
@@ -28,6 +32,6 @@ async function checkUsernameExists(username){
 }
 
 module.exports = {
-    checkNewUserInput,
+    checkFormInput,
     checkUsernameExists
 }

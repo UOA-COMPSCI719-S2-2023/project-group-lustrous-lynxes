@@ -2,7 +2,9 @@ window.addEventListener("load", () =>{
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
-    //Everytime an input is made in form trigger event listener
+    //Everytime an input is made in form trigger event listener.
+    //if input equals null don't process event listener to prevent type error.
+    if (usernameInput != null){
     usernameInput.addEventListener("input", async () => {
         const currentInput = usernameInput.value;
         try {
@@ -24,4 +26,5 @@ window.addEventListener("load", () =>{
             return;
           }
     });
+}
 });

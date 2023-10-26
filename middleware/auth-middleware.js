@@ -36,6 +36,7 @@ async function addUserToLocals(req, res, next) {
     next();
 }
 
+//Restrict non-logged in users from accessing certain.
 function verifyAuthenticated(req, res, next) {
     //If res.locals user exists verfication accepted call next
     if (res.locals.user) {
@@ -46,12 +47,15 @@ function verifyAuthenticated(req, res, next) {
         res.redirect("./login");
     }
 }
+
+//Remove token from user that has logged out.
 async function removeToken(req, res, next){
     //Remove token from Database upon logging out.
     userDao.removeUserToken(res.locals.user);
     next();
 }
 
+//Check if user is logged in before allowing access to login page.
 async function checkIfLoggedIn(req, res, next){
     if (res.locals.user){
         res.redirect("./")
@@ -59,7 +63,6 @@ async function checkIfLoggedIn(req, res, next){
         next();
     }
 }
-
 
 module.exports = {
     checkLoginCredentials,

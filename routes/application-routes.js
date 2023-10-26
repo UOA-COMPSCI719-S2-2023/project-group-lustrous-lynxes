@@ -34,7 +34,7 @@ router.get("/create-account",(req,res)=>{
     res.render("create-account");
 });
 
-router.post("/create-account",newUser.checkNewUserInput,(req,res)=>{
+router.post("/create-account",newUser.checkFormInput,(req,res)=>{
     res.render("account-setup");
 });
 
