@@ -52,10 +52,19 @@ async function removeToken(req, res, next){
     next();
 }
 
+async function checkIfLoggedIn(req, res, next){
+    if (res.locals.user){
+        res.redirect("./")
+    }else{
+        next();
+    }
+}
+
 
 module.exports = {
     checkLoginCredentials,
     verifyAuthenticated,
     addUserToLocals,
-    removeToken
+    removeToken,
+    checkIfLoggedIn
 }

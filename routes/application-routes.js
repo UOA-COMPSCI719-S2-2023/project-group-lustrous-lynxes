@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-const {checkLoginCredentials, verifyAuthenticated,removeToken} = require("../middleware/auth-middleware.js");
+const {checkLoginCredentials, verifyAuthenticated,removeToken,checkIfLoggedIn} = require("../middleware/auth-middleware.js");
 
 //render home page. User remains logged in until logged out
 router.get("/", verifyAuthenticated, (req, res) => {
@@ -12,7 +12,7 @@ router.get("/", verifyAuthenticated, (req, res) => {
 });
 
 //Login Clicked
-router.get("/login", (req, res) => {
+router.get("/login",checkIfLoggedIn, (req, res) => {
     res.render("login");
 });
 
