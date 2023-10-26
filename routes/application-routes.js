@@ -30,16 +30,17 @@ router.get("/logout",authUser.removeToken, (req, res) => {
 });
 
 //Render form to create account
-router.get("/create-account",(req,res)=>{
+router.get("/create-account", async (req,res)=>{
+    res.locals.avatars = await newUser.avatarsArray();
     res.render("create-account");
 });
 
-router.post("/create-account",newUser.checkNewUserInput,(req,res)=>{
-    res.render("account-setup");
+router.post("/create-account",newUser.checkFormInput,(req,res)=>{
+    res.render("account");
 });
 
 //check against db if username is already taken.
-router.get("/new/:input",async (req,res) =>{
+router.get("/new/:input", async (req,res) =>{
     const userExists = await newUser.checkUsernameExists(req.params.input);
     res.json({ value: userExists }); 
 });

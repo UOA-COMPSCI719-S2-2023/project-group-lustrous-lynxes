@@ -1,4 +1,4 @@
-const userDao = require("../modules/user-dao.js");
+const userDao = require("../modules/users-dao.js");
 const { v4: uuid } = require("uuid");
 
 //Check the user username and password match that of in DB.
