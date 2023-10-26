@@ -35,7 +35,7 @@ router.get("/create-account",(req,res)=>{
 });
 
 router.post("/create-account",newUser.checkNewUserInput,(req,res)=>{
-    res.render("account-details");
+    res.render("account-setup");
 });
 
 //check against db if username is already taken.
