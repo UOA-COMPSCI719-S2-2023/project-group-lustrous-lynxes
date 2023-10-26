@@ -4,20 +4,19 @@ window.addEventListener("load", () =>{
     //Everytime an input is made in form trigger event listener
     usernameInput.addEventListener("input", async () => {
         const currentInput = usernameInput.value;
-        if(currentInput.length < 5){
-            return;
-        }
         try {
             //make call to server
-            const usernameExists = await fetch(`./new/${currentInput}`);
-            console.log(usernameExists);
+            const response = await fetch(`./new/${currentInput}`);
+            const json = await response.json();
+            const usernameExists = json.value;
+            //If the username exists change inner.HTML to reflect this
             if (usernameExists) {
-             console.log(true);
+                document.querySelector("#checkExists").innerHTML= "Username Taken";
             } else {
-            console.log(false);
+                document.querySelector("#checkExists").innerHTML= "";
             }
           } catch (error) {
-            console.error("Error checking username availability:", error);
+            console.error(error);
             return;
           }
     });
