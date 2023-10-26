@@ -28,4 +28,9 @@ router.get("/logout",authUser.removeToken, (req, res) => {
     res.redirect("./login");
 });
 
+//Render form to create account
+router.get("/create-account",(req,res)=>{
+    res.render("create-account");
+});
+
 module.exports = router;
