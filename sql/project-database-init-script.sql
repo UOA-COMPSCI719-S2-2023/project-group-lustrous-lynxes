@@ -1,3 +1,4 @@
+drop table if exists likes;
 drop table if exists images;
 drop table if exists comment;
 drop table if exists rate;
@@ -33,28 +34,36 @@ create table articles (
 
 create table comment (
     id INTEGER NOT NULL PRIMARY KEY,
-    authorId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
     articleId INTEGER NOT NULL,
     content VARCHAR(260) NOT NULL,
-    likes INTEGER,
-    FOREIGN KEY (authorId) references users (id),
+    FOREIGN KEY (userId) references users (id),
     FOREIGN KEY (articleId) references articles (id)
 );
 
 create table rate (
-    authorId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
     articleId INTEGER NOT NULL,
     rating INTEGER NOT NULL,
-    PRIMARY KEY (authorId, articleId),
-    FOREIGN KEY (authorId) references users (id),
+    PRIMARY KEY (userId, articleId),
+    FOREIGN KEY (userId) references users (id),
     FOREIGN KEY (articleId) references articles (id)
 );
 
 create table images (
-    filName VARCHAR(50) NOT NULL,
+    filName VARCHAR(50) NOT NULL PRIMARY KEY,
     caption VARCHAR(100) NOT NULL,
     articleId INTEGER NOT NULL,
     FOREIGN KEY (articleId) references articles (id)
+);
+
+create table likes (
+    userId INTEGER NOT NULL,
+    commentId INTEGER NOT NULL,
+    liking INTEGER NOT NULL,
+    PRIMARY KEY (userId, commentId),
+    FOREIGN KEY (userId) references users (id),
+    FOREIGN KEY (commentId) references comment (id)                       
 );
 
 insert into avatars (filName, name) values 
@@ -228,15 +237,15 @@ Allow to cool slightly and thicken enough to be able to be piped onto the ginger
 
 If the icing/frosting is too thick, add a few drops of water, if too thin, allow to cool in the fridge to allow the butter and cream cheese to solidify slightly.", "Sugar Free Gingerbread Men");
 
-insert into comment (id, authorId, articleId, content, likes) values
-(1, 2, 3, "So Good!!!", 2),
-(2, 3, 4, "Yuck!!!!", 1),
-(3, 1, 2, "I want to try this", 5),
-(4, 2, 1, "how much time does this take?", 3),
-(5, 2, 5, "ooohhhh", 1),
-(6, 1, 4, "can I use coconut flour?", 1);
+insert into comment (id, userId, articleId, content) values
+(1, 2, 3, "So Good!!!"),
+(2, 3, 4, "Yuck!!!!"),
+(3, 1, 2, "I want to try this"),
+(4, 2, 1, "how much time does this take?"),
+(5, 2, 5, "ooohhhh"),
+(6, 1, 4, "can I use coconut flour?");
 
-insert into rate (authorId, articleId, rating) values
+insert into rate (userId, articleId, rating) values
 (1, 2, 5),
 (1, 3, 3),
 (2, 1, 4),
@@ -250,5 +259,12 @@ insert into images (articleId, caption, filName) values
 (3, "hmm donuts", "donut.png"),
 (4, "smells like Rotorua", "egg.png"),
 (5, "Love burgers", "burger.png");
+
+insert into likes (userId, commentId, liking) values
+(1, 2, 1),
+(3, 2, 1),
+(1, 6, 1),
+(1, 3, 1),
+(2, 2, 1);
     
 

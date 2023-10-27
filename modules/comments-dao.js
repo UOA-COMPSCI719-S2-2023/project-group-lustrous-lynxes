@@ -37,32 +37,34 @@ async function addComment(comment) {
      (${comment.authorId}, ${comment.articleId}, ${comment.content})`);     
 }
 
-async function likeComment(comment) {
+async function likeComment(likes) {
     const db = await dbPromise;
 
      return await db.run (SQL`
-     update comment
-     set likes = likes + 1
-     where id = ${comment.id}`);
+     insert into likes (userId, commentId, liking) values
+     (${likes.userId}, ${likes.commentId}, 1)`);
 }
 
-async function orderComments(comment) {
-    const db = await dbPromise;
+//async function orderComments(article) {
+    //const db = await dbPromise;
 
-    const allComments = await db.all(SQL`
-     select * 
-     from comments
-     where id = ${comment.id}
-     order by ${comment.likes}`);  
+    //const allComments = await db.all(SQL`
+     // c.content, l.liking, u.fName, u.lName
+     //from comment c, articles a, likes l, users u  
+     //where a.id = ${article.id}
+     ////and a.id = c.articleId
+     //and c.id = l.commentId
+     //and c.userId = u.id
+     //order by ${l.liking}`);  
 
-    return allComments;
-}
+    ////return allComments;
+//}
 
 module.exports = {
     rateArticles,
     allRatingArticle,
     addComment,
     likeComment,
-    orderComments,
+    //orderComments,
     avRating
 };
