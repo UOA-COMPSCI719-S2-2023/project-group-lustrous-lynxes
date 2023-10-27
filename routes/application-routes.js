@@ -28,4 +28,9 @@ router.get("/logout", authUser.removeToken, (req, res) => {
     res.redirect("./login");
 });
 
+//Renders add-article page which allows user to create an article
+router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
+    res.render("add-article");
+});
+
 module.exports = router;
