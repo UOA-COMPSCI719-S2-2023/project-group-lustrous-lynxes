@@ -2,7 +2,8 @@ window.addEventListener("load", () =>{
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
-    //Everytime an input is made in form trigger event listener
+    //Everytime an input is made in form trigger event listener.
+    //The Try-catch is optional, but could use it if calling server then DB from client.
     if (usernameInput != null){
     usernameInput.addEventListener("input", async () => {
         const currentInput = usernameInput.value;
