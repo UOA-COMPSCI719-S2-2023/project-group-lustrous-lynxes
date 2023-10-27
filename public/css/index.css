@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .navbar {
     overflow: hidden;
     background-color: #333;
@@ -6,12 +7,41 @@
 .navbar a {
     float: left;
     display: block;
+=======
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    display: flex;
+>>>>>>> faa5d168bed3d244c5bc04501c6cfe243760c464
     color: #f2f2f2;
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
 }
 
+<<<<<<< HEAD
+=======
+.login {
+    margin-left: auto;
+}
+
+.logout {
+    display: flex;
+    margin-left: auto;
+}
+
+>>>>>>> faa5d168bed3d244c5bc04501c6cfe243760c464
 .login-form {
     margin: 50px auto;
     width: 300px;
@@ -40,4 +70,11 @@
 
 .login-form button:hover {
     background-color: #45a049;
+<<<<<<< HEAD
+=======
+}
+
+.create-btn {
+    text-decoration: none;
+>>>>>>> faa5d168bed3d244c5bc04501c6cfe243760c464
 }
