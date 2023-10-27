@@ -12,6 +12,7 @@ async function retrieveUserCredentials(username, password) {
 
     return user;
 }
+//User logs in, add a token to check against to know if they are still logged in.
 async function updateUserToken(user) {
     const db = await dbPromise;
 
@@ -21,6 +22,7 @@ async function updateUserToken(user) {
         where id = ${user.id}`);
 }
 
+//Check if user is still logged in.
 async function retrieveUserByToken(token) {
     const db = await dbPromise;
 
@@ -30,7 +32,7 @@ async function retrieveUserByToken(token) {
 
     return testData;
 }
-
+//Remove token as user has now logged out.
 async function removeUserToken(user) {
     const db = await dbPromise;
 
@@ -39,6 +41,7 @@ async function removeUserToken(user) {
         set token = null
         where id = ${user.id}`);
 }
+//Check if username already exists for new account.
 async function retrieveUserName(username){
     const db = await dbPromise;
 
@@ -47,7 +50,7 @@ async function retrieveUserName(username){
 
     return user;
 }
-
+//Create user using user JSON
 async function createUser(user) {
     const db = await dbPromise;
 

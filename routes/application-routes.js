@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-
 const authUser = require("../middleware/auth-middleware.js");
 const newUser = require("../middleware/new-account-middleware.js");
 
-//render home page. User remains logged in until logged out
+//Render home page. User remains logged in until logged out
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
     res.locals.title = "Lustrous Lynxes";
     res.render("account");
