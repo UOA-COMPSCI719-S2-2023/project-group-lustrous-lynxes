@@ -28,6 +28,7 @@ async function checkLoginCredentials(req, res, next) {
     }
 }
 
+//Keep user details no matter where the user navigates to.
 async function addUserToLocals(req, res, next) {
     //Use cookie to find current user. Add to locals for handlebars information.
     //This code is in app.js and will run every time application is run e.g. route handler.
@@ -36,6 +37,7 @@ async function addUserToLocals(req, res, next) {
     next();
 }
 
+//Check user is authenticatied before rendering account page.
 function verifyAuthenticated(req, res, next) {
     //If res.locals user exists verfication accepted call next
     if (res.locals.user) {
@@ -46,12 +48,14 @@ function verifyAuthenticated(req, res, next) {
         res.redirect("./login");
     }
 }
+//Remove token when user logs out.
 async function removeToken(req, res, next){
     //Remove token from Database upon logging out.
     userDao.removeUserToken(res.locals.user);
     next();
 }
 
+//Don't allow users logged in to access account url.
 async function checkIfLoggedIn(req, res, next){
     if (res.locals.user){
         res.redirect("./")
@@ -59,7 +63,6 @@ async function checkIfLoggedIn(req, res, next){
         next();
     }
 }
-
 
 module.exports = {
     checkLoginCredentials,
