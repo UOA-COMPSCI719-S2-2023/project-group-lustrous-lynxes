@@ -20,6 +20,15 @@ async function allRatingArticle(article) {
      return allRatings;
 }
 
+async function avRating(aveRating, rate) {
+    const db = await dbPromise;
+
+     return await db.run (SQL`
+     update articles
+     set avRating = ${aveRating}
+     where id = ${rate.articleId}`);
+}
+
 async function addComment(comment) {
     const db = await dbPromise;
 
@@ -54,5 +63,6 @@ module.exports = {
     allRatingArticle,
     addComment,
     likeComment,
-    orderComments
+    orderComments,
+    avRating
 };

@@ -45,6 +45,7 @@
         **likeComment**
     - average rating of article
         **allRatingArticle**
+        **avRating**
     - order comments by most liked for each article
         **orderComments**
     - sort articles by most popular article (main and user page)
