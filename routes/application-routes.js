@@ -31,7 +31,9 @@ router.get("/logout",authUser.removeToken, (req, res) => {
 
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
+    //Get all avatars for create account form.
     res.locals.avatars = await newUser.avatarsArray();
+    //Render create account form using avatars.
     res.render("create-account");
 });
 

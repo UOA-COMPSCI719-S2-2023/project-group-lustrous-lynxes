@@ -32,13 +32,8 @@ async function checkUsernameExists(username){
 
 //Get all avatar links for user to choose from.
 async function avatarsArray(){
-    const jsonIcons = await avatarDao.retrieveAllIcons();
-    //Convert to array for handlebars
-    const iconsArray = [];
-    for (let key in jsonIcons) {
-        iconsArray.push(jsonIcons[key].filName);
-    }
-    return iconsArray;
+    const icons = await avatarDao.retrieveAllIcons();
+    return icons;
 }
 
 module.exports = {
