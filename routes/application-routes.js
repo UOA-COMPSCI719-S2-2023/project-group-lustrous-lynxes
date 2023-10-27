@@ -3,6 +3,8 @@ const router = express.Router();
 
 const authUser = require("../middleware/auth-middleware.js");
 const newUser = require("../middleware/new-account-middleware.js");
+const userDao = require("../modules/users-dao.js");
+const avatarDao = require("../modules/avatars-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -11,8 +13,12 @@ router.get("/", authUser.verifyAuthenticated, (req, res) => {
 });
 
 //Login Clicked. If a logged in user makes get request (URL) then redirect.
-router.get("/login",authUser.checkIfLoggedIn, (req, res) => {
+router.get("/login", (req, res) => {
+    if (res.locals.user){
+        res.redirect("./");
+    }else{
     res.render("login");
+    }
 });
 
 //Submit Login form. Verification done first. If correct, call next and proceed with code.
@@ -20,8 +26,9 @@ router.post("/login", authUser.checkLoginCredentials, (req, res) => {
     res.render("account")
 });
 
-//Logout Clicked. Remove token and clear user from locals.
-router.get("/logout",authUser.removeToken, (req, res) => {
+//Logout Clicked. Remove token, cookie and user from DB/locals.
+router.get("/logout",(req, res) => {
+    userDao.removeUserToken(res.locals.user);
     res.clearCookie("authToken");
     res.locals.user = null;
     res.setToastMessage("Successfully logged out!");
@@ -31,7 +38,7 @@ router.get("/logout",authUser.removeToken, (req, res) => {
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
-    res.locals.avatars = await newUser.avatarsArray();
+    res.locals.avatars = await avatarDao.retrieveAllIcons();
     //Render create account form using avatars.
     res.render("create-account");
 });
@@ -47,13 +54,13 @@ router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
         avatar: req.body.avatar,
         description: req.body.description
     };
-    //Add new user to DB using middleware.
-    await newUser.createUserInDb(user);
+    //Add new user to Database.
+    await userDao.createUser(user);
     res.setToastMessage("New Account Created Successfully");
     res.redirect("./login");
 });
 
-//check against db if username is already taken.
+//Check against db if username is already taken.
 router.get("/new/:input", async (req,res) =>{
     const userExists = await newUser.checkUsernameExists(req.params.input);
     res.json({ value: userExists }); 

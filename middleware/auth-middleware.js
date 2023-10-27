@@ -48,26 +48,9 @@ function verifyAuthenticated(req, res, next) {
         res.redirect("./login");
     }
 }
-//Remove token when user logs out.
-async function removeToken(req, res, next){
-    //Remove token from Database upon logging out.
-    userDao.removeUserToken(res.locals.user);
-    next();
-}
-
-//Don't allow users logged in to access account url.
-async function checkIfLoggedIn(req, res, next){
-    if (res.locals.user){
-        res.redirect("./")
-    }else{
-        next();
-    }
-}
 
 module.exports = {
     checkLoginCredentials,
     verifyAuthenticated,
-    addUserToLocals,
-    removeToken,
-    checkIfLoggedIn
+    addUserToLocals
 }

@@ -1,5 +1,4 @@
-const userDao = require("../modules/users-dao.js");
-const avatarDao = require("../modules/avatars-dao.js");
+const {retrieveUserName} = require("../modules/users-dao.js");
 
 //Check form information is valid.
 async function checkFormInput(req, res, next) {
@@ -22,7 +21,7 @@ async function checkFormInput(req, res, next) {
 
 //Check if username already exists in DB.
 async function checkUsernameExists(username){
-    const userName = await userDao.retrieveUserName(username);
+    const userName = await retrieveUserName(username);
     if (userName == undefined){
         return false;
     }else{
@@ -30,20 +29,7 @@ async function checkUsernameExists(username){
     }
 }
 
-//Get all avatar links for user to choose from.
-async function avatarsArray(){
-    const icons = await avatarDao.retrieveAllIcons();
-    return icons;
-}
-
-//create user in DB from form submittion.
-async function createUserInDb(userJson){
-    await userDao.createUser(userJson);
-}
-
 module.exports = {
     checkFormInput,
-    checkUsernameExists,
-    avatarsArray,
-    createUserInDb
+    checkUsernameExists
 }
