@@ -37,8 +37,19 @@ router.get("/create-account", async (req,res)=>{
     res.render("create-account");
 });
 
-router.post("/create-account",newUser.checkFormInput,(req,res)=>{
-    res.render("account");
+//If new account is valid proceed with putting in DB and re-route to login.
+router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
+    const user = {
+        username: req.body.username,
+        password: req.body.password,
+        fName: req.body.fName,
+        lName: req.body.lName,
+        avatar: req.body.avatar,
+        description: req.body.description
+    };
+    await newUser.createUser(user);
+    res.setToastMessage("New Account Created Successfully");
+    res.redirect("./login");
 });
 
 //check against db if username is already taken.

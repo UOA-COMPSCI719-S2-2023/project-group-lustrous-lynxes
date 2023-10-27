@@ -36,8 +36,14 @@ async function avatarsArray(){
     return icons;
 }
 
+//create user in DB from form submittion.
+async function createUser(userJson){
+
+}
+
 module.exports = {
     checkFormInput,
     checkUsernameExists,
-    avatarsArray
+    avatarsArray,
+    createUser
 }
