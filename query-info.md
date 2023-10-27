@@ -10,7 +10,7 @@
     - assign chosen Avatar to user
 
     - edit user information
-
+        **editUser**
 - verify & login user 
     - Already given
     **retrieveUserCredentials**,
@@ -38,17 +38,15 @@
 - Access comments and ratings
 
     - rate articles (once per article)
-
+        **rateArticles**
     - comment on articles
-
+        **addComment**
     - like others comments
-
+        **likeComment**
     - average rating of article
-
-    - order based on rating
-
+        **allRatingArticle**
     - order comments by most liked for each article
-
+        **orderComments**
     - sort articles by most popular article (main and user page)
         **viewArticles**
         **viewUserArticles**
