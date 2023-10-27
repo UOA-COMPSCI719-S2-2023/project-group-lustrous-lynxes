@@ -25,26 +25,26 @@ async function viewUserArticles(userId, criteria) {
     return allArticles;
 }
 
-async function editArticles(articleId, content, title, filName, caption) {
+async function editArticles(article, image) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      update articles 
-     set content = ${content}, title = ${title}
-     where id = ${articleId}`); 
+     set content = ${article.content}, title = ${article.title}
+     where id = ${article.articleId}`); 
      
-    editImageArticles(filName, caption, articleId);     
+    editImageArticles(image);     
 }
 
-async function addNewArticles(userId, content, title, filName, caption) {
+async function addNewArticles(article, image) {
     const db = await dbPromise;
 
     const artId =  await db.run(SQL`
      insert in articles (authorId, content, title)
-     values(${userId}, ${content}), ${title}`);
+     values(${article.userId}, ${article.content}), ${article.title}`);
      articles.id = artId.LastID;
 
-    addNewImageArticles(filName, caption, artId.LastID);
+    addNewImageArticles(image, artId.LastID);
 }
 
 async function deleteArticles(article) {
@@ -57,21 +57,21 @@ async function deleteArticles(article) {
     deleteImageArticles(article);     
 }
 
-async function addNewImageArticles(filName, caption, articleId) {
+async function addNewImageArticles(image, articleId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      insert in images (filName, caption, articleId)
-     values(${filName}, ${caption}, ${articleId})`);     
+     values(${image.filName}, ${image.caption}, ${articleId})`);     
 }
 
-async function editImageArticles(filName, caption, articleId) {
+async function editImageArticles(image) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      update images 
-     set filName = ${filName}, caption = ${caption}
-     where articleId = ${articleId}`);    
+     set filName = ${image.filName}, caption = ${image.caption}
+     where articleId = ${image.articleId}`);    
 }
 
 async function deleteImageArticles(article) {
