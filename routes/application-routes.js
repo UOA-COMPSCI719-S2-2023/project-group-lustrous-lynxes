@@ -30,7 +30,9 @@ router.get("/logout", authUser.removeToken, (req, res) => {
 
 //Renders add-article page which allows user to create an article
 router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
-    res.render("add-article");
+    res.render("add-article", {
+        includeTinyMCEScripts: true
+    });
 });
 
 module.exports = router;
