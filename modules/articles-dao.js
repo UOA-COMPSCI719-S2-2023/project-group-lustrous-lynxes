@@ -18,8 +18,8 @@ async function viewUserArticles(userId, criteria) {
 
     const allArticles = await db.all(SQL`
      select * 
-     from articles a
-     where a.authorId = ${userId}
+     from articles 
+     where authorId = ${userId}
      order by ${criteria}`);  
 
     return allArticles;
@@ -50,18 +50,18 @@ async function addNewArticles(article, image) {
 async function deleteArticles(article) {
     const db = await dbPromise;
 
+    deleteImageArticles(article); 
+
     return await db.run(SQL`
      delete from  articles 
-     where id = ${article.id}`); 
-     
-    deleteImageArticles(article);     
+     where id = ${article.id}`);       
 }
 
 async function addNewImageArticles(image, articleId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     insert in images (filName, caption, articleId)
+     insert into images (filName, caption, articleId)
      values(${image.filName}, ${image.caption}, ${articleId})`);     
 }
 
