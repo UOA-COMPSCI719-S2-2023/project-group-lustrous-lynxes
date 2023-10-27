@@ -47,7 +47,7 @@ router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
         avatar: req.body.avatar,
         description: req.body.description
     };
-    await newUser.createUser(user);
+    await newUser.createUserInDb(user);
     res.setToastMessage("New Account Created Successfully");
     res.redirect("./login");
 });

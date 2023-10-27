@@ -37,13 +37,13 @@ async function avatarsArray(){
 }
 
 //create user in DB from form submittion.
-async function createUser(userJson){
-
+async function createUserInDb(userJson){
+    await userDao.createUser(userJson);
 }
 
 module.exports = {
     checkFormInput,
     checkUsernameExists,
     avatarsArray,
-    createUser
+    createUserInDb
 }

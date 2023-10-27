@@ -46,7 +46,14 @@ async function retrieveUserName(username){
     where username = ${username}`);
 
     return user;
+}
 
+async function createUser(user) {
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+    insert into users (username,fName, lName, password, description, avatar) values
+    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.description}, ${user.avatar})`);  
 }
 
 // Export functions.
@@ -55,5 +62,6 @@ module.exports = {
     updateUserToken,
     retrieveUserByToken,
     removeUserToken,
-    retrieveUserName
+    retrieveUserName,
+    createUser
 };
