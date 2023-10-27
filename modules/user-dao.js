@@ -40,10 +40,21 @@ async function removeUserToken(user) {
         where id = ${user.id}`);
 }
 
+
+
+async function createUser(username,fName, lName, password, description, avatar) {
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+    insert into users (username,fName, lName, password, description, avatar) values
+    (${username}, ${fName}, ${lName}, ${password}, ${description}, ${avatar})`);  
+}
+
 // Export functions.
 module.exports = {
     retrieveUserCredentials,
     updateUserToken,
     retrieveUserByToken,
-    removeUserToken
+    removeUserToken,
+    createUser
 };

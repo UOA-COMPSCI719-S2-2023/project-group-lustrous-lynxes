@@ -33,4 +33,3 @@ and a.id = i.articleId
 order by u.fName;
 
 
-
