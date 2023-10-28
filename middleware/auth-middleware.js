@@ -3,12 +3,13 @@ const { v4: uuid } = require("uuid");
 const bcrypt = require('bcrypt');
 
 //Check the user username and password match that of in DB.
+//Set user to logged in if validation correct.
 async function checkLoginCredentials(req, res, next) {
     //Username and password submitted in form.
     const username = req.body.username;
     const passwordAttempt = req.body.password;
 
-    //check if matching username and return password in database.
+    //check if matching username and return user.
     const user = await userDao.retrieveUser(username);
     const encryptedCorrectPassword = user.password;
     //If user exists proceed with validation.
