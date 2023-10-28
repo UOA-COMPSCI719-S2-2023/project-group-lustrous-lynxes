@@ -1,20 +1,19 @@
 const userDao = require("../modules/users-dao.js");
 const { v4: uuid } = require("uuid");
 const bcrypt = require('bcrypt');
-const { verify } = require("crypto");
 
 //Check the user username and password match that of in DB.
 async function checkLoginCredentials(req, res, next) {
     //Username and password submitted in form.
     const username = req.body.username;
-    const password = req.body.password;
+    const passwordAttempt = req.body.password;
 
     //check if matching username and return password in database.
     const user = await userDao.retrieveUser(username);
+    const encryptedCorrectPassword = user.password;
     //If user exists proceed with validation.
     if (user){
-        //De-encrypt and check password in database. If allow login to occur.
-        correctPassword = await comparePasswords(password, user.password);
+        correctPassword = await comparePasswords(passwordAttempt, encryptedCorrectPassword);
 
         if (correctPassword){
         //create authentication token

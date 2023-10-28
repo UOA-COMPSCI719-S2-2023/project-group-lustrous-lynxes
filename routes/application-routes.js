@@ -62,7 +62,7 @@ router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
         fName: req.body.fName,
         lName: req.body.lName,
         avatar: req.body.avatar,
-        description: req.body.descriptiongit 
+        description: req.body.description 
     };
     //Add new user to Database.
     await userDao.createUser(user);
