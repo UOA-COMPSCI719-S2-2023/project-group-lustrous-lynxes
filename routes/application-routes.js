@@ -74,4 +74,15 @@ router.get("/new/:input", async (req,res) =>{
     res.json({ value: userExists }); 
 });
 
+//Logout Clicked
+router.get("/logout",(req, res) => {
+    userDao.removeUserToken(res.locals.user);
+    res.clearCookie("authToken");
+    res.locals.user = null;
+    res.setToastMessage("Successfully logged out!");
+    res.redirect("./login");
+});
+
+
+
 module.exports = router;
