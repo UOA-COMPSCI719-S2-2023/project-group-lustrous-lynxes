@@ -1,31 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+const testDao = require("../modules/test-dao.js");
 
-const authUser = require("../middleware/auth-middleware.js");
+router.get("/", async function(req, res) {
 
-//render home page. User remains logged in until logged out
-router.get("/", authUser.verifyAuthenticated, (req, res) => {
     res.locals.title = "Lustrous Lynxes";
-    res.render("account");
-});
+    res.locals.allTestData = await testDao.retrieveAllTestData();
 
-//Login Clicked
-router.get("/login", authUser.checkIfLoggedIn, (req, res) => {
-    res.render("login");
-});
-
-//Submit Login form. Verification done first. If correct, call next and proceed with code.
-router.post("/login", authUser.checkLoginCredentials, (req, res) => {
-    res.render("account")
-});
-
-//Logout Clicked
-router.get("/logout", authUser.removeToken, (req, res) => {
-    res.clearCookie("authToken");
-    res.locals.user = null;
-    res.setToastMessage("Successfully logged out!");
-    res.redirect("./login");
+    res.render("home");
 });
 
 //Renders add-article page which allows user to create an article
