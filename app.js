@@ -28,6 +28,9 @@ app.use(cookieParser());
 const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
 
+//Make the "tinymce" folder available statically
+app.use("/scripts", express.static(path.join(__dirname, "node_modules/tinymce")));
+
 // Use the toaster middleware
 app.use(require("./middleware/toaster-middleware.js"));
 
