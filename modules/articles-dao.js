@@ -40,7 +40,7 @@ async function addNewArticles(article, image) {
     const db = await dbPromise;
 
     const artId =  await db.run(SQL`
-     insert in articles (authorId, content, title)
+     insert into articles (authorId, content, title)
      values(${article.userId}, ${article.content}), ${article.title}`);
      articles.id = artId.LastID;
 
