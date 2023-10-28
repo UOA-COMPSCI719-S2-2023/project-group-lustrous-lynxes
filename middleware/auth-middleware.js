@@ -60,8 +60,8 @@ function verifyAuthenticated(req, res, next) {
     }
 }
 
-async function comparePasswords(password, encryptedVersion){
-    return bcrypt.compareSync(password, encryptedVersion);
+async function comparePasswords(passwordAttempt, encryptedCorrectPassword){
+    return bcrypt.compareSync(passwordAttempt, encryptedCorrectPassword);
 }
 
 module.exports = {
