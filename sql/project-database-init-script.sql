@@ -60,7 +60,6 @@ create table images (
 create table likes (
     userId INTEGER NOT NULL,
     commentId INTEGER NOT NULL,
-    liking INTEGER NOT NULL,
     PRIMARY KEY (userId, commentId),
     FOREIGN KEY (userId) references users (id),
     FOREIGN KEY (commentId) references comment (id)                       
@@ -260,11 +259,11 @@ insert into images (articleId, caption, filName) values
 (4, "smells like Rotorua", "egg.png"),
 (5, "Love burgers", "burger.png");
 
-insert into likes (userId, commentId, liking) values
-(1, 2, 1),
-(3, 2, 1),
-(1, 6, 1),
-(1, 3, 1),
-(2, 2, 1);
+insert into likes (userId, commentId) values
+(1, 2),
+(3, 2),
+(1, 6),
+(1, 3),
+(2, 2);
     
 
