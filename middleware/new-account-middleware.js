@@ -1,4 +1,9 @@
+const bcrypt = require('bcrypt');
 const {retrieveUserName} = require("../modules/users-dao.js");
+
+//Salt Rounds- Complexity of protection. The higher the intger the more encrypted.
+//However this comes at the cost of performance. For the project 10 will be fine.
+const saltRounds = 10;
 
 //Check form information is valid.
 async function checkFormInput(req, res, next) {
@@ -29,7 +34,19 @@ async function checkUsernameExists(username){
     }
 }
 
+async function encryptPassword(password) {
+    try {
+      const hash = bcrypt.hashSync(password, saltRounds);
+      return hash;
+    } catch (err) {
+      //Not yet sure if we need this. Will change later.
+      console.error('Error hashing password:', err);
+      return null;
+    }
+  }
+
 module.exports = {
     checkFormInput,
-    checkUsernameExists
+    checkUsernameExists,
+    encryptPassword
 }

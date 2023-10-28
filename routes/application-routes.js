@@ -53,14 +53,16 @@ router.get("/create-account", async (req,res)=>{
 
 //If form values are valid proceed with putting in database and re-route to login.
 router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
+    //Encrypt Password
+    hashedPassword = await newUser.encryptPassword(req.body.password);
     //Create JSON for user from form values.
     const user = {
         username: req.body.username,
-        password: req.body.password,
+        password: hashedPassword,
         fName: req.body.fName,
         lName: req.body.lName,
         avatar: req.body.avatar,
-        description: req.body.description
+        description: req.body.description 
     };
     //Add new user to Database.
     await userDao.createUser(user);
