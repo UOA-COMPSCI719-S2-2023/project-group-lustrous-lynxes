@@ -1,31 +1,15 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
 .navbar {
     overflow: hidden;
     background-color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .navbar a {
-    display: flex;
+    float: left;
+    display: block;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
-}
-
-.login {
-    margin-left: auto;
-}
-
-.logout {
-    display: flex;
-    margin-left: auto;
 }
 
 .login-form {
@@ -61,6 +45,19 @@
 .create-btn {
     text-decoration: none;
 }
-#checkExists{
-    color: red;
+
+/*Exactly the same as for .login-form - do we want to make this just "button"?*/
+.article-form button {
+    width: 100%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+/*Exactly the same as for .login-form - do we want to make this just "button:hover"?*/
+.article-form button:hover {
+    background-color: #45a049;
 }

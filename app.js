@@ -28,12 +28,11 @@ app.use(cookieParser());
 const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
 
+//Make the "tinymce" folder available statically
+app.use("/scripts", express.static(path.join(__dirname, "node_modules/tinymce")));
+
 // Use the toaster middleware
 app.use(require("./middleware/toaster-middleware.js"));
-
-//Runs everytime get/post request made. Checks if user still is logged in.
-const {addUserToLocals} = require("./middleware/auth-middleware.js");
-app.use(addUserToLocals);
 
 // Setup routes
 app.use(require("./routes/application-routes.js"));
