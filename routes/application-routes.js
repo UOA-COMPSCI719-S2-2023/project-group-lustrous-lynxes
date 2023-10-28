@@ -12,13 +12,18 @@ router.get("/", authUser.verifyAuthenticated, (req, res) => {
     res.render("account");
 });
 
-//Login Clicked. If a logged in user makes get request (URL) then redirect.
+//If a logged in user makes get request (URL) then redirect.
 router.get("/login", (req, res) => {
     if (res.locals.user){
         res.redirect("./");
     }else{
     res.render("login");
     }
+});
+
+//Login Clicked
+router.post("/login", authUser.checkLoginCredentials, (req, res) => {
+    res.render("account")
 });
 
 //Renders add-article page which allows user to create an article
@@ -68,5 +73,16 @@ router.get("/new/:input", async (req,res) =>{
     const userExists = await newUser.checkUsernameExists(req.params.input);
     res.json({ value: userExists }); 
 });
+
+//Logout Clicked
+router.get("/logout",(req, res) => {
+    userDao.removeUserToken(res.locals.user);
+    res.clearCookie("authToken");
+    res.locals.user = null;
+    res.setToastMessage("Successfully logged out!");
+    res.redirect("./login");
+});
+
+
 
 module.exports = router;
