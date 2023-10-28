@@ -1,0 +1,27 @@
+<h2>Create Account</h2>
+<div class="login-form">
+    <form action="./create-account" method="post">
+
+        <legend>Login Credentials</legend>
+        <input type="text" placeholder="Username" id="username" name="username" required>
+        <p id="checkExists"></p>
+        <input type="password" placeholder="Password" name="password" required>
+        <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
+    <br>
+
+        <legend>Account Details</legend>
+        <input type="text" placeholder="First Name" name="fName" required>
+        <input type="text" placeholder="Last Name" name="lName" required>
+
+        <label for="avatar">Select your avatar:</label>
+        <select id="chooseAvatar" name="avatar" required>
+        {{#each avatars}}
+            <option value={{filName}}>{{name}}</option>
+        {{/each}}
+        </select>
+        <br><br>
+        <textarea id="profileText" name="description" rows="4" cols="40">Tell Us About Yourself</textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

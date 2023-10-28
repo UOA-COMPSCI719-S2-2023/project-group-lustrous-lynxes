@@ -31,7 +31,9 @@
             </form>
         </div>
     </header>
-
+{{#if toastMessage}}
+    <p>{{toastMessage}}</p>
+{{/if}}
     {{{body}}}
 </body>
 
