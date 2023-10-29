@@ -3,15 +3,16 @@ const dbPromise = require("./database.js");
 
 
 //Check credentials match upon login.
-async function retrieveUserCredentials(username, password) {
+async function retrieveUser(username) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where username = ${username} and password = ${password}`);
+        where username = ${username}`);
 
     return user;
 }
+
 async function updateUserToken(user) {
     const db = await dbPromise;
 
@@ -42,7 +43,7 @@ async function removeUserToken(user) {
 
 // Export functions.
 module.exports = {
-    retrieveUserCredentials,
+    retrieveUser,
     updateUserToken,
     retrieveUserByToken,
     removeUserToken
