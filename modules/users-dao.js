@@ -40,11 +40,30 @@ async function removeUserToken(user) {
         set token = null
         where id = ${user.id}`);
 }
+//Check if username already exists for new account.
+async function retrieveUserName(username){
+    const db = await dbPromise;
+
+    const user = await db.get(SQL`select username from users
+    where username = ${username}`);
+
+    return user;
+}
+//Create user using user JSON
+async function createUser(user) {
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+    insert into users (username,fName, lName, password, description, avatar) values
+    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.description}, ${user.avatar})`);  
+}
 
 // Export functions.
 module.exports = {
     retrieveUser,
     updateUserToken,
     retrieveUserByToken,
-    removeUserToken
+    removeUserToken,
+    createUser,
+    retrieveUserName
 };
