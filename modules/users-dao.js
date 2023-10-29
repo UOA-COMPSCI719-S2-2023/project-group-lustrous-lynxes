@@ -40,29 +40,10 @@ async function removeUserToken(user) {
         where id = ${user.id}`);
 }
 
-async function createUser(user) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-    insert into users (username,fName, lName, password, description, avatar) values
-    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.description}, ${user.avatar})`);  
-}
-
-async function editUser(user) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-        update users
-        set fName = ${user.fName}, lName = ${user.lName}, password = ${user.password}, description = ${user.description}, avatar = ${user.avatar}
-        where id = ${user.id}`);
-}
-
 // Export functions.
 module.exports = {
     retrieveUserCredentials,
     updateUserToken,
     retrieveUserByToken,
-    removeUserToken,
-    createUser,
-    editUser
+    removeUserToken
 };

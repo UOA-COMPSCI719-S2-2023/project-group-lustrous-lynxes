@@ -258,7 +258,6 @@ insert into images (articleId, caption, filName) values
 (3, "hmm donuts", "donut.png"),
 (4, "smells like Rotorua", "egg.png"),
 (5, "Love burgers", "burger.png");
-
 insert into likes (userId, commentId) values
 (1, 2),
 (3, 2),

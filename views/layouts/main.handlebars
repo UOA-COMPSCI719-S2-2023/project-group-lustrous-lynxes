@@ -8,8 +8,13 @@
     {{else}}
     <title>Lustrous Lynxes</title>
     {{/if}}
-    
+
     <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/client.js"></script>
+
+    {{#if includeTinyMCEScripts}}
+    {{> tinyMCE-partial}}
+    {{/if}}
 </head>
 
 <body>
@@ -25,8 +30,10 @@
             <a class="login" href= "./login">Login</a>
             {{/if}}
         </nav>
-    </header>
 
+{{#if toastMessage}}
+    <p>{{toastMessage}}</p>
+{{/if}}
     {{{body}}}
 </body>
 
