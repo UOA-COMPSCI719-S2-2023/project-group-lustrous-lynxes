@@ -68,5 +68,6 @@ async function comparePasswords(passwordAttempt, encryptedCorrectPassword){
 module.exports = {
     checkLoginCredentials,
     verifyAuthenticated,
-    addUserToLocals
+    addUserToLocals,
+    comparePasswords
 }
