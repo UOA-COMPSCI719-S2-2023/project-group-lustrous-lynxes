@@ -85,6 +85,12 @@ router.get("/logout",(req, res) => {
     res.redirect("./login");
 });
 
+//Request made to change user's settings. Need to verify login first.
+router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
+    res.locals.avatars = await avatarDao.retrieveAllIcons();
+    res.render("edit-account");
+});
+
 
 
 module.exports = router;
