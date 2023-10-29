@@ -91,6 +91,28 @@ router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
     res.render("edit-account");
 });
 
+//Changes made to user settings (everything but password).
+router.post("/edit-account", async (req,res) =>{
+    const userDetails = {
+        username: req.body.username,
+        fName: req.body.fName,
+        lName: req.body.lName,
+        avatar: req.body.avatar,
+        description: req.body.description 
+    };
+    console.log(userDetails);
+    res.redirect("./");
+});
+
+//Changes made to password by user.
+router.post("/edit-password", async (req,res) =>{
+    const currentPassword = req.body.password;
+    const newPassword = req.body.newPassword;
+    console.log(currentPassword);
+    console.log(newPassword);
+    res.redirect("./");
+});
+
 
 
 module.exports = router;
