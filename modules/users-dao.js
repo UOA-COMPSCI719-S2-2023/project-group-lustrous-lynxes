@@ -3,16 +3,15 @@ const dbPromise = require("./database.js");
 
 
 //Check credentials match upon login.
-async function retrieveUser(username) {
+async function retrieveUserCredentials(username, password) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where username = ${username}`);
+        where username = ${username} and password = ${password}`);
 
     return user;
 }
-//User logs in, add a token to check against to know if they are still logged in.
 async function updateUserToken(user) {
     const db = await dbPromise;
 
@@ -22,7 +21,6 @@ async function updateUserToken(user) {
         where id = ${user.id}`);
 }
 
-//Check if user is still logged in.
 async function retrieveUserByToken(token) {
     const db = await dbPromise;
 
@@ -32,7 +30,7 @@ async function retrieveUserByToken(token) {
 
     return testData;
 }
-//Remove token as user has now logged out.
+
 async function removeUserToken(user) {
     const db = await dbPromise;
 
@@ -41,30 +39,11 @@ async function removeUserToken(user) {
         set token = null
         where id = ${user.id}`);
 }
-//Check if username already exists for new account.
-async function retrieveUserName(username){
-    const db = await dbPromise;
-
-    const user = await db.get(SQL`select username from users
-    where username = ${username}`);
-
-    return user;
-}
-//Create user using user JSON
-async function createUser(user) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-    insert into users (username,fName, lName, password, description, avatar) values
-    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.description}, ${user.avatar})`);  
-}
 
 // Export functions.
 module.exports = {
-    retrieveUser,
+    retrieveUserCredentials,
     updateUserToken,
     retrieveUserByToken,
-    removeUserToken,
-    retrieveUserName,
-    createUser
+    removeUserToken
 };
