@@ -3,6 +3,7 @@ const router = express.Router();
 
 const authUser = require("../middleware/auth-middleware.js");
 const newUser = require("../middleware/new-account-middleware.js");
+const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 
@@ -149,7 +150,7 @@ router.post("/edit-password", async (req,res) =>{
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
     res.locals.artCard =  await allArticles.allCardDetails();
-
+   
     res.render("./articles");
 });
 

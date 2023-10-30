@@ -114,7 +114,7 @@ body {
 }
 
 .card-image img {
-    max-height: 10em;
+    width: 12em;
 }
 
 .card-title {
