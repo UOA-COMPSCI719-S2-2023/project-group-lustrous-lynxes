@@ -156,5 +156,4 @@ router.get("/articles", async (req, res) => {
     res.render("./articles");
 });
 
-
 module.exports = router;
