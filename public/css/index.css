@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Kavoon&family=Roboto&family=Roboto+Slab:wght@500&display=swap');
+
+:root {
+  font-family: 'Kavoon', cursive;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', serif;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+  }
+
 .navbar {
     overflow: hidden;
     background-color: #333;
@@ -19,7 +32,8 @@
     margin: 50px auto;
     width: 300px;
     padding: 20px;
-    border: 1px solid #ccc;
+    background-color:#f9f9f9;
+    border: 1px solid #333;
 }
 
 .login-form input {
@@ -27,7 +41,7 @@
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     box-sizing: border-box;
 }
 
@@ -42,7 +56,8 @@
 }
 
 .login-form button:hover {
-    background-color: #45a049;
+    background-color: #C1E5C7;
+    color: #333;
 }
 
 .create-btn {
@@ -62,7 +77,7 @@
 
 /*Exactly the same as for .login-form - do we want to make this just "button:hover"?*/
 .article-form button:hover {
-    background-color: #45a049;
+    background-color: #4caf50;
 }
 
 /*Size of WYSIWYG - can change this later*/
@@ -78,3 +93,55 @@
     max-width: 50px;
     max-height: 50px;
   }
+
+  .all-cards {
+    background-color: #E2F3E3;
+    padding: 5%;
+    margin: 2%;
+}
+
+.summary-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-areas: 
+    "image title content content"; 
+    background-color: white;
+    box-shadow: 5px 10px 5px #C1E5C7;
+    margin-bottom: 2%;
+    height: 10em;
+    overflow: hidden;
+}
+
+.card-image {
+    grid-area: image;   
+}
+
+.card-image img {
+    width: 12em;
+}
+
+.card-title {
+    grid-area: title;
+    justify-self: left;
+}
+
+.card-content {
+    grid-area: content;
+}
+
+.card-content p {
+    padding-right: 2em;
+    text-align: justify;
+}
+
+.card-content a {
+    text-align: right;
+    font-weight: bolder;
+    text-decoration: none;
+    color: #4caf50;
+}
+
+h1 {
+    font-family: 'Kavoon', sans-serif;
+    text-align: center;
+}
