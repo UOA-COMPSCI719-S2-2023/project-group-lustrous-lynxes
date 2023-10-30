@@ -81,7 +81,6 @@ router.get("/logout",(req, res) => {
     userDao.removeUserToken(res.locals.user);
     res.clearCookie("authToken");
     res.locals.user = null;
-    res.setToastMessage("Successfully logged out!");
     res.redirect("./login");
 });
 
@@ -119,9 +118,10 @@ router.post("/edit-password", async (req,res) =>{
     //Validation- confirm the new password and check user has inputted their current password.
     if (confirmPassword == newPassword && checkPasswordCorrect){
         //Encrypt and change password in DB.
-        const encryptNewPassword = newUser.encryptPassword(newPassword);
-        newUser.changePassword(userId, encryptNewPassword);
-        res.redirect("./");
+        const encryptNewPassword = await newUser.encryptPassword(newPassword);
+        await userDao.changePassword(userId, encryptNewPassword);
+        res.setToastMessage("Password Changed");
+        res.redirect("./logout");
     }else{
         res.setToastMessage("Password input not valid.");
         res.redirect("./edit-account");

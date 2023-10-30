@@ -71,6 +71,10 @@ async function getUserById(userId){
 async function changePassword(userId, password){
     const db = await dbPromise;
 
+    console.log("Testing");
+    console.log(userId);
+    console.log(password);
+
     return await db.run(SQL`
         update users
         set password = ${password}
