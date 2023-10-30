@@ -33,9 +33,6 @@ async function checkUsernameExists(username){
         return true;
     }
 }
-async function editAccount(user){
-
-}
 
 async function encryptPassword(password) {
     try {

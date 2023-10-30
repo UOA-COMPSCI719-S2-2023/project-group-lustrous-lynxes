@@ -11,9 +11,10 @@ async function checkLoginCredentials(req, res, next) {
 
     //check if matching username and return user.
     const user = await userDao.retrieveUser(username);
-    const encryptedCorrectPassword = user.password;
     //If user exists proceed with validation.
     if (user){
+        //Get password after boolean...otherwise will not read undefined if user does not exist.
+        const encryptedCorrectPassword = user.password;
         correctPassword = await comparePasswords(passwordAttempt, encryptedCorrectPassword);
 
         if (correctPassword){

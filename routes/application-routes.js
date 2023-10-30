@@ -8,6 +8,7 @@ const avatarDao = require("../modules/avatars-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
+    console.log(res.locals.user);
     res.locals.title = "Lustrous Lynxes";
     res.render("account");
 });
@@ -92,15 +93,38 @@ router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
 
 //Changes made to user settings (everything but password).
 router.post("/edit-account", async (req,res) =>{
-    const userDetails = {
+    //Get current ID and username for user.
+    userId = res.locals.user.id;
+    currentUsername = res.locals.user.username;
+
+    //New settings inputted
+    const newUserSettings = {
         username: req.body.username,
         fName: req.body.fName,
         lName: req.body.lName,
         avatar: req.body.avatar,
         description: req.body.description 
     };
-    console.log(userDetails);
+
+    //If Username is changed we will need to check if the username is already taken.
+    if (currentUsername != newUserSettings.username){
+        const usernameExists = await newUser.checkUsernameExists(newUserSettings.username);
+        //If Username exists, do not process form in DB.
+        if (usernameExists){
+            res.setToastMessage("Username Taken");
+            res.redirect("./edit-account");
+        }else{
+            //If username is unique, process changes to DB.
+            await userDao.changeUserSettings(userId, newUserSettings);
+            res.setToastMessage("User Details Changed");
+            res.redirect("./");
+        }
+    //If the Username is the same as the original.
+    }else{
+    await userDao.changeUserSettings(userId, newUserSettings);
+    res.setToastMessage("User Details Changed");
     res.redirect("./");
+    }
 });
 
 //Changes made to password by user.
@@ -127,7 +151,5 @@ router.post("/edit-password", async (req,res) =>{
         res.redirect("./edit-account");
     }
 });
-
-
 
 module.exports = router;

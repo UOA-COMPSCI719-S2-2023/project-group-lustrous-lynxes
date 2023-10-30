@@ -61,8 +61,7 @@ async function createUser(user) {
 async function getUserById(userId){
     const db = await dbPromise;
 
-    const password = await db.get(SQL`select * from users
-    where id = ${userId}`);
+    const password = await db.get(SQL`select * from users where id = ${userId}`);
 
     return password;
 
@@ -71,13 +70,22 @@ async function getUserById(userId){
 async function changePassword(userId, password){
     const db = await dbPromise;
 
-    console.log("Testing");
-    console.log(userId);
-    console.log(password);
-
     return await db.run(SQL`
         update users
         set password = ${password}
+        where id = ${userId}`);
+}
+//Change User's details
+async function changeUserSettings(userId, user){
+    const db = await dbPromise;
+    
+    return await db.run(SQL`
+        update users
+        set username = ${user.username},
+        fName = ${user.fName},
+        lName = ${user.lName},
+        avatar = ${user.avatar},
+        description = ${user.description}
         where id = ${userId}`);
 }
 
@@ -90,5 +98,6 @@ module.exports = {
     createUser,
     retrieveUserName,
     getUserById,
-    changePassword
+    changePassword,
+    changeUserSettings
 };
