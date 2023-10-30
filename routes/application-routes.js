@@ -61,6 +61,7 @@ router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
         password: hashedPassword,
         fName: req.body.fName,
         lName: req.body.lName,
+        dateOfBirth: req.body.dateOfBirth,
         avatar: req.body.avatar,
         description: req.body.description 
     };
@@ -101,6 +102,7 @@ router.post("/edit-account", async (req,res) =>{
         username: req.body.username,
         fName: req.body.fName,
         lName: req.body.lName,
+        dateOfBirth: req.body.dateOfBirth,
         avatar: req.body.avatar,
         description: req.body.description 
     };

@@ -17,6 +17,7 @@ create table users (
     fName VARCHAR(50) NOT NULL,
     lName VARCHAR(50) NOT NULL,
     password BLOB NOT NULL,
+    dateOfBirth DATE,
     description VARCHAR(260),
     avatar VARCHAR(50) NOT NULL,
     token BLOB,
@@ -75,10 +76,14 @@ insert into avatars (filName, name) values
 ("spaghetti.png", "spaghetti"),
 ("strawberry.png", "strawberry");
 
-insert into users (id, username, fName, lName, password, description, avatar) values
-(1, "doggy", "Molly", "Leslie", "dogzRule1", "Puppy kitty ipsum dolor sit good dog throw wet nose.", "bell-pepper.png"),
-(2, "pusspuss", "Beauty", "Toogood", "cats89", "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "pizza.png"),
-(3, "BirdSing", "Very", "Loud", "I8worms", "Bird Food kisses run fast wet nose purr", "strawberry.png");
+insert into users (id, username, fName, lName, password, dateOfBirth, description, avatar) values
+(1, "doggy", "Molly", "Leslie", "dogzRule1", '1995-06-15',"Puppy kitty ipsum dolor sit good dog throw wet nose.", "bell-pepper.png"),
+(2, "pusspuss", "Beauty", "Toogood", "cats89", '2010-05-20', "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "pizza.png"),
+(3, "BirdSing", "Very", "Loud", "I8worms", '2000-01-02', "Bird Food kisses run fast wet nose purr", "strawberry.png");
+
+//These users will prepopulate all the current articles for lecturers.
+//The lectures will be able to see articles.
+//However they will need to create an account to use other features.
 
 insert into articles (id, authorId, content, title) values 
 (1, 1, "

@@ -54,8 +54,8 @@ async function createUser(user) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-    insert into users (username,fName, lName, password, description, avatar) values
-    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.description}, ${user.avatar})`);  
+    insert into users (username,fName, lName, password, dateOfBirth, description, avatar) values
+    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.dateOfBirth}, ${user.description}, ${user.avatar})`);  
 }
 //Get user password by ID
 async function getUserById(userId){
@@ -84,6 +84,7 @@ async function changeUserSettings(userId, user){
         set username = ${user.username},
         fName = ${user.fName},
         lName = ${user.lName},
+        dateOfBirth = ${user.dateOfBirth},
         avatar = ${user.avatar},
         description = ${user.description}
         where id = ${userId}`);
