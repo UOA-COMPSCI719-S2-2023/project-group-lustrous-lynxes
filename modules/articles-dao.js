@@ -86,7 +86,7 @@ async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName 
+     select i.filName, a.title, substring(a.content, 0, 400) as short, u.fName, u.lName 
      from images i, articles a, users u 
      where i.articleId = a.id
      and a.authorId = u.id`);  

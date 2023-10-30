@@ -150,7 +150,7 @@ router.post("/edit-password", async (req,res) =>{
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
     res.locals.artCard =  await allArticles.allCardDetails();
-   
+  
     res.render("./articles");
 });
 
