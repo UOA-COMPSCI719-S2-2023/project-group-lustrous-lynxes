@@ -1,5 +1,6 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
+const articlesDao = require("./articles-dao.js")
 
 
 //Check credentials match upon login.
@@ -100,17 +101,19 @@ async function deleteUser(userId){
      delete from users
      where id = ${userId}`);
 }
-//To assist in delete User (NOT TO BE EXPORTED)
+//Need to get every article ID associate with a given user.
+//Then delete by using a For Each and the articlesDao functions.
 async function deleteUserArticles(userId){
     const db = await dbPromise;
 
     deleteUserComments(userId);
 
-    return await db.run(SQL`
-     delete from articles
-     where authorId = ${userId}`);
-}
 
+
+
+
+}
+//Correct- Tested in SQL
 async function deleteUserComments(userId){
     const db = await dbPromise;
 
@@ -120,7 +123,7 @@ async function deleteUserComments(userId){
      delete from comment
      where userId = ${userId}`);
 }
-
+//Correct- Tested in SQL
 async function deleteUserRatings(userId){
     const db = await dbPromise;
 
@@ -130,7 +133,7 @@ async function deleteUserRatings(userId){
      delete from rate
      where userId = ${userId}`);
 }
-
+//Correct- Tested in SQL
 async function deleteUserLikes(userId){
     const db = await dbPromise;
 

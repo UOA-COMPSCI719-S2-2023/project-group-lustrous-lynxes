@@ -34,7 +34,8 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     });
 });
 
-router.post("/add-article", (req, res) => {
+//This needs to be async as you are making call to DAO.
+router.post("/add-article", async (req, res) => {
     const article = req.body.article;
 
     //Change later - add article to database
@@ -153,9 +154,8 @@ router.post("/edit-password", async (req,res) =>{
 //Then process the delete in Database and redirect to Login (NOT LOGOUT!!!).
 router.post("/delete-account", async (req,res)=>{
     res.clearCookie("authToken");
-    userDao.deleteUser(res.locals.user.id);
+    await userDao.deleteUser(res.locals.user.id);
     res.locals.user = null;
-
     res.redirect("./login");
 });
 
