@@ -149,6 +149,16 @@ router.post("/edit-password", async (req,res) =>{
     }
 });
 
+//Get Request to delete account. Remove the authentication token and set user to null.
+//Then process the delete in Database and redirect to Login (NOT LOGOUT!!!).
+router.post("/delete-account", async (req,res)=>{
+    res.clearCookie("authToken");
+    userDao.deleteUser(res.locals.user.id);
+    res.locals.user = null;
+
+    res.redirect("./login");
+});
+
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
     res.locals.artCard =  await allArticles.allCardDetails();

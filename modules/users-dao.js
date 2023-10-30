@@ -90,6 +90,56 @@ async function changeUserSettings(userId, user){
         where id = ${userId}`);
 }
 
+//Critical that this is done in the correct order.
+async function deleteUser(userId){
+    const db = await dbPromise;
+
+    deleteUserArticles(userId);
+
+    return await db.run(SQL`
+     delete from users
+     where id = ${userId}`);
+}
+//To assist in delete User (NOT TO BE EXPORTED)
+async function deleteUserArticles(userId){
+    const db = await dbPromise;
+
+    deleteUserComments(userId);
+
+    return await db.run(SQL`
+     delete from articles
+     where authorId = ${userId}`);
+}
+
+async function deleteUserComments(userId){
+    const db = await dbPromise;
+
+    deleteUserRatings(userId);
+
+    return await db.run(SQL`
+     delete from comment
+     where userId = ${userId}`);
+}
+
+async function deleteUserRatings(userId){
+    const db = await dbPromise;
+
+    deleteUserLikes(userId);
+
+    return await db.run(SQL`
+     delete from rate
+     where userId = ${userId}`);
+}
+
+async function deleteUserLikes(userId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from likes
+     where userId = ${userId}`);
+}
+
+
 // Export functions.
 module.exports = {
     retrieveUser,
@@ -100,5 +150,6 @@ module.exports = {
     retrieveUserName,
     getUserById,
     changePassword,
-    changeUserSettings
+    changeUserSettings,
+    deleteUser
 };
