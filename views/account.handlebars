@@ -3,6 +3,11 @@
 
 <p>Username: {{user.username}}</p>
 <p>Name: {{user.fName}} {{user.lName}}</p>
+
+{{#if user.dateOfBirth}}
+<p>Date of Birth: {{user.dateOfBirth}}</p>
+{{/if}}
+
 {{#if user.description}}
 <p>Description: {{user.description}}</p>
 {{/if}}
