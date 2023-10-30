@@ -67,6 +67,15 @@ async function getUserById(userId){
     return password;
 
 }
+//Change User's Password
+async function changePassword(userId, password){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+        update users
+        set password = ${password}
+        where id = ${userId}`);
+}
 
 // Export functions.
 module.exports = {
@@ -76,5 +85,6 @@ module.exports = {
     removeUserToken,
     createUser,
     retrieveUserName,
-    getUserById
+    getUserById,
+    changePassword
 };
