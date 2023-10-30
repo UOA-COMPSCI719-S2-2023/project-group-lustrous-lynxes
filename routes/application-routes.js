@@ -8,7 +8,6 @@ const avatarDao = require("../modules/avatars-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
-    console.log(res.locals.user);
     res.locals.title = "Lustrous Lynxes";
     res.render("account");
 });
