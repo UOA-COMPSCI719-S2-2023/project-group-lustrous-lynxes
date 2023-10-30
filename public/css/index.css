@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Kavoon&family=Roboto&family=Roboto+Slab:wght@500&display=swap');
+
+:root {
+  font-family: 'Kavoon', cursive;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Slab', serif;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+  }
+
 .navbar {
     overflow: hidden;
     background-color: #333;
@@ -78,3 +91,47 @@
     max-width: 50px;
     max-height: 50px;
   }
+
+  .all-cards {
+    background-color: #E2F3E3;
+    padding: 5%;
+}
+
+.summary-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-areas: 
+    "image title content content"; 
+    background-color: white;
+    box-shadow: 5px 10px 5px #d4d2d2;
+    margin-bottom: 2%;
+    height: 10em;
+    overflow: hidden;
+}
+
+.card-image {
+    grid-area: image;   
+}
+
+.card-image img {
+    max-height: 10em;
+}
+
+.card-title {
+    grid-area: title;
+    justify-self: left;
+}
+
+.card-content {
+    grid-area: content;
+}
+
+.card-content p {
+    padding-right: 2em;
+    text-align: justify;
+}
+
+h1 {
+    font-family: 'Kavoon', sans-serif;
+    text-align: center;
+}

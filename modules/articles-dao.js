@@ -82,6 +82,19 @@ async function deleteImageArticles(article) {
      where articleId = ${article.id}`);     
 }
 
+async function viewArticlesCards() {
+    const db = await dbPromise;
+
+    const artCards = await db.all(SQL`
+     select i.filName, a.title, a.content, u.fName, u.lName 
+     from images i, articles a, users u 
+     where i.articleId = a.id
+     and a.authorId = u.id`);  
+
+    return artCards;
+}
+
+
 module.exports = {
     viewAllArticles,
     viewUserArticles,
@@ -90,5 +103,6 @@ module.exports = {
     deleteArticles,
     addNewImageArticles,
     editImageArticles,
+    viewArticlesCards,
     deleteImageArticles
 };
