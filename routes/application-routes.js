@@ -81,7 +81,6 @@ router.get("/logout",(req, res) => {
     userDao.removeUserToken(res.locals.user);
     res.clearCookie("authToken");
     res.locals.user = null;
-    res.setToastMessage("Successfully logged out!");
     res.redirect("./login");
 });
 
@@ -93,26 +92,58 @@ router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
 
 //Changes made to user settings (everything but password).
 router.post("/edit-account", async (req,res) =>{
-    const userDetails = {
+    //Get current ID and username for user.
+    userId = res.locals.user.id;
+    currentUsername = res.locals.user.username;
+
+    //New settings inputted
+    const newUserSettings = {
         username: req.body.username,
         fName: req.body.fName,
         lName: req.body.lName,
         avatar: req.body.avatar,
         description: req.body.description 
     };
-    console.log(userDetails);
+
+    //If Username is changed we will need to check if the username is already taken.
+    if (currentUsername != newUserSettings.username){
+        
+        const usernameExists = await newUser.checkUsernameExists(newUserSettings.username);
+        //If Username exists, do not process form in DB.
+        if (usernameExists){
+            res.setToastMessage("Username Taken");
+            return res.redirect("./edit-account");
+        }
+    }
+    //If the Username is the same as the original.
+    await userDao.changeUserSettings(userId, newUserSettings);
+    res.setToastMessage("User Details Changed");
     res.redirect("./");
 });
 
 //Changes made to password by user.
 router.post("/edit-password", async (req,res) =>{
-    const currentPassword = req.body.password;
+    const userId = res.locals.user.id;
+    //Have User input current password as validation.
+    const currentPasswordInput = req.body.password;
+    //Check actual password in DB for user.
+    const user = await userDao.getUserById(userId);
+    //Check the input matches that of the User's actual password.
+    const checkPasswordCorrect = await authUser.comparePasswords(currentPasswordInput, user.password);
+    //New Password and confirmation of that password.
     const newPassword = req.body.newPassword;
-    console.log(currentPassword);
-    console.log(newPassword);
-    res.redirect("./");
+    const confirmPassword = req.body.confirmPassword;
+    //Validation- confirm the new password and check user has inputted their current password.
+    if (confirmPassword == newPassword && checkPasswordCorrect){
+        //Encrypt and change password in DB.
+        const encryptNewPassword = await newUser.encryptPassword(newPassword);
+        await userDao.changePassword(userId, encryptNewPassword);
+        res.setToastMessage("Password Changed");
+        res.redirect("./logout");
+    }else{
+        res.setToastMessage("Password input not valid.");
+        res.redirect("./edit-account");
+    }
 });
-
-
 
 module.exports = router;

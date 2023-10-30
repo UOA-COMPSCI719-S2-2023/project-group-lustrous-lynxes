@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const {retrieveUserName} = require("../modules/users-dao.js");
+const {retrieveUserName } = require("../modules/users-dao.js");
 
 //Salt Rounds- Complexity of protection. The higher the intger the more encrypted.
 //However this comes at the cost of performance. For the project 10 will be fine.
