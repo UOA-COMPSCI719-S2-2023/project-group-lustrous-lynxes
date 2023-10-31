@@ -9,7 +9,7 @@
 body {
     margin: 0px;
     font-family: 'Roboto', sans-serif;
-  }
+}
 
 h1, h2 {
     font-family: 'Kavoon', sans-serif;
@@ -18,6 +18,10 @@ h1, h2 {
 
 h2 {
     color: #4caf50;
+}
+
+.page-heading {
+    text-align: left;
 }
 
 .navbar {
@@ -76,13 +80,27 @@ button:hover {
     width: 300px;
 }
 
-.create-btn {
-    text-decoration: none;
-}
-
 /*Size of WYSIWYG - can change this later*/
 #articleContent {
     height: 80vh;
+}
+
+.account-settings-container {
+    padding: 10px 50px 50px 50px;
+}
+
+.settings-forms-container {
+    display: flex;
+    gap: 25px;
+}
+
+.settings-form {
+    margin: 0px;
+    flex: 0 0 300px;
+}
+
+.create-btn {
+    text-decoration: none;
 }
 
 /*Check if username exists. Show text in red*/
