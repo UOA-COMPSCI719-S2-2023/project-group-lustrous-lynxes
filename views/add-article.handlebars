@@ -1,6 +1,20 @@
 <div class="article-form">
-    <form action="./add-article" method="POST">
-        <textarea name="article" id="article" cols="30" rows="10">Create your article here!</textarea>
+    <form action="./add-article" method="POST" enctype="multipart/form-data">
+        <label for="articleTitle">Title:</label>
+        <input type="text" name="articleTitle" id="articleTitle" value="Enter your title here">
+        <br>
+
+        <label for="imageInput">Upload your main image:</label>
+        <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+        <br>
+
+        <label for="imageCaption">Image Caption:</label>
+        <input type="text" name="imageCaption" id="imageCaption" value="Write a caption for your image">
+        <br>
+
+        <label for="articleContent">Content:</label>
+        <textarea name="articleContent" id="articleContent" cols="30" rows="10">Create your article here!</textarea>
+        
         <button type="submit">Publish article</button>
     </form>
 </div>
