@@ -7,6 +7,7 @@ const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const article = require("../modules/articles-dao.js");
+const upload = require("../middleware/multer-uploader.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -35,7 +36,8 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     });
 });
 
-router.post("/add-article", (req, res) => {
+//Processes form for adding a new article
+router.post("/add-article", upload.single("imageFile"), (req, res) => {
     const articleContent = req.body.articleContent;
 
     //Change later - add article to database
