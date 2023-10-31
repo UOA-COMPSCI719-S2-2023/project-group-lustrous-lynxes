@@ -155,6 +155,7 @@ button:hover {
 .card-title {
     grid-area: title;
     justify-self: left;
+    color: black;
 }
 
 .card-content {
@@ -166,16 +167,19 @@ button:hover {
     text-align: justify;
 }
 
-.card-content a {
-    text-align: right;
-    font-weight: bolder;
-    text-decoration: none;
+#read-more {
     color: #4caf50;
+    font-weight: bolder;
 }
 
-.card-content a:hover {
+#read-more:hover {
     color: #333;
-    font-size: large;
+    font-size: larger;
+}
+
+.all-cards a {
+    text-decoration: none;
+    color: #333;
 }
 
 .full-card {
