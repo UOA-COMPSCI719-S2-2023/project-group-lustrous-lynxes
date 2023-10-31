@@ -14,7 +14,7 @@ async function addCommentMiddleware(req, res) {
         const commentData = {
             userId: user.id,
             articleId: req.params.articleId,
-            content: req.body.content
+            content: req.body.comment
         };
 
         //try to add comment to database

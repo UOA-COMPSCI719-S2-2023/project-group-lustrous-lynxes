@@ -33,8 +33,8 @@ async function addComment(comment) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     insert into comment (authorId, articleId, content) values
-     (${comment.authorId}, ${comment.articleId}, ${comment.content})`);     
+     insert into comment (userId, articleId, content) values
+     (${comment.userId}, ${comment.articleId}, ${comment.content})`);     
 }
 
 async function likeComment(likes) {

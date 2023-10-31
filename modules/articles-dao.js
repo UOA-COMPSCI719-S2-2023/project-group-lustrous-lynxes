@@ -107,13 +107,6 @@ async function viewFullArticle(givenId) {
     return artFull;
 }
 
-async function addComment(comment) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-        INSERT INTO comment (userId, articleId, content)
-        VALUES (${comment.userId}, ${comment.articleId}, ${comment.content})`);
-}
 
 module.exports = {
     viewAllArticles,
@@ -126,5 +119,4 @@ module.exports = {
     viewArticlesCards,
     deleteImageArticles,
     viewFullArticle,
-    addComment
 };
