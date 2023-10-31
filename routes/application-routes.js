@@ -38,7 +38,7 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
 });
 
 //Processes form for adding a new article
-router.post("/add-article", upload.single("imageFile"), (req, res) => {
+router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     //Getting user input from form
     const articleTitle = req.body.articleTitle;
     const articleContent = req.body.articleContent;
@@ -63,11 +63,12 @@ router.post("/add-article", upload.single("imageFile"), (req, res) => {
         caption: imageCaption
     };
 
-    console.log(newArticle);
-    console.log(newImage);
+    //Adding new article & image to database
+    await article.addNewArticles(newArticle, newImage);
 
-    //Redirect to user's account with new article on it - might change later
-    res.redirect("/account");
+    //Redirect to all articles - might change later
+    //Probably makes sense to redirect to user's page of their own articles
+    res.redirect("/articles");
 });
 
 //Render form to create account
