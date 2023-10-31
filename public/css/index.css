@@ -73,18 +73,23 @@ button:hover {
 }
 
 .form-container {
-    margin: 50px auto;
+    margin: 0px auto;
     padding: 20px;
     background-color:#f9f9f9;
     border: 1px solid #333;
 }
 
+.narrow-form {
+    width: 300px;
+}
+
 .article-form {
+    margin-top: 30px;
     width: 90vw;
 }
 
 .login-form {
-    width: 300px;
+    margin: 50px auto;
 }
 
 /*Size of WYSIWYG - can change this later*/
@@ -92,7 +97,7 @@ button:hover {
     height: 80vh;
 }
 
-.account-settings-container {
+.page-container {
     padding: 10px 50px 50px 50px;
 }
 
