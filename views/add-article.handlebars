@@ -1,20 +1,23 @@
-<div class="article-form">
-    <form action="./add-article" method="POST" enctype="multipart/form-data">
-        <label for="articleTitle">Title:</label>
-        <input type="text" name="articleTitle" id="articleTitle" value="Enter your title here">
-        <br>
+<div class="page-container">
+    <div class="article-form form-container">
+        <h1>Create a new article</h1>
+        <form action="./add-article" method="POST" enctype="multipart/form-data">
+            <label for="articleTitle">Title:</label>
+            <input type="text" name="articleTitle" id="articleTitle" placeholder="Your title here">
+            <br>
 
-        <label for="imageInput">Upload your main image:</label>
-        <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
-        <br>
+            <label for="imageInput">Upload your main image:</label>
+            <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+            <br>
 
-        <label for="imageCaption">Image Caption:</label>
-        <input type="text" name="imageCaption" id="imageCaption" value="Write a caption for your image">
-        <br>
+            <label for="imageCaption">Image Caption:</label>
+            <input type="text" name="imageCaption" id="imageCaption" placeholder="What's in this picture?">
+            <br>
 
-        <label for="articleContent">Content:</label>
-        <textarea name="articleContent" id="articleContent" cols="30" rows="10">Create your article here!</textarea>
-        
-        <button type="submit">Publish article</button>
-    </form>
+            <label for="articleContent">Content:</label>
+            <textarea name="articleContent" id="articleContent" cols="30" rows="10" placeholder="Your article content goes here!"></textarea>
+            
+            <button type="submit">Publish article</button>
+        </form>
+    </div>
 </div>

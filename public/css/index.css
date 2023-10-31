@@ -9,7 +9,7 @@
 body {
     margin: 0px;
     font-family: 'Roboto', sans-serif;
-  }
+}
 
 h1, h2 {
     font-family: 'Kavoon', sans-serif;
@@ -20,6 +20,9 @@ h2 {
     color: #4caf50;
 }
 
+.page-heading {
+    text-align: left;
+}
 
 .navbar {
     overflow: hidden;
@@ -28,7 +31,14 @@ h2 {
     width: 100%; /* Set a fixed width for the container */
     height: 75px; /* Set a fixed height for the container */
     align-items: center;
+    justify-content: space-between;
 }
+
+.navbar-left, .navbar-right {
+    display: flex;
+    align-items: center;
+}
+
 
 .navbar a {
     float: left;
@@ -38,15 +48,7 @@ h2 {
     text-decoration: none;
 }
 
-.login-form {
-    margin: 50px auto;
-    width: 300px;
-    padding: 20px;
-    background-color:#f9f9f9;
-    border: 1px solid #333;
-}
-
-.login-form input {
+input, textarea {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -55,7 +57,7 @@ h2 {
     box-sizing: border-box;
 }
 
-.login-form button {
+button {
     width: 100%;
     background-color: #4caf50;
     color: #fff;
@@ -65,39 +67,59 @@ h2 {
     cursor: pointer;
 }
 
-.login-form button:hover {
+button:hover {
     background-color: #C1E5C7;
     color: #333;
+}
+
+.form-container {
+    margin: 0px auto;
+    padding: 20px;
+    background-color:#f9f9f9;
+    border: 1px solid #333;
+}
+
+.narrow-form {
+    width: 300px;
+}
+
+.article-form {
+    margin-top: 30px;
+    width: 90vw;
+}
+
+.login-form {
+    margin: 50px auto;
+}
+
+/*Size of WYSIWYG - can change this later*/
+#articleContent {
+    height: 80vh;
+}
+
+.page-container {
+    padding: 10px 50px 50px 50px;
+}
+
+.settings-forms-container {
+    display: flex;
+    gap: 25px;
+}
+
+.settings-form {
+    margin: 0px;
+    flex: 0 0 300px;
 }
 
 .create-btn {
     text-decoration: none;
 }
 
-/*Exactly the same as for .login-form - do we want to make this just "button"?*/
-.article-form button {
-    width: 100%;
-    background-color: #4caf50;
-    color: #fff;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-}
-
-/*Exactly the same as for .login-form - do we want to make this just "button:hover"?*/
-.article-form button:hover {
-    background-color: #4caf50;
-}
-
-/*Size of WYSIWYG - can change this later*/
-#articleContent {
-    height: 60vh;
-}
 /*Check if username exists. Show text in red*/
 #checkExists{
     color:red;
 }
+
 /*Scale icon to appropriate size*/
 .icon {
     max-width: 50px;
