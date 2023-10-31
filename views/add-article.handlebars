@@ -1,6 +1,14 @@
 <div class="article-form">
     <form action="./add-article" method="POST">
+        <label for="articleTitle">Title:</label>
+        <input type="text" name="articleTitle" id="articleTitle" value="Enter your title here">
+        <br>
+
+        <label for="imageCaption">Image Caption:</label>
+        <input type="text" name="imageCaption" id="imageCaption" value="Write a caption for your image">
+        <br>
         
+        <label for="articleContent">Content:</label>
         <textarea name="articleContent" id="articleContent" cols="30" rows="10">Create your article here!</textarea>
         
         <button type="submit">Publish article</button>
