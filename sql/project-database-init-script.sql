@@ -30,7 +30,7 @@ create table articles (
     content TEXT NOT NULL,
     avRating REAL,
     title VARCHAR(80),
-    FOREIGN KEY (authorId) references users (id)
+    FOREIGN KEY (authorId) references users (id) ON DELETE CASCADE
 );
 
 create table comment (
@@ -39,7 +39,7 @@ create table comment (
     articleId INTEGER NOT NULL,
     content VARCHAR(260) NOT NULL,
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table rate (
@@ -48,14 +48,14 @@ create table rate (
     rating INTEGER NOT NULL,
     PRIMARY KEY (userId, articleId),
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table images (
     filName VARCHAR(50) NOT NULL PRIMARY KEY,
     caption VARCHAR(100) NOT NULL,
     articleId INTEGER NOT NULL,
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table likes (
@@ -63,7 +63,7 @@ create table likes (
     commentId INTEGER NOT NULL,
     PRIMARY KEY (userId, commentId),
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (commentId) references comment (id)                       
+    FOREIGN KEY (commentId) references comment (id) ON DELETE CASCADE                      
 );
 
 insert into avatars (filName, name) values 
@@ -121,11 +121,10 @@ insert into images (articleId, caption, filName) values
 (3, "Healthy", "bowl.jpeg"),
 (4, "Fruity Cupcakes", "cupcakes.jpeg"),
 (5, "Gingerbread People", "gingerbread.jpeg");
+
 insert into likes (userId, commentId) values
 (1, 2),
 (3, 2),
 (1, 6),
 (1, 3),
 (2, 2);
-    
-
