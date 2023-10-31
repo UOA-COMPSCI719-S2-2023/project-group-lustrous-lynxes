@@ -182,6 +182,11 @@ button:hover {
     color: #333;
 }
 
+.summary {
+    max-height: 7em;
+    overflow: hidden;
+}
+
 .full-card {
     display: grid;
     grid-template-columns:1fr 2fr;
