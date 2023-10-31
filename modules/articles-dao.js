@@ -92,7 +92,6 @@ async function viewArticlesCards() {
      from images i, articles a, users u 
      where i.articleId = a.id
      and a.authorId = u.id`);  
-    //console.log(artCards);
     return artCards;
 }
 
