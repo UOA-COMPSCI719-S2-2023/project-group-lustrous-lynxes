@@ -71,6 +71,17 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     res.redirect("/articles");
 });
 
+//Renders edit-article page which allows user to edit their own article
+//Later we will use query parameters to specify which article to edit
+//e.g. edit-article?id=5 using the articleId
+//will need to verify that current user is writer of this article
+router.get("/edit-article", authUser.verifyAuthenticated, (req, res) => {
+
+    res.render("edit-article", {
+        includeTinyMCEScripts: true
+    });
+});
+
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
