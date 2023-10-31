@@ -76,6 +76,8 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 //e.g. edit-article?id=5 using the articleId
 //will need to verify that current user is writer of this article
 router.get("/edit-article", authUser.verifyAuthenticated, (req, res) => {
+    const articleId = req.query.articleId;
+    console.log(articleId);
 
     res.render("edit-article", {
         includeTinyMCEScripts: true
