@@ -6,6 +6,7 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
+const article = require("../modules/articles-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -154,6 +155,13 @@ router.get("/articles", async (req, res) => {
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
+});
+
+//read a full article - no login required
+router.get("/full-article", async (req, res) => { 
+    res.locals.artFull =  await article.viewFullArticle(req.query.id);
+
+    res.render("./full-article");
 });
 
 module.exports = router;
