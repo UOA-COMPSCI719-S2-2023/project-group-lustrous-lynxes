@@ -6,6 +6,8 @@ drop table if exists articles;
 drop table if exists users;
 drop table if exists avatars;
 
+PRAGMA foreign_keys = ON;
+
 create table avatars (
     filName VARCHAR(50) NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL   
@@ -21,7 +23,7 @@ create table users (
     description VARCHAR(260),
     avatar VARCHAR(50) NOT NULL,
     token BLOB,
-    FOREIGN KEY (avatar) references avatars (filName)
+    FOREIGN KEY (avatar) references avatars (filName) ON DELETE CASCADE
 );
 
 create table articles (
@@ -30,7 +32,7 @@ create table articles (
     content TEXT NOT NULL,
     avRating REAL,
     title VARCHAR(80),
-    FOREIGN KEY (authorId) references users (id)
+    FOREIGN KEY (authorId) references users (id) ON DELETE CASCADE
 );
 
 create table comment (
@@ -39,7 +41,7 @@ create table comment (
     articleId INTEGER NOT NULL,
     content VARCHAR(260) NOT NULL,
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table rate (
@@ -48,14 +50,14 @@ create table rate (
     rating INTEGER NOT NULL,
     PRIMARY KEY (userId, articleId),
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table images (
     filName VARCHAR(50) NOT NULL PRIMARY KEY,
     caption VARCHAR(100) NOT NULL,
     articleId INTEGER NOT NULL,
-    FOREIGN KEY (articleId) references articles (id)
+    FOREIGN KEY (articleId) references articles (id) ON DELETE CASCADE
 );
 
 create table likes (
@@ -63,7 +65,7 @@ create table likes (
     commentId INTEGER NOT NULL,
     PRIMARY KEY (userId, commentId),
     FOREIGN KEY (userId) references users (id),
-    FOREIGN KEY (commentId) references comment (id)                       
+    FOREIGN KEY (commentId) references comment (id) ON DELETE CASCADE                      
 );
 
 insert into avatars (filName, name) values 

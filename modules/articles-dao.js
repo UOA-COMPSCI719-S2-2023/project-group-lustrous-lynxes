@@ -46,15 +46,13 @@ async function addNewArticles(article, image) {
 
     addNewImageArticles(image, artId.LastID);
 }
-
+//DELETE ARTICLE
 async function deleteArticles(article) {
     const db = await dbPromise;
 
-    deleteImageArticles(article); 
-
     return await db.run(SQL`
-     delete from  articles 
-     where id = ${article.id}`);       
+    delete from  articles 
+    where id = ${article.id}`);
 }
 
 async function addNewImageArticles(image, articleId) {
@@ -73,12 +71,14 @@ async function editImageArticles(image) {
      set filName = ${image.filName}, caption = ${image.caption}
      where articleId = ${image.articleId}`);    
 }
-
+//DELTE before article
 async function deleteImageArticles(article) {
     const db = await dbPromise;
+    console.log("delete images");
+    console.log(article.id)
 
     return await db.run(SQL`
-     delete from  images
+     delete from images
      where articleId = ${article.id}`);     
 }
 
@@ -93,7 +93,6 @@ async function viewArticlesCards() {
 
     return artCards;
 }
-
 
 module.exports = {
     viewAllArticles,
