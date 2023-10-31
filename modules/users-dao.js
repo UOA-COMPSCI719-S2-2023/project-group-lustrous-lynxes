@@ -94,27 +94,34 @@ async function changeUserSettings(userId, user){
 //Critical that this is done in the correct order.
 async function deleteUser(userId){
     const db = await dbPromise;
-    console.log("Deleting user");
+
+    await deleteUserInput(userId);
+    
 
     return await db.run(SQL`
      delete from users
      where id = ${userId}`);
 }
-//Need to get every article ID associate with a given user.
-//Then delete by using a For Each and the articlesDao functions.
+
+async function deleteUserInput(userId){
+    await deleteUserArticles(userId);
+    await deleteUserComments(userId);
+    await deleteUserLikes(userId);
+    await deleteUserRatings(userId);
+}
+
 async function deleteUserArticles(userId){
     const db = await dbPromise;
-    console.log(userId)
+    console.log("Delete User's articles");
 
     return await db.run(SQL`
-    delete from users
-    where id = ${userId}`);
+    delete from articles
+    where authorId = ${userId}`);
 }
 //Correct- Tested in SQL
 async function deleteUserComments(userId){
     const db = await dbPromise;
-
-    await deleteUserRatings(userId);
+    console.log("delete User's Comments");
 
     return await db.run(SQL`
      delete from comment
@@ -123,8 +130,7 @@ async function deleteUserComments(userId){
 //Correct- Tested in SQL
 async function deleteUserRatings(userId){
     const db = await dbPromise;
-
-    await deleteUserLikes(userId);
+    console.log("delete User's Ratings");
 
     return await db.run(SQL`
      delete from rate
@@ -133,6 +139,7 @@ async function deleteUserRatings(userId){
 //Correct- Tested in SQL
 async function deleteUserLikes(userId){
     const db = await dbPromise;
+    console.log("delete User's Likes");
 
     return await db.run(SQL`
      delete from likes
@@ -150,6 +157,5 @@ module.exports = {
     getUserById,
     changePassword,
     changeUserSettings,
-    deleteUser,
-    deleteUserArticles
+    deleteUser
 };

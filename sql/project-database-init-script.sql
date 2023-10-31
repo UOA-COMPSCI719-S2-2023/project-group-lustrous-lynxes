@@ -6,8 +6,6 @@ drop table if exists articles;
 drop table if exists users;
 drop table if exists avatars;
 
-PRAGMA foreign_keys = ON;
-
 create table avatars (
     filName VARCHAR(50) NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL   
@@ -23,7 +21,7 @@ create table users (
     description VARCHAR(260),
     avatar VARCHAR(50) NOT NULL,
     token BLOB,
-    FOREIGN KEY (avatar) references avatars (filName) ON DELETE CASCADE
+    FOREIGN KEY (avatar) references avatars (filName)
 );
 
 create table articles (
@@ -123,6 +121,7 @@ insert into images (articleId, caption, filName) values
 (3, "Healthy", "bowl.jpeg"),
 (4, "Fruity Cupcakes", "cupcakes.jpeg"),
 (5, "Gingerbread People", "gingerbread.jpeg");
+
 insert into likes (userId, commentId) values
 (1, 2),
 (3, 2),

@@ -157,7 +157,7 @@ router.get("/delete-account", async (req,res)=>{
     //await userDao.deleteUser(res.locals.user.id);
     //res.locals.user = null;
     //res.redirect("./login");
-    await userDao.deleteUser(1);
+    await userDao.deleteUser(2);
     res.redirect("./edit-account");
 });
 
