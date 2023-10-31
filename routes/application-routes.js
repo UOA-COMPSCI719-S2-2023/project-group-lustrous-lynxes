@@ -7,6 +7,8 @@ const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const article = require("../modules/articles-dao.js");
+const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -35,14 +37,38 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     });
 });
 
-router.post("/add-article", (req, res) => {
-    const article = req.body.article;
+//Processes form for adding a new article
+router.post("/add-article", upload.single("imageFile"), async (req, res) => {
+    //Getting user input from form
+    const articleTitle = req.body.articleTitle;
+    const articleContent = req.body.articleContent;
+    const imageInfo = req.file;
+    const imageCaption = req.body.imageCaption;
 
-    //Change later - add article to database
-    console.log(article);
+    //Renaming and moving image file
+    const oldFileName = imageInfo.path;
+    const newFileName = `public/images/${imageInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
 
-    //Redirect to user's account with new article on it - might change later
-    res.redirect("/account");
+    //Creating new article object
+    const newArticle = {
+        userId: res.locals.user.id,
+        content: articleContent,
+        title: articleTitle
+    };
+
+    //Creating new image object
+    const newImage = {
+        filName: imageInfo.originalname,
+        caption: imageCaption
+    };
+
+    //Adding new article & image to database
+    await article.addNewArticles(newArticle, newImage);
+
+    //Redirect to all articles - might change later
+    //Probably makes sense to redirect to user's page of their own articles
+    res.redirect("/articles");
 });
 
 //Render form to create account
