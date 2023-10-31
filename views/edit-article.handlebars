@@ -1,4 +1,5 @@
 <div class="page-container">
+    {{#if correctAuthor}}
     <div class="article-form form-container">
         <h1>Edit your article</h1>
         <form action="./edit-article" method="POST" enctype="multipart/form-data">
@@ -20,4 +21,8 @@
             <button type="submit">Publish article</button>
         </form>
     </div>
+    {{else}}
+    <h1>Access denied</h1>
+    <p class="centred-text">You do not have permission to edit this article.</p>
+    {{/if}}
 </div>
