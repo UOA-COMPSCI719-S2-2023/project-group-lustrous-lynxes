@@ -108,6 +108,13 @@ async function viewFullArticle(givenId) {
     return artFull;
 }
 
+//Get article by ID
+async function getArticleById(articleId){
+    const db = await dbPromise;
+    const article = await db.get(SQL`select * from articles where id = ${articleId}`);
+    return article;
+}
+
 module.exports = {
     viewAllArticles,
     viewUserArticles,
@@ -118,5 +125,6 @@ module.exports = {
     editImageArticles,
     viewArticlesCards,
     deleteImageArticles,
-    viewFullArticle
+    viewFullArticle,
+    getArticleById
 };
