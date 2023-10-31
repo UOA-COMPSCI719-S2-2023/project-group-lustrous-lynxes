@@ -85,6 +85,7 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
         res.render("edit-article", {
             includeTinyMCEScripts: true,
             correctAuthor: true,
+            article: article
         });
     } else {
         res.render("edit-article");
