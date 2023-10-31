@@ -1,42 +1,50 @@
 <h2>Account Settings</h2>
-<form action="./edit-account" method="post">
-    <h3>Change Account Details</h3>
-    <label for="username">Username</label>
-    <input type="text" placeholder="{{user.username}}" name="username" value="{{user.username}}"><br><br>
-    <label for="fName">First Name</label>
-    <input type="text" placeholder="{{user.fName}}" name="fName" value="{{user.fName}}"><br><br>
-    <label for="lName">Last Name</label>
-    <input type="text" placeholder="{{user.lName}}" name="lName" value="{{user.lName}}"><br><br>
-    <label for="dateOfBirth">Date of Birth</label>
-    <input type="date" placeholder="{{user.dateOfBirth}}" name="dateOfBirth" value="{{user.dateOfBirth}}"><br><br>
+<div class="account-settings-container">
+    <div class="login-form form-container">
+        <form action="./edit-account" method="post">
+            <h3>Change Account Details</h3>
+            <label for="username">Username</label>
+            <input type="text" placeholder="{{user.username}}" name="username" value="{{user.username}}"><br><br>
+            <label for="fName">First Name</label>
+            <input type="text" placeholder="{{user.fName}}" name="fName" value="{{user.fName}}"><br><br>
+            <label for="lName">Last Name</label>
+            <input type="text" placeholder="{{user.lName}}" name="lName" value="{{user.lName}}"><br><br>
+            <label for="dateOfBirth">Date of Birth</label>
+            <input type="date" placeholder="{{user.dateOfBirth}}" name="dateOfBirth" value="{{user.dateOfBirth}}"><br><br>
 
-    <label for="avatar">Select your avatar:</label>
-    <select id="chooseAvatar" name="avatar">
-        {{#each avatars}}
-            <option value={{filName}}>{{name}}</option>
-        {{/each}}
-    </select><br><br>
+            <label for="avatar">Select your avatar:</label>
+            <select id="chooseAvatar" name="avatar">
+                {{#each avatars}}
+                    <option value={{filName}}>{{name}}</option>
+                {{/each}}
+            </select><br><br>
 
-    <textarea id="profileText" name="description" rows="4" cols="40" value="{{user.description}}">{{user.description}}</textarea><br>
-    <button type="submit">Save Changes</button>
-</form>
-        
-    <!-- Seperate Password as the logic is different -->
-<form action="./edit-password" method="post">
-    <h3>Change Password</h3>
-    <p>Require current password as validation.</p>
-    <label for="password">Current Password:</label>
-    <input type="password" name="password" required><br><br>
+            <textarea id="profileText" name="description" rows="4" cols="40" value="{{user.description}}">{{user.description}}</textarea><br>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
 
-    <label for="newPassword">New Password:</label>
-    <input type="password" name="newPassword" required><br><br>
-    
-    <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" name="confirmPassword" required>
-    <button type="submit">Change Password</button>
-</form>
+    <div class="login-form form-container">
+        <!-- Seperate Password as the logic is different -->
+        <form action="./edit-password" method="post">
+            <h3>Change Password</h3>
+            <p>Require current password as validation.</p>
+            <label for="password">Current Password:</label>
+            <input type="password" name="password" required><br><br>
 
-<h3>Delete Account</h3>
-<a href="./delete-account">
-    <button>Delete Account</button>
-</a>
+            <label for="newPassword">New Password:</label>
+            <input type="password" name="newPassword" required><br><br>
+            
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" name="confirmPassword" required>
+            <button type="submit">Change Password</button>
+        </form>
+    </div>
+
+    <div class="login-form form-container">
+        <h3>Delete Account</h3>
+        <a href="./delete-account">
+            <button>Delete Account</button>
+        </a>
+    </div>
+</div>
