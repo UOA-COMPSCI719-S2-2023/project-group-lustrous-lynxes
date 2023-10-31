@@ -89,6 +89,55 @@ async function changeUserSettings(userId, user){
         description = ${user.description}
         where id = ${userId}`);
 }
+//Articles are covered by DELETE CASCADE
+async function deleteUser(userId){
+    const db = await dbPromise;
+
+    await deleteUserInput(userId);
+
+    return await db.run(SQL`
+     delete from users
+     where id = ${userId}`);
+}
+//This is done to ensure each function is only called once.
+async function deleteUserInput(userId){
+    await deleteUserArticles(userId);
+    await deleteUserComments(userId);
+    await deleteUserLikes(userId);
+    await deleteUserRatings(userId);
+}
+
+async function deleteUserArticles(userId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+    delete from articles
+    where authorId = ${userId}`);
+}
+
+async function deleteUserComments(userId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from comment
+     where userId = ${userId}`);
+}
+
+async function deleteUserRatings(userId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from rate
+     where userId = ${userId}`);
+}
+
+async function deleteUserLikes(userId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from likes
+     where userId = ${userId}`);
+}
 
 // Export functions.
 module.exports = {
@@ -100,5 +149,6 @@ module.exports = {
     retrieveUserName,
     getUserById,
     changePassword,
-    changeUserSettings
+    changeUserSettings,
+    deleteUser
 };

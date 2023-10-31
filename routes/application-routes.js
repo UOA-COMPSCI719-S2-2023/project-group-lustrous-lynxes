@@ -6,7 +6,7 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
-const article = require("../modules/articles-dao.js");
+const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
@@ -64,7 +64,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     };
 
     //Adding new article & image to database
-    await article.addNewArticles(newArticle, newImage);
+    await articleDao.addNewArticles(newArticle, newImage);
 
     //Redirect to all articles - might change later
     //Probably makes sense to redirect to user's page of their own articles
@@ -175,6 +175,15 @@ router.post("/edit-password", async (req,res) =>{
         res.redirect("./edit-account");
     }
 });
+//Get Request to delete account. Remove the authentication token and set user to null.
+//Then process the delete in Database and redirect to Login (NOT LOGOUT!!!).
+router.get("/delete-account", async (req,res)=>{
+    await userDao.deleteUser(res.locals.user.id);
+    res.setToastMessage("Account Deleted");
+    res.locals.user = null;
+    res.clearCookie("authToken");
+    res.redirect("./articles");
+});
 
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
@@ -185,7 +194,7 @@ router.get("/articles", async (req, res) => {
 
 //read a full article - no login required
 router.get("/full-article", async (req, res) => { 
-    res.locals.artFull =  await article.viewFullArticle(req.query.id);
+    res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
 
     res.render("./full-article");
 });
