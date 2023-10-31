@@ -4,7 +4,7 @@
         <h1>Edit your article</h1>
         <form action="./edit-article" method="POST" enctype="multipart/form-data">
             <label for="articleTitle">Title:</label>
-            <input type="text" name="articleTitle" id="articleTitle" placeholder="Your title here">
+            <input type="text" name="articleTitle" id="articleTitle" value="{{article.title}}">
             <br>
 
             <label for="imageInput">Upload your main image:</label>
@@ -12,11 +12,11 @@
             <br>
 
             <label for="imageCaption">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" placeholder="What's in this picture?">
+            <input type="text" name="imageCaption" id="imageCaption" value="{{article.image.caption}}">
             <br>
 
             <label for="articleContent">Content:</label>
-            <textarea name="articleContent" id="articleContent" cols="30" rows="10" placeholder="Your article content goes here!"></textarea>
+            <textarea name="articleContent" id="articleContent" cols="30" rows="10">{{article.content}}</textarea>
             
             <button type="submit">Publish article</button>
         </form>
