@@ -1,7 +1,8 @@
 <div id="full-article">
-    <div class="header-details"></div>
+    <div class="header-details">
         <h1>{{artFull.title}}</h1>
         <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
+    </div>
     <div class="all-cards">
         <div class="full-card">
             <div class="header-image">
@@ -11,7 +12,21 @@
                 <p>{{artFull.content}}</p>
             </div>
         </div>
-        
     </div>
-    
+    {{#if userLoggedIn}}
+        {{!-- <p>user already logged in</p>  --}}
+        <div>
+            <form id="comment-form" action="/articles/{{artFull.id}}/comments" method="post">
+                <textarea name="comment" placeholder="Add your comments here..."></textarea>
+                <button type="submit">Publish Comment</button>
+            </form>
+        </div>
+    {{else}}
+        {{!-- <p>please login first</p>  --}}
+        <p id="login-request">You could add comment after <a href="/login">login</a></p>
+    {{/if}}
+
+    <div id="comments-list">
+        {{!-- show comments here --}}
+    </div>
 </div>

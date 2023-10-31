@@ -98,13 +98,21 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName 
+     select a.id, i.filName, a.title, a.content, u.fName, u.lName 
      from images i, articles a, users u 
      where a.id = ${givenId}
      and i.articleId = a.id
      and a.authorId = u.id`);  
     
     return artFull;
+}
+
+async function addComment(comment) {
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+        INSERT INTO comment (userId, articleId, content)
+        VALUES (${comment.userId}, ${comment.articleId}, ${comment.content})`);
 }
 
 module.exports = {
@@ -117,5 +125,6 @@ module.exports = {
     editImageArticles,
     viewArticlesCards,
     deleteImageArticles,
-    viewFullArticle
+    viewFullArticle,
+    addComment
 };

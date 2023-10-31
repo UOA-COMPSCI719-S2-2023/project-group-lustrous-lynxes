@@ -45,8 +45,25 @@ async function checkLoginCredentials(req, res, next) {
 async function addUserToLocals(req, res, next) {
     //Use cookie to find current user. Add to locals for handlebars information.
     //This code is in app.js and will run every time application is run e.g. route handler.
-    const user = await userDao.retrieveUserByToken(req.cookies.authToken);
-    res.locals.user = user;
+    // const user = await userDao.retrieveUserByToken(req.cookies.authToken);
+    // res.locals.user = user;
+
+    // Use cookie to find current user. Add to locals for handlebars information.
+    const authToken = req.cookies.authToken;
+    if(authToken) {
+        const user = await userDao.retrieveUserByToken(authToken);
+        if (user) {
+            res.locals.user = user;
+            //Set user logged in states to true
+            res.locals.userLoggedIn = true;
+        } else {
+            ////Set user logged in states to false if token invalid
+            res.locals.userLoggedIn = false;
+        }
+    } else {
+        //Set user logged in states to false if no token
+        res.locals.userLoggedIn = false;
+    }
     next();
 }
 
@@ -65,6 +82,7 @@ function verifyAuthenticated(req, res, next) {
 async function comparePasswords(passwordAttempt, encryptedCorrectPassword){
     return bcrypt.compareSync(passwordAttempt, encryptedCorrectPassword);
 }
+
 
 module.exports = {
     checkLoginCredentials,
