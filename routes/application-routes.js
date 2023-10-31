@@ -36,10 +36,10 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
 });
 
 router.post("/add-article", (req, res) => {
-    const article = req.body.article;
+    const articleContent = req.body.articleContent;
 
     //Change later - add article to database
-    console.log(article);
+    console.log(articleContent);
 
     //Redirect to user's account with new article on it - might change later
     res.redirect("/account");

@@ -91,7 +91,7 @@ h2 {
 }
 
 /*Size of WYSIWYG - can change this later*/
-#article {
+#articleContent {
     height: 60vh;
 }
 /*Check if username exists. Show text in red*/
