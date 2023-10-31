@@ -8,6 +8,7 @@ const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const article = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -40,8 +41,15 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
 router.post("/add-article", upload.single("imageFile"), (req, res) => {
     const articleContent = req.body.articleContent;
 
+    //File stuff
+    const fileInfo = req.file;
+    const oldFileName = fileInfo.path;
+    const newFileName = `public/images/${fileInfo.originalname}`;
+
+    fs.renameSync(oldFileName, newFileName);
+
     //Change later - add article to database
-    console.log(articleContent);
+    //console.log(articleContent);
 
     //Redirect to user's account with new article on it - might change later
     res.redirect("/account");
