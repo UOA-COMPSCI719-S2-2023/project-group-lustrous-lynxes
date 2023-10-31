@@ -39,13 +39,15 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
 
 //Processes form for adding a new article
 router.post("/add-article", upload.single("imageFile"), (req, res) => {
+    //Getting user input from form
+    const articleTitle = req.body.articleTitle;
     const articleContent = req.body.articleContent;
+    const imageInfo = req.file;
+    const imageCaption = req.body.imageCaption;
 
-    //File stuff
-    const fileInfo = req.file;
-    const oldFileName = fileInfo.path;
-    const newFileName = `public/images/${fileInfo.originalname}`;
-
+    //Renaming and moving image file
+    const oldFileName = imageInfo.path;
+    const newFileName = `public/images/${imageInfo.originalname}`;
     fs.renameSync(oldFileName, newFileName);
 
     //Change later - add article to database
