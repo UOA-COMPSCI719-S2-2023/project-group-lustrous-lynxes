@@ -50,8 +50,21 @@ router.post("/add-article", upload.single("imageFile"), (req, res) => {
     const newFileName = `public/images/${imageInfo.originalname}`;
     fs.renameSync(oldFileName, newFileName);
 
-    //Change later - add article to database
-    //console.log(articleContent);
+    //Creating new article object
+    const newArticle = {
+        userId: res.locals.user.id,
+        content: articleContent,
+        title: articleTitle
+    };
+
+    //Creating new image object
+    const newImage = {
+        filName: imageInfo.originalname,
+        caption: imageCaption
+    };
+
+    console.log(newArticle);
+    console.log(newImage);
 
     //Redirect to user's account with new article on it - might change later
     res.redirect("/account");
