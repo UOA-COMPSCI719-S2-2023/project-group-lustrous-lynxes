@@ -2,7 +2,7 @@
     <p>{{toastMessage}}</p>
 {{/if}}
 <div id="articles-page">
-    <h1>All Articles</h1>
+    <h1 id="arthead">All Articles</h1>
 
     <div class="all-cards">
         {{#each artCard}}
@@ -16,7 +16,7 @@
             </div>
             <div class="card-content">
                 <p>{{short}}...</p>
-                <a href="#">Read More</a>
+                <a href="./full-article?id={{id}}" id="read-more">Read More</a>
             </div>           
         </div>
         {{/each}}
