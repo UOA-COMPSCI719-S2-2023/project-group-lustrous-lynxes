@@ -89,7 +89,6 @@ async function changeUserSettings(userId, user){
         description = ${user.description}
         where id = ${userId}`);
 }
-//Critical that this is done in the correct order.
 //Articles are covered by DELETE CASCADE
 async function deleteUser(userId){
     const db = await dbPromise;
@@ -101,7 +100,6 @@ async function deleteUser(userId){
      where id = ${userId}`);
 }
 //This is done to ensure each function is only called once.
-//db Promise does not work in the way you always expect.
 async function deleteUserInput(userId){
     await deleteUserArticles(userId);
     await deleteUserComments(userId);

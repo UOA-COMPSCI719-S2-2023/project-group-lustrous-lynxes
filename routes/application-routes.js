@@ -6,7 +6,7 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
-const article = require("../modules/articles-dao.js");
+const articleDao = require("../modules/articles-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -156,7 +156,7 @@ router.get("/delete-account", async (req,res)=>{
     res.setToastMessage("Account Deleted");
     res.locals.user = null;
     res.clearCookie("authToken");
-    res.redirect("./login");
+    res.redirect("./articles");
 });
 
 //go to articles page - no login required
