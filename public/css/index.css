@@ -178,6 +178,8 @@ button:hover {
 
 .card-image img {
     width: 12em;
+    height: 10em;
+    object-fit: cover;
 }
 
 .card-title {
