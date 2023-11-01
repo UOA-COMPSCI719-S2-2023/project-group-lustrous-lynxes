@@ -33,9 +33,12 @@ async function addAverageRating(articleId){
     //Calculate average.
     const sumOfTotal = ratingArray.reduce((total, num) => total + num, 0);
     const averageRating = sumOfTotal / ratingArray.length;
+    //Round to nearest .5 or .0 decimal value.
+    const roundAverage = (Math.round(averageRating * 2)) / 2;
     //Add to Database
-    await commentDao.avRating(averageRating, articleId);
+    await commentDao.avRating(roundAverage, articleId);
 }
+
 
 async function addUserArticleRating(ratingJson){
     const userArticleRating = await commentDao.getUserRatingforArticle(ratingJson);
@@ -53,5 +56,4 @@ module.exports = {
     userCardDetails,
     setAllArticleAverageRating,
     addUserArticleRating
-
 };
