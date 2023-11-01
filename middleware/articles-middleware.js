@@ -1,6 +1,7 @@
 const articlesDao = require("../modules/articles-dao.js");
 const commentDao = require("../modules/comments-dao.js")
 
+//Get all articles. Ordered by highest to lowest average rating.
 async function allCardDetails() {
     const allCardData = await articlesDao.viewArticlesCards();
 
@@ -29,10 +30,6 @@ async function calculateAverageRating(articleId){
     //Add to Article in DB
     
     return averageRating;
-}
-//Round average to nearest .5 value. Will implement at later stage.
-function roundAverage(averageRating){
-    return Math.floor(number * 2) / 2;
 }
 
 module.exports = {
