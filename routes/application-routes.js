@@ -196,13 +196,15 @@ router.get("/articles", async (req, res) => {
 });
 //Add Rating to article
 router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
+    //Convert String to Number.
+    const userRating = Number(req.body.rating);
     const articleRating = {
         articleId: req.body.id,
         userId: res.locals.user.id,
-        rating: req.body.rating
+        rating: userRating
     }
+    await allArticles.addUserArticleRating(articleRating);
     res.redirect("/full-article?id=" + req.body.id);
-
 });
 
 //read a full article - no login required

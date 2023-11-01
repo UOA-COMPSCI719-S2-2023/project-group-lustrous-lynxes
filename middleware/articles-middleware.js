@@ -32,7 +32,19 @@ async function calculateAverageRating(articleId){
     return averageRating;
 }
 
+async function addUserArticleRating(ratingJson){
+    const userArticleRating = await commentDao.getUserRatingforArticle(ratingJson);
+    //If user already has rating for given article, then change it to new rating.
+    if (userArticleRating){
+        await commentDao.changeArticleRating(ratingJson);
+    //Else create new rating for article.
+    }else{
+        await commentDao.addArticleRating(ratingJson);
+    }
+}
+
 module.exports = {
     allCardDetails,
-    setAllArticleAverageRating
+    setAllArticleAverageRating,
+    addUserArticleRating
 };

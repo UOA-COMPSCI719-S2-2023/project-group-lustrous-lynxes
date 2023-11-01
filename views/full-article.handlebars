@@ -15,7 +15,11 @@
 </div>
 <fieldset>Give this article a rating
 <form action="./rating" method="post">
-<input type="text" placeholder="Rating" name="rating" required>
+<label><input type="radio" name="rating" value= '1'>One</label>
+<label><input type="radio" name="rating" value= '2'>Two</label>
+<label><input type="radio" name="rating" value= '3' checked>Three</label>
+<label><input type="radio" name="rating" value= '4'>Four</label>
+<label><input type="radio" name="rating" value= '5'>Five</label>
 <input type="hidden" name="id" value="{{artFull.id}}">
 <button type="submit">Submit</button>
 </form>
