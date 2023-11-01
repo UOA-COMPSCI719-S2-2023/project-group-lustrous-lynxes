@@ -7,6 +7,7 @@ const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const articleDao = require("../modules/articles-dao.js");
+const commentDao = require("../modules/comments-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
@@ -187,15 +188,14 @@ router.get("/delete-account", async (req,res)=>{
 
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
-    res.locals.artCard =  await allArticles.allCardDetails();
-  
+    res.locals.artCard =  await allArticles.allCardDetails(); 
     res.render("./articles");
 });
 
 //read a full article - no login required
 router.get("/full-article", async (req, res) => { 
     res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-
+    res.locals.comFull = await commentDao.viewComments(req.query.id);
     res.render("./full-article");
 });
 
