@@ -113,8 +113,10 @@ async function viewFullArticle(givenId) {
 async function getArticleById(articleId){
     const db = await dbPromise;
     const article = await db.get(SQL`select * from articles where id = ${articleId}`);
-    const image = await getImageById(articleId);
-    article.image = image;
+    if (article) {
+        const image = await getImageById(articleId);
+        article.image = image;
+    }
     return article;
 }
 

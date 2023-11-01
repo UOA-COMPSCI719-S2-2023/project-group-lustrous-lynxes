@@ -82,17 +82,24 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     const articleId = req.query.id;
     const article = await articleDao.getArticleById(articleId);
 
-    //Checks whether the user currently logged in is the author of the article
-    if (article.authorId == res.locals.user.id) {
+    //Checks whether the article exists
+    if (article == undefined) {
         res.render("edit-article", {
-            includeTinyMCEScripts: true,
-            correctAuthor: true,
-            article: article
+            noArticle: true
         });
     } else {
-        res.render("edit-article");
+        //Checks whether the user currently logged in is the author of the article
+        if (article.authorId == res.locals.user.id) {
+            res.render("edit-article", {
+                includeTinyMCEScripts: true,
+                article: article
+            });
+        } else {
+            res.render("edit-article", {
+                wrongAuthor: true
+            });
+        }
     }
-
 });
 
 //Render form to create account
