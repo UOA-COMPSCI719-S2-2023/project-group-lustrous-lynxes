@@ -9,24 +9,24 @@ async function rateArticles(rate) {
      (${rate.authorId}, ${rate.articleId}, ${rate.rating})`);     
 }
 
-async function allRatingArticle(article) {
+async function allRatingArticle(articleId) {
     const db = await dbPromise;
 
     const allRatings =  await db.all(SQL`
-     select *
+     select rating
      from rate
-     where ${article.articleId} = rate.articleId`);  
+     where ${articleId} = articleId`);  
      
      return allRatings;
 }
 
-async function avRating(aveRating, rate) {
+async function avRating(aveRating, articleId) {
     const db = await dbPromise;
 
      return await db.run (SQL`
      update articles
      set avRating = ${aveRating}
-     where id = ${rate.articleId}`);
+     where id = ${articleId}`);
 }
 
 async function addComment(comment) {
@@ -43,6 +43,19 @@ async function likeComment(likes) {
      return await db.run (SQL`
      insert into likes (userId, commentId, liking) values
      (${likes.userId}, ${likes.commentId}, 1)`);
+}
+
+async function viewComments(articleId) {
+    const db = await dbPromise;
+
+    const allComments =  await db.all(SQL`
+     select u.fName, u.lName, c.content, u.avatar
+     from comment c, articles a, users u 
+     where ${articleId} = a.id
+     and a.id = c.articleId
+     and c.userId = u.id`);  
+     
+     return allComments;
 }
 
 //async function orderComments(article) {
@@ -65,6 +78,7 @@ module.exports = {
     allRatingArticle,
     addComment,
     likeComment,
+    viewComments,
     //orderComments,
-    avRating
+    avRating,
 };

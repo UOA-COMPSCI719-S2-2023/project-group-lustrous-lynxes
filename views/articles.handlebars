@@ -3,19 +3,23 @@
 
     <div class="all-cards">
         {{#each artCard}}
-        <div class="summary-card">
-            <div class="card-image">
-                <img src="/images/{{filName}}">
+        <a href="./full-article?id={{id}}" >
+            <div class="summary-card">
+                <div class="card-image">
+                    <img src="/images/{{filName}}">
+                </div>
+                <div class="card-title">
+                    <h3>{{title}}</h3> 
+                    <h4>By {{fName}} {{lName}} </h4>
+                </div>
+                <div class="card-content">
+                    <div class="summary">
+                        <p>{{{content}}}</p>
+                    </div>                    
+                    <p id="read-more">Read More</p>
+                </div>                     
             </div>
-            <div class="card-title">
-                <h3>{{title}}</h3> 
-                <h4>By {{fName}} {{lName}} </h4>
-            </div>
-            <div class="card-content">
-                <p>{{short}}...</p>
-                <a href="./full-article?id={{id}}" id="read-more">Read More</a>
-            </div>           
-        </div>
+         </a> 
         {{/each}}
     </div>
 </div>

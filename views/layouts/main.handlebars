@@ -20,15 +20,19 @@
 <body>
     <header>
         <nav class="navbar">
-            <a href="#">Home</a>
-            <a href="./articles">Articles</a>
-        
-            {{#if user}}
-            <a href ="./edit-account"><img src="/images/settings.png" alt="Settings Icon" class="icon"></a>
-            <a class="logout" href="./logout">Logout</a>
-            {{else}}
-            <a class="login" href= "./login">Login</a>
-            {{/if}}
+            <div class="navbar-left">
+                <a href="#">Home</a>
+                <a href="./articles">Articles</a>
+            </div>
+
+            <div class="navbar-right">    
+                {{#if user}}
+                <a class="logout" href="./logout">Logout</a>
+                <a href ="./edit-account"><img src="/images/icons/settings.png" alt="Settings Icon" class="icon"></a>
+                {{else}}
+                <a class="login" href= "./login">Login</a>
+                {{/if}}
+            </div>
         </nav>
 
 {{#if toastMessage}}

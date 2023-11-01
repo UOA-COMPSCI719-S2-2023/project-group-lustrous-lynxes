@@ -38,13 +38,15 @@ async function editArticles(article, image) {
 
 async function addNewArticles(article, image) {
     const db = await dbPromise;
-
-    const artId =  await db.run(SQL`
-     insert into articles (authorId, content, title)
-     values(${article.userId}, ${article.content}), ${article.title}`);
-     articles.id = artId.LastID;
-
-    addNewImageArticles(image, artId.LastID);
+    
+    const result = await db.run(SQL`
+        insert into articles (authorId, content, title) 
+        values(${article.userId}, ${article.content}, ${article.title})
+    `);
+    
+    //articles.id = artId.lastID;
+    //Not sure what the above line is for @mary?? - maybe delete later
+    await addNewImageArticles(image, result.lastID);
 }
 
 async function deleteArticles(article) {
@@ -82,15 +84,16 @@ async function deleteImageArticles(article) {
      where articleId = ${article.id}`);     
 }
 
+//Order by Average Rating for when we display articles.
 async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, substring(a.content, 0, 400) as short, u.fName, u.lName, a.id 
+     select i.filName, a.title, a.content, u.fName, u.lName, a.id 
      from images i, articles a, users u 
      where i.articleId = a.id
-     and a.authorId = u.id`);  
-    console.log(artCards);
+     and a.authorId = u.id
+     order by a.avRating desc`);  
     return artCards;
 }
 

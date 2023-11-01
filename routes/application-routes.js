@@ -6,8 +6,11 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
-const article = require("../modules/articles-dao.js");
 const { addComment } = require("../modules/comments-dao.js");
+const articleDao = require("../modules/articles-dao.js");
+const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
+
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -36,14 +39,38 @@ router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     });
 });
 
-router.post("/add-article", (req, res) => {
-    const article = req.body.article;
+//Processes form for adding a new article
+router.post("/add-article", upload.single("imageFile"), async (req, res) => {
+    //Getting user input from form
+    const articleTitle = req.body.articleTitle;
+    const articleContent = req.body.articleContent;
+    const imageInfo = req.file;
+    const imageCaption = req.body.imageCaption;
 
-    //Change later - add article to database
-    console.log(article);
+    //Renaming and moving image file
+    const oldFileName = imageInfo.path;
+    const newFileName = `public/images/${imageInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
 
-    //Redirect to user's account with new article on it - might change later
-    res.redirect("/account");
+    //Creating new article object
+    const newArticle = {
+        userId: res.locals.user.id,
+        content: articleContent,
+        title: articleTitle
+    };
+
+    //Creating new image object
+    const newImage = {
+        filName: imageInfo.originalname,
+        caption: imageCaption
+    };
+
+    //Adding new article & image to database
+    await articleDao.addNewArticles(newArticle, newImage);
+
+    //Redirect to all articles - might change later
+    //Probably makes sense to redirect to user's page of their own articles
+    res.redirect("/articles");
 });
 
 //Render form to create account
@@ -150,9 +177,21 @@ router.post("/edit-password", async (req,res) =>{
         res.redirect("./edit-account");
     }
 });
+//Get Request to delete account. Remove the authentication token and set user to null.
+//Then process the delete in Database and redirect to Login (NOT LOGOUT!!!).
+router.get("/delete-account", async (req,res)=>{
+    await userDao.deleteUser(res.locals.user.id);
+    res.setToastMessage("Account Deleted");
+    res.locals.user = null;
+    res.clearCookie("authToken");
+    res.redirect("./articles");
+});
 
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
+    //Set the average rating for all articles into DB.
+    await allArticles.setAllArticleAverageRating();
+    //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
@@ -160,8 +199,8 @@ router.get("/articles", async (req, res) => {
 
 //read a full article - no login required
 router.get("/full-article", async (req, res) => { 
-    res.locals.artFull =  await article.viewFullArticle(req.query.id);
-
+    res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+    res.locals.comFull = await commentDao.viewComments(req.query.id);
     res.render("./full-article");
 });
 
@@ -186,7 +225,7 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
         content: content
     };
 
-    //Add comment to database
+    //Add comment to database.
     await addComment(commentData);
 
     res.redirect("/full-article?id=" + req.params.articleId);

@@ -1,15 +1,21 @@
-<h2>Account Page</h2>
-<img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
+<div class="page-container">    
+    <h2>Account Page</h2>
+    <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
 
-<p>Username: {{user.username}}</p>
-<p>Name: {{user.fName}} {{user.lName}}</p>
+    <p>Username: {{user.username}}</p>
+    <p>Name: {{user.fName}} {{user.lName}}</p>
 
-{{#if user.dateOfBirth}}
-<p>Date of Birth: {{user.dateOfBirth}}</p>
-{{/if}}
+    {{#if user.dateOfBirth}}
+    <p>Date of Birth: {{user.dateOfBirth}}</p>
+    {{/if}}
 
-{{#if user.description}}
-<p>Description: {{user.description}}</p>
-{{/if}}
+    {{#if user.description}}
+    <p>Description: {{user.description}}</p>
+    {{/if}}
 
-<h2>Your Article</h2>
+    <a href="./add-article">
+        <button>Create New Article</button>
+    </a>
+
+    <h2>{{user.fName}}'s Articles</h2>
+</div>
