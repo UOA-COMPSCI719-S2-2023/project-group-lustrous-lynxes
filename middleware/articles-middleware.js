@@ -7,6 +7,12 @@ async function allCardDetails() {
 
     return allCardData;
 }
+//Get  articles of one user. Ordered by highest to lowest average rating.
+async function userCardDetails(id) {
+    const cardData = await articlesDao.userArticlesCards(id);
+
+    return cardData;
+}
 //Sets average rating for all articles.
 async function setAllArticleAverageRating(){
     const allArticles = await articlesDao.viewAllArticles("id");
@@ -34,5 +40,6 @@ async function calculateAverageRating(articleId){
 
 module.exports = {
     allCardDetails,
+    userCardDetails,
     setAllArticleAverageRating
 };

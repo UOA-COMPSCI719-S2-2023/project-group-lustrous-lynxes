@@ -3,7 +3,7 @@
 :root {
   font-family: 'Kavoon', cursive;
   font-family: 'Roboto', sans-serif;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Slab', sans-serif;
 }
 
 body {
@@ -12,7 +12,7 @@ body {
 }
 
 h1, h2 {
-    font-family: 'Kavoon', sans-serif;
+    font-family: 'Roboto Slab', sans-serif;
     text-align: center;
 }
 
@@ -209,6 +209,11 @@ button:hover {
     max-width: 100%;
 }
 
+.header-image p {
+    text-align: center;
+    color: #4caf50;
+}
+
 .full-content {
     grid-area: content;
 }
@@ -255,25 +260,6 @@ button:hover {
     content: "";
     display: table;
     clear: both;
-}
-
-#comments-list {
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-.comment-item {
-    padding: 10px;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
-}
-
-.comment-item:last-child {
-    border-bottom: none;
-}
-
-.comment-author {
-    font-weight: border;
 }
 
 .comment-card {

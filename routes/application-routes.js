@@ -7,14 +7,20 @@ const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const { addComment } = require("../modules/comments-dao.js");
+const commentDao = require("../modules/comments-dao.js");
 const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
 
 //Render home/account page if user is logged in. Check using middleware.
-router.get("/", authUser.verifyAuthenticated, (req, res) => {
+router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
+    //Set the average rating for all articles into DB.
+    await allArticles.setAllArticleAverageRating();
+    //Get allCardDetails in order of rating.
+    res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
+    
     res.render("account");
 });
 
@@ -28,7 +34,8 @@ router.get("/login", (req, res) => {
 });
 
 //Login Clicked
-router.post("/login", authUser.checkLoginCredentials, (req, res) => {
+router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
+
     res.render("account")
 });
 
