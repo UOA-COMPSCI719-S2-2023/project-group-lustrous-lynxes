@@ -30,58 +30,26 @@ async function editArticles(article, image) {
 
     return await db.run(SQL`
      update articles 
-     set content = ${article.content}, title = ${article.title}
-     where id = ${article.articleId}`); 
-     
-    editImageArticles(image);     
+     set content = ${article.content}, title = ${article.title}, imgFileName = ${image.filName}, imgCaption = ${image.caption}
+     where id = ${article.articleId}`);  
 }
 
 async function addNewArticles(article, image) {
     const db = await dbPromise;
     
-    const result = await db.run(SQL`
-        insert into articles (authorId, content, title) 
-        values(${article.userId}, ${article.content}, ${article.title})
+    return await db.run(SQL`
+        insert into articles (authorId, content, title, imgFileName, imgCaption) 
+        values(${article.userId}, ${article.content}, ${article.title}, ${image.filName}, ${image.caption})
     `);
-    
-    //articles.id = artId.lastID;
-    //Not sure what the above line is for @mary?? - maybe delete later
-    await addNewImageArticles(image, result.lastID);
+
 }
 
 async function deleteArticles(article) {
     const db = await dbPromise;
 
-    deleteImageArticles(article); 
-
     return await db.run(SQL`
-     delete from  articles 
+     delete * from  articles 
      where id = ${article.id}`);       
-}
-
-async function addNewImageArticles(image, articleId) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-     insert into images (filName, caption, articleId)
-     values(${image.filName}, ${image.caption}, ${articleId})`);     
-}
-
-async function editImageArticles(image) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-     update images 
-     set filName = ${image.filName}, caption = ${image.caption}
-     where articleId = ${image.articleId}`);    
-}
-
-async function deleteImageArticles(article) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-     delete from  images
-     where articleId = ${article.id}`);     
 }
 
 //Order by Average Rating for when we display articles.
@@ -89,10 +57,9 @@ async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName, a.id
-     from images i, articles a, users u 
-     where i.articleId = a.id
-     and a.authorId = u.id
+     select a.imgFileName, a.title, a.content, a.imgCaption, u.fName, u.lName, a.id
+     from  articles a, users u 
+     where a.authorId = u.id
      order by a.avRating desc`);  
     return artCards;
 }
@@ -102,10 +69,9 @@ async function userArticlesCards(userId) {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, a.content, a.id 
-     from images i, articles a, users u 
+     select a.imgFileName, a.title, a.content, a.id, a.imgCaption 
+     from  articles a, users u 
      where u.id = ${userId}
-     and i.articleId = a.id
      and a.authorId = u.id
      order by a.avRating desc`); 
      
@@ -116,10 +82,9 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select a.id, i.filName, i.caption, a.title, a.content, u.fName, u.lName 
-     from images i, articles a, users u 
+     select a.id, a.imgFileName, a.imgCaption, a.title, a.content, u.fName, u.lName 
+     from articles a, users u 
      where a.id = ${givenId}
-     and i.articleId = a.id
      and a.authorId = u.id`);  
     
     return artFull;
@@ -128,19 +93,9 @@ async function viewFullArticle(givenId) {
 async function getArticleById(articleId){
     const db = await dbPromise;
     const article = await db.get(SQL`select * from articles where id = ${articleId}`);
-    if (article) {
-        const image = await getImageById(articleId);
-        article.image = image;
-    }
     return article;
 }
 
-//Get image by articleID
-async function getImageById(articleId){
-    const db = await dbPromise;
-    const image = await db.get(SQL`select * from images where articleId = ${articleId}`);
-    return image;
-}
 
 module.exports = {
     viewAllArticles,
@@ -148,11 +103,8 @@ module.exports = {
     addNewArticles,
     editArticles,
     deleteArticles,
-    addNewImageArticles,
-    editImageArticles,
     viewArticlesCards,
     userArticlesCards,
-    deleteImageArticles,
     viewFullArticle,
     getArticleById
 };

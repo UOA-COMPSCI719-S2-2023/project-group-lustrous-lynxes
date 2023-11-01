@@ -88,21 +88,6 @@ async function viewComments(articleId) {
      return allComments;
 }
 
-//async function orderComments(article) {
-    //const db = await dbPromise;
-
-    //const allComments = await db.all(SQL`
-     // c.content, l.liking, u.fName, u.lName
-     //from comment c, articles a, likes l, users u  
-     //where a.id = ${article.id}
-     ////and a.id = c.articleId
-     //and c.id = l.commentId
-     //and c.userId = u.id
-     //order by ${l.liking}`);  
-
-    ////return allComments;
-//}
-
 module.exports = {
     rateArticles,
     allRatingArticle,
