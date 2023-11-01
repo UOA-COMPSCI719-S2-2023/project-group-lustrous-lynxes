@@ -19,19 +19,6 @@
             </div>        
         </div>    
     </div>
-    
-    <div class="all-cards">
-        <div class="full-card">
-            <div class="header-image">
-                <img src="/images/{{artFull.filName}}">
-                <p>{{artFull.caption}}</p>
-            </div>
-            <div class="full-content">
-                <p>{{{artFull.content}}}</p>
-            </div>
-        </div>        
-    </div>    
-</div>
 
     <div class="rating">
         <h2>Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
@@ -66,26 +53,24 @@
                     <button type="submit">Publish Comment</button>
                 </form>
             </div>
+            <div>
+                <fieldset>Give this article a rating
+                    <form action="./rating" method="post">
+                    <label><input type="radio" name="rating" value= '1'>One</label>
+                    <label><input type="radio" name="rating" value= '2'>Two</label>
+                    <label><input type="radio" name="rating" value= '3' checked>Three</label>
+                    <label><input type="radio" name="rating" value= '4'>Four</label>
+                    <label><input type="radio" name="rating" value= '5'>Five</label>
+                    <input type="hidden" name="id" value="{{artFull.id}}">
+                    <button type="submit">Submit</button>
+                    </form>
+                    </fieldset>
+            </div>
         {{else}}
             {{!-- <p>please login first</p>  --}}
-            <p id="login-request">You could add comment after <a href="/login">login</a></p>
+            <p id="login-request">To add comments and rate article: <a href="/login">login</a></p>
         {{/if}}
-
-        <div id="comments-list">
-            {{!-- show comments here --}}
-        </div>
     </div>
     
-    <fieldset>Give this article a rating
-        <form action="./rating" method="post">
-            <label><input type="radio" name="rating" value= '1'>One</label>
-            <label><input type="radio" name="rating" value= '2'>Two</label>
-            <label><input type="radio" name="rating" value= '3' checked>Three</label>
-            <label><input type="radio" name="rating" value= '4'>Four</label>
-            <label><input type="radio" name="rating" value= '5'>Five</label>
-            <input type="hidden" name="id" value="{{artFull.id}}">
-            <button type="submit">Submit</button>
-        </form>
-    </fieldset>
     {{/if}}
 </div>
