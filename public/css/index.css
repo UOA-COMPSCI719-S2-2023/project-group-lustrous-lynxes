@@ -20,6 +20,11 @@ h2 {
     color: #4caf50;
 }
 
+h3 {
+    font-family: 'Kavoon', sans-serif;
+    color: #4caf50;
+}
+
 .page-heading {
     text-align: left;
 }
@@ -159,7 +164,7 @@ button:hover {
     max-height: 50px;
   }
 
-  .all-cards {
+.all-cards {
     background-color: #E2F3E3;
     padding: 5%;
     margin: 2%;
@@ -190,6 +195,7 @@ button:hover {
 .card-title {
     grid-area: title;
     justify-self: left;
+    color: black;
 }
 
 .card-content {
@@ -201,26 +207,33 @@ button:hover {
     text-align: justify;
 }
 
-.card-content a {
-    text-align: right;
-    font-weight: bolder;
-    text-decoration: none;
+#read-more {
     color: #4caf50;
+    font-weight: bolder;
 }
 
-.card-content a:hover {
+#read-more:hover {
     color: #333;
-    font-size: large;
+    font-size: larger;
+}
+
+.all-cards a {
+    text-decoration: none;
+    color: #333;
+}
+
+.summary {
+    max-height: 7em;
+    overflow: hidden;
 }
 
 .full-card {
     display: grid;
-    grid-template-columns:1fr 2fr;
+    grid-template-columns: 3fr 7fr;
     grid-template-areas: 
-    "image content content"; 
+    "image content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
-
 }
 
 .header-image {
@@ -242,8 +255,110 @@ button:hover {
 
 .centred-text {
     text-align: center;
+
+#comment-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+#comment-form textarea {
+    width: 400px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 100px;
+    resize: vertical;
+}
 
+#comment-form button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+#comment-form button:hover {
+    background-color: #4cae4c;
+}
+
+#comment-form:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#comments-list {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.comment-item {
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: border;
+}
+
+.comment-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr 7fr;
+    grid-template-areas: 
+    "image title content content"; 
+    background-color: white;
+    box-shadow: 5px 10px 5px #C1E5C7;
+    margin-bottom: 2%;
+}
+
+.card-avatar {
+    grid-area: image;   
+}
+
+.card-avatar img {
+    max-height: 5em;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+.card-title {
+    margin-right: 2em;
+    padding-right: 2em;
+    border-right: 4px inset #E2F3E3 ;
+}
+
+.card-title h4 {
+    font-size: larger;
+    font-weight: bolder;
+    font-family: 'Kavoon', sans-serif;
+}
+
+.comment-text {
+    margin-top: 5px;
+
+}
+
+#login-request {
+    text-align: center;
+}
+
+#login-request>a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bolder;
+}
 
 

@@ -84,14 +84,16 @@ async function deleteImageArticles(article) {
      where articleId = ${article.id}`);     
 }
 
+//Order by Average Rating for when we display articles.
 async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, substring(a.content, 0, 400) as short, u.fName, u.lName, a.id 
+     select i.filName, a.title, a.content, u.fName, u.lName, a.id 
      from images i, articles a, users u 
      where i.articleId = a.id
-     and a.authorId = u.id`);  
+     and a.authorId = u.id
+     order by a.avRating desc`);  
     return artCards;
 }
 
@@ -99,7 +101,7 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName 
+     select a.id, i.filName, a.title, a.content, u.fName, u.lName 
      from images i, articles a, users u 
      where a.id = ${givenId}
      and i.articleId = a.id
@@ -107,7 +109,6 @@ async function viewFullArticle(givenId) {
     
     return artFull;
 }
-
 //Get article by ID
 async function getArticleById(articleId){
     const db = await dbPromise;

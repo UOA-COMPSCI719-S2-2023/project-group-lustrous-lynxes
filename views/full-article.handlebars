@@ -1,17 +1,60 @@
 <div id="full-article">
-    <div class="header-details"></div>
+    <div class="header-details">
         <h1>{{artFull.title}}</h1>
         <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
+    </div>
     <div class="all-cards">
         <div class="full-card">
             <div class="header-image">
                 <img src="/images/{{artFull.filName}}">
             </div>
             <div class="full-content">
-                <p>{{artFull.content}}</p>
+                <p>{{{artFull.content}}}</p>
             </div>
-        </div>
-        
-    </div>
+        </div>        
+    </div>    
+</div>
+
+<div class="rating">
+    <h2>Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
     
+</div>
+
+<div class="all-cards">
+    <div class="header-details">
+        <h1>Comments</h1>
+    </div>
+    {{#each comFull}}
+    <div class="comment-card">
+        <div class="card-avatar">
+            <img src="/images/avatars/{{avatar}}">
+        </div>
+    <div class="card-title">
+            <h4>{{fName}}  {{lName}}</h4>
+        </div>
+        <div class="card-content">
+            <p>{{content}}</p>
+            <h3>likes</h3> 
+        </div>                     
+    </div>
+    {{/each}}
+
+    </div>
+    {{#if user}}
+        {{!-- <p>user already logged in</p>  --}}
+        <div>
+            <form id="comment-form" action="/articles/{{artFull.id}}/comments" method="post">
+                <textarea name="comment" placeholder="Add your comments here..."></textarea>
+                <button type="submit">Publish Comment</button>
+            </form>
+        </div>
+    {{else}}
+        {{!-- <p>please login first</p>  --}}
+        <p id="login-request">You could add comment after <a href="/login">login</a></p>
+    {{/if}}
+
+    <div id="comments-list">
+        {{!-- show comments here --}}
+    </div>
+
 </div>

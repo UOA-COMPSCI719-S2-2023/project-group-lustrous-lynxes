@@ -6,9 +6,11 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
+const { addComment } = require("../modules/comments-dao.js");
 const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
+
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -209,6 +211,9 @@ router.get("/delete-account", async (req,res)=>{
 
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
+    //Set the average rating for all articles into DB.
+    await allArticles.setAllArticleAverageRating();
+    //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
@@ -217,8 +222,35 @@ router.get("/articles", async (req, res) => {
 //read a full article - no login required
 router.get("/full-article", async (req, res) => { 
     res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-
+    res.locals.comFull = await commentDao.viewComments(req.query.id);
     res.render("./full-article");
+});
+
+//add comment to article, and make sure comment not empty
+router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async(req, res) => {
+
+    const userId = res.locals.user.id;
+    const articleId = req.params.articleId;
+    //get comment from form, and make sure it's not empty
+    const content = (req.body.comment || "").trim();
+
+    //Comment cannot be empty
+    if (!content) {
+        res.setToastMessage("Comment cannot be empty");
+        return res.redirect("/full-article?id=" + req.params.articleId);
+    }
+
+    //Add comment to database
+    const commentData = {
+        userId: userId,
+        articleId: articleId,
+        content: content
+    };
+
+    //Add comment to database.
+    await addComment(commentData);
+
+    res.redirect("/full-article?id=" + req.params.articleId);
 });
 
 module.exports = router;
