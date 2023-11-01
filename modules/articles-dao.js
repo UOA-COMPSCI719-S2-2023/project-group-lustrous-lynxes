@@ -97,11 +97,26 @@ async function viewArticlesCards() {
     return artCards;
 }
 
+//Order by Average Rating for when we display  user's articles.
+async function userArticlesCards(userId) {
+    const db = await dbPromise;
+
+    const artCards = await db.all(SQL`
+     select i.filName, a.title, a.content, a.id 
+     from images i, articles a, users u 
+     where u.id = ${userId}
+     and i.articleId = a.id
+     and a.authorId = u.id
+     order by a.avRating desc`); 
+     
+    return artCards;
+}
+
 async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select a.id, i.filName, a.title, a.content, u.fName, u.lName 
+     select a.id, i.filName, i.caption, a.title, a.content, u.fName, u.lName 
      from images i, articles a, users u 
      where a.id = ${givenId}
      and i.articleId = a.id
@@ -136,6 +151,7 @@ module.exports = {
     addNewImageArticles,
     editImageArticles,
     viewArticlesCards,
+    userArticlesCards,
     deleteImageArticles,
     viewFullArticle,
     getArticleById

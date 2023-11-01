@@ -1,5 +1,5 @@
 <div class="page-container">    
-    <h2>Account Page</h2>
+    <h1>Account Page</h1>
     <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
 
     <p>Username: {{user.username}}</p>
@@ -18,4 +18,26 @@
     </a>
 
     <h2>{{user.fName}}'s Articles</h2>
+
+    <div class="all-cards">
+        {{#each artCard}}
+        <a href="./full-article?id={{id}}" >
+            <div class="summary-card">
+                <div class="card-image">
+                    <img src="/images/{{filName}}">
+                </div>
+                <div class="card-title">
+                    <h4>{{title}}</h4> 
+                </div>
+                <div class="card-content">
+                    <div class="summary">
+                        <p>{{{content}}}</p>
+                    </div>                    
+                    <p id="read-more">Read More</p>
+                </div>                     
+            </div>
+         </a> 
+        {{/each}}
+    </div>
 </div>
+
