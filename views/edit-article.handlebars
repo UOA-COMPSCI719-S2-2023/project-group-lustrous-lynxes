@@ -1,0 +1,41 @@
+<div class="page-container">
+    {{#if noArticle}}
+    <h1>Something went wrong</h1>
+    <p class="centred-text">This article does not exist.</p>
+    {{else if wrongAuthor}}
+    <h1>Access denied</h1>
+    <p class="centred-text">You do not have permission to edit this article.</p>
+    {{else}}
+    <div class="article-form form-container">
+        <h1>Edit your article</h1>
+        <form action="./edit-article" method="POST" enctype="multipart/form-data">
+            <label for="articleTitle">Title:</label>
+            <input type="text" name="articleTitle" id="articleTitle" value="{{article.title}}">
+            <br>
+
+            <label for="imageInput">Upload your image:</label>
+            <div class="image-box-container">
+                <div class="image-box existing-image-container">
+                    <p class="inner-label">Current image:</p>
+                    <img src="/images/{{article.image.filName}}" alt="{{article.image.caption}}" class="existing-image">
+                </div>
+                <div class="image-box image-input-container">
+                    <p class="inner-label">To change your image, upload a new image here:</p>
+                    <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+                </div>
+            </div>
+
+            <label for="imageCaption">Image Caption:</label>
+            <input type="text" name="imageCaption" id="imageCaption" value="{{article.image.caption}}">
+            <br>
+
+            <label for="articleContent">Content:</label>
+            <div class="wysiwyg-container">
+                <textarea name="articleContent" id="articleContent" cols="30" rows="10">{{article.content}}</textarea>
+            </div>
+            
+            <button type="submit">Publish article</button>
+        </form>
+    </div>
+    {{/if}}
+</div>

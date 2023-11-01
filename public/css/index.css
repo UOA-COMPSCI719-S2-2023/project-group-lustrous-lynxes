@@ -53,13 +53,51 @@ h3 {
     text-decoration: none;
 }
 
-input, textarea {
+input:not(#imageInput), textarea, .image-box {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
+}
+
+.image-box-container {
+    display: flex;
+}
+
+.existing-image-container {
+    border-right: 0px;
+    width: auto;
+}
+
+.image-input-container {
+    flex: 1;
+}
+
+.existing-image {
+    width: 12em;
+    height: 10em;
+    object-fit: cover;
+}
+
+.inner-label {
+    margin-top: 0px;
+    margin-bottom: 0.2em;
+}
+
+#imageInput {
+    margin: 7px auto;
+}
+
+.wysiwyg-container {
+    margin: 8px 0px;
+    border: 1px solid #333;
+}
+
+/*Size of WYSIWYG - can change this later*/
+#articleContent {
+    height: 80vh;
 }
 
 button {
@@ -95,11 +133,6 @@ button:hover {
 
 .login-form {
     margin: 50px auto;
-}
-
-/*Size of WYSIWYG - can change this later*/
-#articleContent {
-    height: 80vh;
 }
 
 .page-container {
@@ -155,6 +188,8 @@ button:hover {
 
 .card-image img {
     width: 12em;
+    height: 10em;
+    object-fit: cover;
 }
 
 .card-title {
@@ -222,6 +257,9 @@ button:hover {
     padding: 2em;
     text-align: justify;
 }
+
+.centred-text {
+    text-align: center;
 
 #comment-form {
     max-width: 600px;
@@ -296,6 +334,7 @@ button:hover {
 
 .comment-text {
     margin-top: 5px;
+
 }
 
 #login-request {

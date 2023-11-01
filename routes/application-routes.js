@@ -6,7 +6,6 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
-const { addComment } = require("../modules/comments-dao.js");
 const commentDao = require("../modules/comments-dao.js");
 const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
@@ -34,7 +33,7 @@ router.get("/login", (req, res) => {
 });
 
 //Login Clicked
-router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
+router.post("/login", authUser.checkLoginCredentials, (req, res) => {
 
     res.render("account")
 });
@@ -78,6 +77,35 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     //Redirect to all articles - might change later
     //Probably makes sense to redirect to user's page of their own articles
     res.redirect("/articles");
+});
+
+//Renders edit-article page which allows user to edit their own article
+//Later we will use query parameters to specify which article to edit
+//e.g. edit-article?id=5 using the articleId
+//will need to verify that current user is writer of this article
+router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
+    //Retrieves article object with corresponding ID from database
+    const articleId = req.query.id;
+    const article = await articleDao.getArticleById(articleId);
+
+    //Checks whether the article exists
+    if (article == undefined) {
+        res.render("edit-article", {
+            noArticle: true
+        });
+    } else {
+        //Checks whether the user currently logged in is the author of the article
+        if (article.authorId == res.locals.user.id) {
+            res.render("edit-article", {
+                includeTinyMCEScripts: true,
+                article: article
+            });
+        } else {
+            res.render("edit-article", {
+                wrongAuthor: true
+            });
+        }
+    }
 });
 
 //Render form to create account
@@ -198,17 +226,39 @@ router.get("/delete-account", async (req,res)=>{
 router.get("/articles", async (req, res) => {    
     //Set the average rating for all articles into DB.
     await allArticles.setAllArticleAverageRating();
+    
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
 });
+//Add Rating to article
+router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
+    //Convert String to Number.
+    const userRating = Number(req.body.rating);
+    const articleRating = {
+        articleId: req.body.id,
+        userId: res.locals.user.id,
+        rating: userRating
+    }
+    await allArticles.addUserArticleRating(articleRating);
+    res.redirect("/full-article?id=" + req.body.id);
+});
 
 //read a full article - no login required
-router.get("/full-article", async (req, res) => { 
-    res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-    res.locals.comFull = await commentDao.viewComments(req.query.id);
-    res.render("./full-article");
+router.get("/full-article", async (req, res) => {
+    const article = await articleDao.getArticleById(req.query.id);
+    if (article) {
+        //Could change this later to reuse code since we are getting the article
+        //eg instead of viewing article directly from db, we could have display article functions in middleware
+        res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+        res.locals.comFull = await commentDao.viewComments(req.query.id);
+        res.render("./full-article");
+    } else {
+        res.render("./full-article", {
+            noArticle: true
+        })
+    }
 });
 
 //add comment to article, and make sure comment not empty
@@ -233,7 +283,7 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
     };
 
     //Add comment to database.
-    await addComment(commentData);
+    await commentDao.addComment(commentData);
 
     res.redirect("/full-article?id=" + req.params.articleId);
 });

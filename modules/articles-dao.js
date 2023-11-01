@@ -89,7 +89,7 @@ async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName, a.id 
+     select i.filName, a.title, a.content, u.fName, u.lName, a.id
      from images i, articles a, users u 
      where i.articleId = a.id
      and a.authorId = u.id
@@ -124,7 +124,23 @@ async function viewFullArticle(givenId) {
     
     return artFull;
 }
+//Get article by ID
+async function getArticleById(articleId){
+    const db = await dbPromise;
+    const article = await db.get(SQL`select * from articles where id = ${articleId}`);
+    if (article) {
+        const image = await getImageById(articleId);
+        article.image = image;
+    }
+    return article;
+}
 
+//Get image by articleID
+async function getImageById(articleId){
+    const db = await dbPromise;
+    const image = await db.get(SQL`select * from images where articleId = ${articleId}`);
+    return image;
+}
 
 module.exports = {
     viewAllArticles,
@@ -137,5 +153,6 @@ module.exports = {
     viewArticlesCards,
     userArticlesCards,
     deleteImageArticles,
-    viewFullArticle
+    viewFullArticle,
+    getArticleById
 };
