@@ -13,3 +13,10 @@
         </div>
     </div>
 </div>
+<fieldset>Give this article a rating
+<form action="./rating" method="post">
+<input type="text" placeholder="Rating" name="rating" required>
+<input type="hidden" name="id" value="{{artFull.id}}">
+<button type="submit">Submit</button>
+</form>
+</fieldset>
