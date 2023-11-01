@@ -7,6 +7,7 @@ const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const article = require("../modules/articles-dao.js");
+const { addComment } = require("../modules/comments-dao.js");
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -164,8 +165,31 @@ router.get("/full-article", async (req, res) => {
     res.render("./full-article");
 });
 
-//use the add comment middleware
-const { addCommentMiddleware } = require("../middleware/add-comment-middleware.js");
-router.post("/articles/:articleId/comments", addCommentMiddleware);
+//add comment to article, and make sure comment not empty
+router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async(req, res) => {
+
+    const userId = res.locals.user.id;
+    const articleId = req.params.articleId;
+    //get comment from form, and make sure it's not empty
+    const content = (req.body.comment || "").trim();
+
+    //Comment cannot be empty
+    if (!content) {
+        res.setToastMessage("Comment cannot be empty");
+        return res.redirect("/full-article?id=" + req.params.articleId);
+    }
+
+    //Add comment to database
+    const commentData = {
+        userId: userId,
+        articleId: articleId,
+        content: content
+    };
+
+    //Add comment to database
+    await addComment(commentData);
+
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
 
 module.exports = router;
