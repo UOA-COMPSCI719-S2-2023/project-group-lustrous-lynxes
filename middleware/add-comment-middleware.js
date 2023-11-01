@@ -20,11 +20,11 @@ async function addCommentMiddleware(req, res) {
         //try to add comment to database
         await addComment(commentData);
 
-        res.locals.message = "add comment successfully";
+        res.setToastMessage("Comment added");
         
     }
 
-    res.send({ message: "Comment added successfully"});
+    res.redirect("/full-article?id=" + req.params.articleId);
     
 }
 
