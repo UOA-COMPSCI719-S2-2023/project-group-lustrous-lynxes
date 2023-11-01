@@ -187,6 +187,9 @@ router.get("/delete-account", async (req,res)=>{
 
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
+    //Set the average rating for all articles into DB.
+    await allArticles.setAllArticleAverageRating();
+    //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
