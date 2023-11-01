@@ -10,9 +10,9 @@
             <input type="file" id="imageInput" class="image-box" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
             <br>
 
-            <label for="imageCaption">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" placeholder="What's in this picture?">
-            <br>
+            <label for="imageCaption" class="if-file-chosen hidden">Image Caption:</label>
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen hidden" placeholder="What's in this picture?">
+            <br class="if-file-chosen hidden">
 
             <label for="articleContent">Content:</label>
             <div class="wysiwyg-container">
