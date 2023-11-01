@@ -9,24 +9,24 @@ async function rateArticles(rate) {
      (${rate.authorId}, ${rate.articleId}, ${rate.rating})`);     
 }
 
-async function allRatingArticle(article) {
+async function allRatingArticle(articleId) {
     const db = await dbPromise;
 
     const allRatings =  await db.all(SQL`
-     select *
+     select rating
      from rate
-     where ${article.articleId} = rate.articleId`);  
+     where ${articleId} = articleId`);  
      
      return allRatings;
 }
 
-async function avRating(aveRating, rate) {
+async function avRating(aveRating, articleId) {
     const db = await dbPromise;
 
      return await db.run (SQL`
      update articles
      set avRating = ${aveRating}
-     where id = ${rate.articleId}`);
+     where id = ${articleId}`);
 }
 
 async function addComment(comment) {
@@ -80,5 +80,5 @@ module.exports = {
     likeComment,
     viewComments,
     //orderComments,
-    avRating
+    avRating,
 };
