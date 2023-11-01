@@ -260,7 +260,7 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
     };
 
     //Add comment to database.
-    await addComment(commentData);
+    await commentDao.addComment(commentData);
 
     res.redirect("/full-article?id=" + req.params.articleId);
 });
