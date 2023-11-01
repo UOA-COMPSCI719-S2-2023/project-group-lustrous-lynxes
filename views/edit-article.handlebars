@@ -24,7 +24,9 @@
             <br>
 
             <label for="articleContent">Content:</label>
-            <textarea name="articleContent" id="articleContent" cols="30" rows="10">{{article.content}}</textarea>
+            <div class="wysiwyg-container">
+                <textarea name="articleContent" id="articleContent" cols="30" rows="10">{{article.content}}</textarea>
+            </div>
             
             <button type="submit">Publish article</button>
         </form>

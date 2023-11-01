@@ -85,6 +85,16 @@ input:not(#imageInput), textarea, .image-box {
     margin: 7px auto;
 }
 
+.wysiwyg-container {
+    margin: 8px 0px;
+    border: 1px solid #333;
+}
+
+/*Size of WYSIWYG - can change this later*/
+#articleContent {
+    height: 80vh;
+}
+
 button {
     width: 100%;
     background-color: #4caf50;
@@ -118,11 +128,6 @@ button:hover {
 
 .login-form {
     margin: 50px auto;
-}
-
-/*Size of WYSIWYG - can change this later*/
-#articleContent {
-    height: 80vh;
 }
 
 .page-container {
