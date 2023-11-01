@@ -239,10 +239,19 @@ router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
 });
 
 //read a full article - no login required
-router.get("/full-article", async (req, res) => { 
-    res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-    res.locals.comFull = await commentDao.viewComments(req.query.id);
-    res.render("./full-article");
+router.get("/full-article", async (req, res) => {
+    const article = await articleDao.getArticleById(req.query.id);
+    if (article) {
+        //Could change this later to reuse code since we are getting the article
+        //eg instead of viewing article directly from db, we could have display article functions in middleware
+        res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+        res.locals.comFull = await commentDao.viewComments(req.query.id);
+        res.render("./full-article");
+    } else {
+        res.render("./full-article", {
+            noArticle: true
+        })
+    }
 });
 
 //add comment to article, and make sure comment not empty
