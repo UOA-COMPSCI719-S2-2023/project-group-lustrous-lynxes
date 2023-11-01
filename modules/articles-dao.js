@@ -118,5 +118,5 @@ module.exports = {
     editImageArticles,
     viewArticlesCards,
     deleteImageArticles,
-    viewFullArticle,
+    viewFullArticle
 };
