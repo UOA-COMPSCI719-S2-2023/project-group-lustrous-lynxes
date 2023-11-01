@@ -101,13 +101,28 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName, a.id 
+     select a.id, i.filName, a.title, a.content, u.fName, u.lName 
      from images i, articles a, users u 
      where a.id = ${givenId}
      and i.articleId = a.id
      and a.authorId = u.id`);  
     
     return artFull;
+}
+//Get article by ID
+async function getArticleById(articleId){
+    const db = await dbPromise;
+    const article = await db.get(SQL`select * from articles where id = ${articleId}`);
+    const image = await getImageById(articleId);
+    article.image = image;
+    return article;
+}
+
+//Get image by articleID
+async function getImageById(articleId){
+    const db = await dbPromise;
+    const image = await db.get(SQL`select * from images where articleId = ${articleId}`);
+    return image;
 }
 
 module.exports = {
@@ -120,5 +135,6 @@ module.exports = {
     editImageArticles,
     viewArticlesCards,
     deleteImageArticles,
-    viewFullArticle
+    viewFullArticle,
+    getArticleById
 };

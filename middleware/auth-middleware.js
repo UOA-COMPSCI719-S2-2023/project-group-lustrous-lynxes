@@ -47,6 +47,7 @@ async function addUserToLocals(req, res, next) {
     //This code is in app.js and will run every time application is run e.g. route handler.
     const user = await userDao.retrieveUserByToken(req.cookies.authToken);
     res.locals.user = user;
+    
     next();
 }
 
@@ -65,6 +66,7 @@ function verifyAuthenticated(req, res, next) {
 async function comparePasswords(passwordAttempt, encryptedCorrectPassword){
     return bcrypt.compareSync(passwordAttempt, encryptedCorrectPassword);
 }
+
 
 module.exports = {
     checkLoginCredentials,

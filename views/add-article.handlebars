@@ -7,7 +7,7 @@
             <br>
 
             <label for="imageInput">Upload your main image:</label>
-            <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+            <input type="file" id="imageInput" class="image-box" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
             <br>
 
             <label for="imageCaption">Image Caption:</label>
@@ -15,9 +15,12 @@
             <br>
 
             <label for="articleContent">Content:</label>
-            <textarea name="articleContent" id="articleContent" cols="30" rows="10" placeholder="Your article content goes here!"></textarea>
+            <div class="wysiwyg-container">
+                <textarea name="articleContent" id="articleContent" cols="30" rows="10" placeholder="Your article content goes here!"></textarea>
+            </div>
             
             <button type="submit">Publish article</button>
         </form>
     </div>
 </div>
+

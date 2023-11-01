@@ -20,6 +20,11 @@ h2 {
     color: #4caf50;
 }
 
+h3 {
+    font-family: 'Kavoon', sans-serif;
+    color: #4caf50;
+}
+
 .page-heading {
     text-align: left;
 }
@@ -48,13 +53,51 @@ h2 {
     text-decoration: none;
 }
 
-input, textarea {
+input:not(#imageInput), textarea, .image-box {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
+}
+
+.image-box-container {
+    display: flex;
+}
+
+.existing-image-container {
+    border-right: 0px;
+    width: auto;
+}
+
+.image-input-container {
+    flex: 1;
+}
+
+.existing-image {
+    width: 12em;
+    height: 10em;
+    object-fit: cover;
+}
+
+.inner-label {
+    margin-top: 0px;
+    margin-bottom: 0.2em;
+}
+
+#imageInput {
+    margin: 7px auto;
+}
+
+.wysiwyg-container {
+    margin: 8px 0px;
+    border: 1px solid #333;
+}
+
+/*Size of WYSIWYG - can change this later*/
+#articleContent {
+    height: 80vh;
 }
 
 button {
@@ -92,11 +135,6 @@ button:hover {
     margin: 50px auto;
 }
 
-/*Size of WYSIWYG - can change this later*/
-#articleContent {
-    height: 80vh;
-}
-
 .page-container {
     padding: 10px 50px 50px 50px;
 }
@@ -126,7 +164,7 @@ button:hover {
     max-height: 50px;
   }
 
-  .all-cards {
+.all-cards {
     background-color: #E2F3E3;
     padding: 5%;
     margin: 2%;
@@ -150,6 +188,8 @@ button:hover {
 
 .card-image img {
     width: 12em;
+    height: 10em;
+    object-fit: cover;
 }
 
 .card-title {
@@ -189,12 +229,11 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns:1fr 2fr;
+    grid-template-columns: 3fr 7fr;
     grid-template-areas: 
-    "image content content"; 
+    "image content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
-
 }
 
 .header-image {
@@ -214,7 +253,112 @@ button:hover {
     text-align: justify;
 }
 
+.centred-text {
+    text-align: center;
 
+#comment-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+#comment-form textarea {
+    width: 400px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 100px;
+    resize: vertical;
+}
+
+#comment-form button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+#comment-form button:hover {
+    background-color: #4cae4c;
+}
+
+#comment-form:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#comments-list {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.comment-item {
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: border;
+}
+
+.comment-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr 7fr;
+    grid-template-areas: 
+    "image title content content"; 
+    background-color: white;
+    box-shadow: 5px 10px 5px #C1E5C7;
+    margin-bottom: 2%;
+}
+
+.card-avatar {
+    grid-area: image;   
+}
+
+.card-avatar img {
+    max-height: 5em;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+.card-title {
+    margin-right: 2em;
+    padding-right: 2em;
+    border-right: 4px inset #E2F3E3 ;
+}
+
+.card-title h4 {
+    font-size: larger;
+    font-weight: bolder;
+    font-family: 'Kavoon', sans-serif;
+}
+
+.comment-text {
+    margin-top: 5px;
+
+}
+
+#login-request {
+    text-align: center;
+}
+
+#login-request>a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bolder;
+}
 
 

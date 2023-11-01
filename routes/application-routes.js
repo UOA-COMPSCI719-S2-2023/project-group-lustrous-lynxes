@@ -6,9 +6,11 @@ const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
+const { addComment } = require("../modules/comments-dao.js");
 const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
+
 
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, (req, res) => {
@@ -69,6 +71,28 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     //Redirect to all articles - might change later
     //Probably makes sense to redirect to user's page of their own articles
     res.redirect("/articles");
+});
+
+//Renders edit-article page which allows user to edit their own article
+//Later we will use query parameters to specify which article to edit
+//e.g. edit-article?id=5 using the articleId
+//will need to verify that current user is writer of this article
+router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
+    //Retrieves article object with corresponding ID from database
+    const articleId = req.query.articleId;
+    const article = await articleDao.getArticleById(articleId);
+
+    //Checks whether the user currently logged in is the author of the article
+    if (article.authorId == res.locals.user.id) {
+        res.render("edit-article", {
+            includeTinyMCEScripts: true,
+            correctAuthor: true,
+            article: article
+        });
+    } else {
+        res.render("edit-article");
+    }
+
 });
 
 //Render form to create account
@@ -210,8 +234,35 @@ router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
 //read a full article - no login required
 router.get("/full-article", async (req, res) => { 
     res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-
+    res.locals.comFull = await commentDao.viewComments(req.query.id);
     res.render("./full-article");
+});
+
+//add comment to article, and make sure comment not empty
+router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async(req, res) => {
+
+    const userId = res.locals.user.id;
+    const articleId = req.params.articleId;
+    //get comment from form, and make sure it's not empty
+    const content = (req.body.comment || "").trim();
+
+    //Comment cannot be empty
+    if (!content) {
+        res.setToastMessage("Comment cannot be empty");
+        return res.redirect("/full-article?id=" + req.params.articleId);
+    }
+
+    //Add comment to database
+    const commentData = {
+        userId: userId,
+        articleId: articleId,
+        content: content
+    };
+
+    //Add comment to database.
+    await addComment(commentData);
+
+    res.redirect("/full-article?id=" + req.params.articleId);
 });
 
 module.exports = router;

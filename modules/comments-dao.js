@@ -63,8 +63,8 @@ async function addComment(comment) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     insert into comment (authorId, articleId, content) values
-     (${comment.authorId}, ${comment.articleId}, ${comment.content})`);     
+     insert into comment (userId, articleId, content) values
+     (${comment.userId}, ${comment.articleId}, ${comment.content})`);     
 }
 
 async function likeComment(likes) {
@@ -73,6 +73,19 @@ async function likeComment(likes) {
      return await db.run (SQL`
      insert into likes (userId, commentId, liking) values
      (${likes.userId}, ${likes.commentId}, 1)`);
+}
+
+async function viewComments(articleId) {
+    const db = await dbPromise;
+
+    const allComments =  await db.all(SQL`
+     select u.fName, u.lName, c.content, u.avatar
+     from comment c, articles a, users u 
+     where ${articleId} = a.id
+     and a.id = c.articleId
+     and c.userId = u.id`);  
+     
+     return allComments;
 }
 
 //async function orderComments(article) {
@@ -96,6 +109,7 @@ module.exports = {
     addComment,
     likeComment,
     getUserRatingforArticle,
+    viewComments,
     avRating,
     changeArticleRating,
     addArticleRating
