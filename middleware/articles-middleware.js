@@ -10,13 +10,13 @@ async function allCardDetails() {
 //Sets average rating for all articles.
 async function setAllArticleAverageRating(){
     const allArticles = await articlesDao.viewAllArticles("id");
-    allArticles.forEach(async article =>{
-        const averageRating = await calculateAverageRating(article.id);
-        await commentDao.avRating(averageRating,article.id);
-    });
+
+    for (let i = 0; i < allArticles.length; i++){
+        await addAverageRating(allArticles[i].id);
+    }
 }
 //Get ratings from DB and calculate average 
-async function calculateAverageRating(articleId){
+async function addAverageRating(articleId){
     const ratingArray = [];
     const allArticleRatings = await commentDao.allRatingArticle(articleId);
 
@@ -27,9 +27,8 @@ async function calculateAverageRating(articleId){
     //Calculate average.
     const sumOfTotal = ratingArray.reduce((total, num) => total + num, 0);
     const averageRating = sumOfTotal / ratingArray.length;
-    //Add to Article in DB
-    
-    return averageRating;
+    //Add to Database
+    await commentDao.avRating(averageRating, articleId);
 }
 
 async function addUserArticleRating(ratingJson){

@@ -220,6 +220,7 @@ router.get("/delete-account", async (req,res)=>{
 router.get("/articles", async (req, res) => {    
     //Set the average rating for all articles into DB.
     await allArticles.setAllArticleAverageRating();
+    
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
