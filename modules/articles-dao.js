@@ -101,7 +101,7 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select i.filName, a.title, a.content, u.fName, u.lName 
+     select a.id, i.filName, a.title, a.content, u.fName, u.lName 
      from images i, articles a, users u 
      where a.id = ${givenId}
      and i.articleId = a.id
@@ -109,6 +109,7 @@ async function viewFullArticle(givenId) {
     
     return artFull;
 }
+
 
 module.exports = {
     viewAllArticles,

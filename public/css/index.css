@@ -131,7 +131,7 @@ button:hover {
     max-height: 50px;
   }
 
-  .all-cards {
+.all-cards {
     background-color: #E2F3E3;
     padding: 5%;
     margin: 2%;
@@ -218,6 +218,64 @@ button:hover {
     text-align: justify;
 }
 
+#comment-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#comment-form textarea {
+    width: 400px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 100px;
+    resize: vertical;
+}
+
+#comment-form button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+#comment-form button:hover {
+    background-color: #4cae4c;
+}
+
+#comment-form:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#comments-list {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.comment-item {
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: border;
+}
+
 .comment-card {
     display: grid;
     grid-template-columns: 1fr 2fr 7fr;
@@ -250,7 +308,18 @@ button:hover {
     font-family: 'Kavoon', sans-serif;
 }
 
+.comment-text {
+    margin-top: 5px;
+}
 
+#login-request {
+    text-align: center;
+}
 
+#login-request>a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bolder;
+}
 
 
