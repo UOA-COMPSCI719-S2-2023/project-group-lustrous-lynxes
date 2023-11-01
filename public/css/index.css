@@ -48,13 +48,41 @@ h2 {
     text-decoration: none;
 }
 
-input, textarea {
+input:not(#imageInput), textarea, .image-box {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
+}
+
+.image-box-container {
+    display: flex;
+}
+
+.existing-image-container {
+    border-right: 0px;
+    width: auto;
+}
+
+.image-input-container {
+    flex: 1;
+}
+
+.existing-image {
+    width: 12em;
+    height: 10em;
+    object-fit: cover;
+}
+
+.inner-label {
+    margin-top: 0px;
+    margin-bottom: 0.2em;
+}
+
+#imageInput {
+    margin: 7px auto;
 }
 
 button {

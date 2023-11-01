@@ -7,9 +7,17 @@
             <input type="text" name="articleTitle" id="articleTitle" value="{{article.title}}">
             <br>
 
-            <label for="imageInput">Upload your main image:</label>
-            <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
-            <br>
+            <label for="imageInput">Upload your image:</label>
+            <div class="image-box-container">
+                <div class="image-box existing-image-container">
+                    <p class="inner-label">Current image:</p>
+                    <img src="/images/{{article.image.filName}}" alt="{{article.image.caption}}" class="existing-image">
+                </div>
+                <div class="image-box image-input-container">
+                    <p class="inner-label">To change your image, upload a new image here:</p>
+                    <input type="file" id="imageInput" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+                </div>
+            </div>
 
             <label for="imageCaption">Image Caption:</label>
             <input type="text" name="imageCaption" id="imageCaption" value="{{article.image.caption}}">
