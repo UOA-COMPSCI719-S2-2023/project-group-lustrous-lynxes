@@ -201,7 +201,6 @@ router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
         userId: res.locals.user.id,
         rating: req.body.rating
     }
-    console.log(articleRating);
     res.redirect("/full-article?id=" + req.body.id);
 
 });
