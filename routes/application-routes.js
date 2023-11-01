@@ -94,17 +94,24 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
 
     //Checks whether the article exists
     if (article == undefined) {
+        //Informs user that the article does not exist
         res.render("edit-article", {
             noArticle: true
         });
     } else {
         //Checks whether the user currently logged in is the author of the article
         if (article.authorId == res.locals.user.id) {
+            //Stores whether or not the article is using the default image
+            const hasImage = (article.image.filName != "default-image.jpg");
+
+            //Renders page with all necessary info
             res.render("edit-article", {
                 includeTinyMCEScripts: true,
+                hasImage: hasImage,
                 article: article
             });
         } else {
+            //Informs user that they cannot edit this article
             res.render("edit-article", {
                 wrongAuthor: true
             });
