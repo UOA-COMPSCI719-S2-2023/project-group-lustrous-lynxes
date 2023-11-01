@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    {{#if userLoggedIn}}
+    {{#if user}}
         {{!-- <p>user already logged in</p>  --}}
         <div>
             <form id="comment-form" action="/articles/{{artFull.id}}/comments" method="post">

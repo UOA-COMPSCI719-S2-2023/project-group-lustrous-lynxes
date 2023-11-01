@@ -164,4 +164,8 @@ router.get("/full-article", async (req, res) => {
     res.render("./full-article");
 });
 
+//use the add comment middleware
+const { addCommentMiddleware } = require("../middleware/add-comment-middleware.js");
+router.post("/articles/:articleId/comments", addCommentMiddleware);
+
 module.exports = router;

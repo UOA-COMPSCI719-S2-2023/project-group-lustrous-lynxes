@@ -46,6 +46,3 @@ app.listen(port, function () {
     console.log(`The Best App In The World ™️ listening on port ${port}!`);
 });
 
-//use the add comment middleware
-const { addCommentMiddleware } = require("./middleware/add-comment-middleware.js");
-app.post("/articles/:articleId/comments", addCommentMiddleware);
