@@ -79,7 +79,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 //will need to verify that current user is writer of this article
 router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     //Retrieves article object with corresponding ID from database
-    const articleId = req.query.articleId;
+    const articleId = req.query.id;
     const article = await articleDao.getArticleById(articleId);
 
     //Checks whether the user currently logged in is the author of the article
