@@ -20,6 +20,11 @@ h2 {
     color: #4caf50;
 }
 
+h3 {
+    font-family: 'Kavoon', sans-serif;
+    color: #4caf50;
+}
+
 .page-heading {
     text-align: left;
 }
@@ -189,12 +194,11 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns:1fr 2fr;
+    grid-template-columns: 3fr 7fr;
     grid-template-areas: 
-    "image content content"; 
+    "image content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
-
 }
 
 .header-image {
@@ -212,6 +216,38 @@ button:hover {
 .full-content p {
     padding: 2em;
     text-align: justify;
+}
+
+.comment-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr 7fr;
+    grid-template-areas: 
+    "image title content content"; 
+    background-color: white;
+    box-shadow: 5px 10px 5px #C1E5C7;
+    margin-bottom: 2%;
+}
+
+.card-avatar {
+    grid-area: image;   
+}
+
+.card-avatar img {
+    max-height: 5em;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+.card-title {
+    margin-right: 2em;
+    padding-right: 2em;
+    border-right: 4px inset #E2F3E3 ;
+}
+
+.card-title h4 {
+    font-size: larger;
+    font-weight: bolder;
+    font-family: 'Kavoon', sans-serif;
 }
 
 

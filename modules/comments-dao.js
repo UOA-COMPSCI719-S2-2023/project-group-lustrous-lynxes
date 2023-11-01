@@ -45,6 +45,19 @@ async function likeComment(likes) {
      (${likes.userId}, ${likes.commentId}, 1)`);
 }
 
+async function viewComments(articleId) {
+    const db = await dbPromise;
+
+    const allComments =  await db.all(SQL`
+     select u.fName, u.lName, c.content, u.avatar
+     from comment c, articles a, users u 
+     where ${articleId} = a.id
+     and a.id = c.articleId
+     and c.userId = u.id`);  
+     
+     return allComments;
+}
+
 //async function orderComments(article) {
     //const db = await dbPromise;
 
@@ -65,6 +78,7 @@ module.exports = {
     allRatingArticle,
     addComment,
     likeComment,
+    viewComments,
     //orderComments,
     avRating,
 };
