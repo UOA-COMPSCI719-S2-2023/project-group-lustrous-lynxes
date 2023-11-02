@@ -42,9 +42,9 @@
                 <p>{{content}}</p>
                 <h3>likes: {{likes}}</h3>
                 {{#if enableUserLike}}
-                <button>Add Like</button>
+                <button><a href="/add-like/{{articleId}}/{{id}}">Add Like</a></button>
                 {{else}}
-                <button>Remove Like</button>
+                <button><a href="/remove-like/{{articleId}}/{{id}}">Remove Like</a></button>
                 {{/if}}
             </div>                     
         </div>

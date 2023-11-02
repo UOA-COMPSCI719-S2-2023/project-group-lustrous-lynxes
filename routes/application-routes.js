@@ -308,5 +308,17 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     res.redirect("/full-article?id=" + req.params.articleId);
 });
+//Add Like to Comment. Still need to do logic to add like
+router.get("/add-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
+//Remove Like from Comment
+router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
 
 module.exports = router;
