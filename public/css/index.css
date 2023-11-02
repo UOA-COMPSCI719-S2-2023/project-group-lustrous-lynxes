@@ -104,6 +104,8 @@ button {
     width: 100%;
     background-color: #4caf50;
     color: #fff;
+    font-size: larger;
+    font-weight: bolder;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -262,6 +264,10 @@ button:hover {
     text-align: center;
 }
 
+/* 
+comment-form styling below was deleted in a new branch but merge conflict 
+- so keeping this but commenting out to see how it goes
+- delete later if nothing is affected
 #comment-form {
     max-width: 600px;
     margin: 20px auto;
@@ -270,29 +276,17 @@ button:hover {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+*/
 
 #comment-form textarea {
-    width: 400px;
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    height: 100px;
+    border-radius: 8px;
+    border: #5cb85c solid 1px;
+    height: 7em;
     resize: vertical;
-}
-
-#comment-form button {
-    padding: 10px 20px;
-    background-color: #5cb85c;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    float: right;
-}
-
-#comment-form button:hover {
-    background-color: #4cae4c;
+    box-shadow: 5px 10px 5px #C1E5C7;
 }
 
 #comment-form:after {
@@ -348,6 +342,43 @@ button:hover {
     font-weight: bolder;
 }
 
+.rating {
+    max-width: 90%;
+    margin: auto;
+}
+
+.rating button{
+    width: 10em;
+}
+
+.rate-form {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5em 2em 0.5em 2em;
+    cursor: pointer; 
+    font-size: 1.25em; 
+    margin-right: 0.5em;
+}
+
+.rate-form input[type=radio] {
+    transform: scale(1.5);
+}
+
+.rate-form input[type=radio]:hover {
+    transform: scale(2);
+}
+
+.rating form {
+    background-color: #E2F3E3;
+    text-align: center;
+    padding: 2em;
+}
+
+.radio-div {
+    margin-right: 1em;
+}
+
 .hidden {
     display: none !important;
 }
+

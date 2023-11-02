@@ -21,9 +21,47 @@
         </div>    
     </div>
 
-    <div class="rating">
-        <h2>Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
-        
+    <div class="rating">    
+        {{#if user}}
+            {{!-- <p>user already logged in</p>  --}}
+             <div>
+                   <h2 class="form-title">Rate the Article</h2> 
+                   <form  action="./rating" method="post">
+                   <label for="rating" class="rate-form" >
+                        <input type="radio" name="rating" value= '1'>
+                        <div class="radio-div"></div>1
+                        <img class="star" src="/images/icons/star.png">
+                    </label>
+                    <label for="rating" class="rate-form" >
+                        <input type="radio" name="rating" value= '2'>
+                        <div class="radio-div"></div>2
+                        <img class="star" src="/images/icons/two-star.png">
+                    </label>
+                    <label for="rating" class="rate-form" >
+                        <input type="radio" name="rating" value= '3'>
+                        <div class="radio-div"></div>3
+                        <img class="star" src="/images/icons/three-star.png">
+                    </label>
+                    <label for="rating" class="rate-form" >
+                        <input type="radio" name="rating" value= '4'>
+                        <div class="radio-div"></div>4
+                        <img class="star" src="/images/icons/four-star.png">
+                    </label>
+                    <label for="rating" class="rate-form" >
+                        <input type="radio" name="rating" value= '5'>
+                        <div class="radio-div"></div>5
+                        <img class="star" src="/images/icons/five-star.png">
+                    </label>
+                    <input type="hidden" name="id" value="{{artFull.id}}">
+                    <button type="submit">Submit</button>
+                    </form>
+
+            </div>
+        {{else}}
+            {{!-- <p>please login first</p>  --}}
+            <p id="login-request">To add comments and rate article: <a href="/login">login</a></p>
+        {{/if}}
+        <h2>Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
     </div>
 
     <div class="all-cards">
@@ -51,32 +89,18 @@
         {{/each}}
 
         </div>
-        {{#if user}}
-            {{!-- <p>user already logged in</p>  --}}
-            <div>
-                <form id="comment-form" action="/articles/{{artFull.id}}/comments" method="post">
-                    <textarea name="comment" placeholder="Add your comments here..."></textarea>
-                    <button type="submit">Publish Comment</button>
-                </form>
-            </div>
-            <div>
-                <fieldset>Give this article a rating
-                    <form action="./rating" method="post">
-                    <label><input type="radio" name="rating" value= '1'>One</label>
-                    <label><input type="radio" name="rating" value= '2'>Two</label>
-                    <label><input type="radio" name="rating" value= '3' checked>Three</label>
-                    <label><input type="radio" name="rating" value= '4'>Four</label>
-                    <label><input type="radio" name="rating" value= '5'>Five</label>
-                    <input type="hidden" name="id" value="{{artFull.id}}">
-                    <button type="submit">Submit</button>
-                    </form>
-                    </fieldset>
-            </div>
-        {{else}}
+        {{#if user}} 
+        <div>
+            <h1>Add a Comment</h1>
+            <form id="comment-form" class="all-cards" action="/articles/{{artFull.id}}/comments" method="post">
+                <textarea name="comment" placeholder="Add your comments here..."></textarea>
+                <button type="submit">Publish Comment</button>
+            </form>
+        </div>
+      {{else}}
             {{!-- <p>please login first</p>  --}}
             <p id="login-request">To add comments and rate article: <a href="/login">login</a></p>
-        {{/if}}
-    </div>
-    
+        {{/if}}     
+    </div>    
     {{/if}}
 </div>
