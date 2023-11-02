@@ -184,6 +184,12 @@ button:hover {
     overflow: hidden;
 }
 
+.summary-card.my-page {
+    grid-template-columns: 1fr 1fr 3fr 1fr;
+    grid-template-areas: 
+    "image title content content options";
+}
+
 .card-image {
     grid-area: image;   
 }
@@ -209,6 +215,21 @@ button:hover {
     text-align: justify;
 }
 
+.card-options {
+    grid-area: options;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-options button {
+    width: 8em;
+    font-size: medium;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+
 #read-more {
     color: #4caf50;
     font-weight: bolder;
@@ -216,7 +237,6 @@ button:hover {
 
 #read-more:hover {
     color: #333;
-    font-size: larger;
 }
 
 .all-cards a {
