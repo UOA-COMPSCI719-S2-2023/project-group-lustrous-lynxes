@@ -264,6 +264,20 @@ button:hover {
     text-align: center;
 }
 
+/* 
+comment-form styling below was deleted in a new branch but merge conflict 
+- so keeping this but commenting out to see how it goes
+- delete later if nothing is affected
+#comment-form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+*/
+
 #comment-form textarea {
     width: 100%;
     padding: 10px;
@@ -364,4 +378,7 @@ button:hover {
     margin-right: 1em;
 }
 
+.hidden {
+    display: none !important;
+}
 

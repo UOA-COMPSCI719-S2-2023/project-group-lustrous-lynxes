@@ -53,22 +53,33 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     const imageInfo = req.file;
     const imageCaption = req.body.imageCaption;
 
-    //Renaming and moving image file
-    const oldFileName = imageInfo.path;
-    const newFileName = `public/images/${imageInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
+    //Creating new image object
+    let newImage = {};
+    if (imageInfo == undefined) {
+        //If user did not upload image, default image & caption is stored.
+        newImage = {
+            filName: "default-image.jpg",
+            caption: "No image available"
+        };
+    } else {
+        //If user did upload an image:
+        //Renames and moves image file
+        const oldFileName = imageInfo.path;
+        const newFileName = `public/images/${imageInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+
+        //Stores given image & caption
+        newImage = {
+            filName: imageInfo.originalname,
+            caption: imageCaption
+        };
+    }
 
     //Creating new article object
     const newArticle = {
         userId: res.locals.user.id,
         content: articleContent,
         title: articleTitle
-    };
-
-    //Creating new image object
-    const newImage = {
-        filName: imageInfo.originalname,
-        caption: imageCaption
     };
 
     //Adding new article & image to database
@@ -82,7 +93,6 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 //Renders edit-article page which allows user to edit their own article
 //Later we will use query parameters to specify which article to edit
 //e.g. edit-article?id=5 using the articleId
-//will need to verify that current user is writer of this article
 router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     //Retrieves article object with corresponding ID from database
     const articleId = req.query.id;
@@ -90,17 +100,24 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
 
     //Checks whether the article exists
     if (article == undefined) {
+        //Informs user that the article does not exist
         res.render("edit-article", {
             noArticle: true
         });
     } else {
         //Checks whether the user currently logged in is the author of the article
         if (article.authorId == res.locals.user.id) {
+            //Stores whether or not the article is using the default image
+            const hasImage = (article.image.filName != "default-image.jpg");
+
+            //Renders page with all necessary info
             res.render("edit-article", {
                 includeTinyMCEScripts: true,
+                hasImage: hasImage,
                 article: article
             });
         } else {
+            //Informs user that they cannot edit this article
             res.render("edit-article", {
                 wrongAuthor: true
             });
@@ -252,7 +269,27 @@ router.get("/full-article", async (req, res) => {
         //Could change this later to reuse code since we are getting the article
         //eg instead of viewing article directly from db, we could have display article functions in middleware
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-        res.locals.comFull = await commentDao.viewComments(req.query.id);
+        const allArticleComments = await commentDao.viewComments(req.query.id);
+        //Add amount of likes to the comment then add back to res.locals.
+        for(let i = 0; i < allArticleComments.length; i++){
+            const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
+            allArticleComments[i].likes = likes;
+            //Only run this if user is logged in.
+            if (res.locals.user){
+            const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
+            //If the user has already liked the comment, then disable the ability to like that comment.
+            if(likeByUser){
+                allArticleComments[i].enableUserLike = false;
+            }else{
+                allArticleComments[i].enableUserLike = true;
+            }
+        }
+        }
+        //Sort Comments by likes.
+        allArticleComments.sort((a,b) =>{
+            return b.likes - a.likes;
+        });
+        res.locals.comFull = allArticleComments;
         res.render("./full-article");
     } else {
         res.render("./full-article", {
@@ -284,7 +321,20 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     //Add comment to database.
     await commentDao.addComment(commentData);
+    //Add comment likes to comment.
 
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
+//Add Like to Comment. Still need to do logic to add like
+router.get("/add-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
+//Remove Like from Comment
+router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
     res.redirect("/full-article?id=" + req.params.articleId);
 });
 
