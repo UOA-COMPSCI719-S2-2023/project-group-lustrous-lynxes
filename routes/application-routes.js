@@ -252,7 +252,27 @@ router.get("/full-article", async (req, res) => {
         //Could change this later to reuse code since we are getting the article
         //eg instead of viewing article directly from db, we could have display article functions in middleware
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-        res.locals.comFull = await commentDao.viewComments(req.query.id);
+        const allArticleComments = await commentDao.viewComments(req.query.id);
+        //Add amount of likes to the comment then add back to res.locals.
+        for(let i = 0; i < allArticleComments.length; i++){
+            const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
+            allArticleComments[i].likes = likes;
+            //Only run this if user is logged in.
+            if (res.locals.user){
+            const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
+            //If the user has already liked the comment, then disable the ability to like that comment.
+            if(likeByUser){
+                allArticleComments[i].enableUserLike = false;
+            }else{
+                allArticleComments[i].enableUserLike = true;
+            }
+        }
+        }
+        //Sort Comments by likes.
+        allArticleComments.sort((a,b) =>{
+            return b.likes - a.likes;
+        });
+        res.locals.comFull = allArticleComments;
         res.render("./full-article");
     } else {
         res.render("./full-article", {
@@ -284,7 +304,20 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     //Add comment to database.
     await commentDao.addComment(commentData);
+    //Add comment likes to comment.
 
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
+//Add Like to Comment. Still need to do logic to add like
+router.get("/add-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
+    res.redirect("/full-article?id=" + req.params.articleId);
+});
+//Remove Like from Comment
+router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
+    console.log(req.params.commentId);
+    console.log(req.params.articleId);
     res.redirect("/full-article?id=" + req.params.articleId);
 });
 

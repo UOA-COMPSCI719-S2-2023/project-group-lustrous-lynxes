@@ -71,21 +71,46 @@ async function likeComment(likes) {
     const db = await dbPromise;
 
      return await db.run (SQL`
-     insert into likes (userId, commentId, liking) values
-     (${likes.userId}, ${likes.commentId}, 1)`);
+     insert into likes (userId, commentId) values
+     (${likes.userId}, ${likes.commentId})`);
 }
 
 async function viewComments(articleId) {
     const db = await dbPromise;
 
     const allComments =  await db.all(SQL`
-     select u.fName, u.lName, c.content, u.avatar
+     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId
      from comment c, articles a, users u 
      where ${articleId} = a.id
      and a.id = c.articleId
      and c.userId = u.id`);  
      
      return allComments;
+}
+async function getCommentLikes(commentId){
+    const db = await dbPromise;
+    
+    const allLikesForComment = await db.all(SQL`
+    select * from likes
+    where commentId = ${commentId}`)
+
+    let likesAmount = 0;
+    for(let i= 0; i < allLikesForComment.length; i++){
+        likesAmount++;
+    }
+
+    return likesAmount;
+}
+
+async function checkLikeByCurrentUser(userId, commentId){
+    const db = await dbPromise;
+    
+    const likeByUser = await db.get(SQL`
+    select * from likes
+    where commentId = ${commentId}
+    and userId = ${userId}`);
+
+    return likeByUser;
 }
 
 module.exports = {
@@ -97,5 +122,7 @@ module.exports = {
     viewComments,
     avRating,
     changeArticleRating,
-    addArticleRating
+    addArticleRating,
+    getCommentLikes,
+    checkLikeByCurrentUser
 };
