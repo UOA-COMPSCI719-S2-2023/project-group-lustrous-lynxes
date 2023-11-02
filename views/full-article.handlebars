@@ -78,11 +78,11 @@
             </div>
             <div class="card-content">
                 <p>{{content}}</p>
-                <h3>likes: {{likes}}</h3>
+                <h3 id = "display{{id}}">likes: {{likes}}</h3>
                 {{#if enableUserLike}}
-                <button><a href="/add-like/{{articleId}}/{{id}}">Add Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</a></button>
                 {{else}}
-                <button><a href="/remove-like/{{articleId}}/{{id}}">Remove Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</a></button>
                 {{/if}}
             </div>                     
         </div>
