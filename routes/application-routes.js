@@ -257,12 +257,21 @@ router.get("/full-article", async (req, res) => {
         for(let i = 0; i < allArticleComments.length; i++){
             const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
             allArticleComments[i].likes = likes;
+            //Only run this if user is logged in.
+            if (res.locals.user){
+            const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
+            //If the user has already liked the comment, then disable the ability to like that comment.
+            if(likeByUser){
+                allArticleComments[i].enableUserLike = false;
+            }else{
+                allArticleComments[i].enableUserLike = true;
+            }
+        }
         }
         //Sort Comments by likes.
-        allArticleComments.sort( (a,b) =>{
+        allArticleComments.sort((a,b) =>{
             return b.likes - a.likes;
         });
-        console.log(allArticleComments);
         res.locals.comFull = allArticleComments;
         res.render("./full-article");
     } else {

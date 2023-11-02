@@ -40,7 +40,12 @@
             </div>
             <div class="card-content">
                 <p>{{content}}</p>
-                <h3>likes</h3> 
+                <h3>likes: {{likes}}</h3>
+                {{#if enableUserLike}}
+                <button>Add Like</button>
+                {{else}}
+                <button>Remove Like</button>
+                {{/if}}
             </div>                     
         </div>
         {{/each}}

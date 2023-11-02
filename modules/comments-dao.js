@@ -71,8 +71,8 @@ async function likeComment(likes) {
     const db = await dbPromise;
 
      return await db.run (SQL`
-     insert into likes (userId, commentId, liking) values
-     (${likes.userId}, ${likes.commentId}, 1)`);
+     insert into likes (userId, commentId) values
+     (${likes.userId}, ${likes.commentId})`);
 }
 
 async function viewComments(articleId) {
@@ -102,6 +102,17 @@ async function getCommentLikes(commentId){
     return likesAmount;
 }
 
+async function checkLikeByCurrentUser(userId, commentId){
+    const db = await dbPromise;
+    
+    const likeByUser = await db.get(SQL`
+    select * from likes
+    where commentId = ${commentId}
+    and userId = ${userId}`);
+
+    return likeByUser;
+}
+
 module.exports = {
     rateArticles,
     allRatingArticle,
@@ -112,5 +123,6 @@ module.exports = {
     avRating,
     changeArticleRating,
     addArticleRating,
-    getCommentLikes
+    getCommentLikes,
+    checkLikeByCurrentUser
 };
