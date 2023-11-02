@@ -64,12 +64,12 @@ async function editArticle(article) {
         `);
     }
 }
-
+//Should just be delete from...not delete * from.
 async function deleteArticle(article) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     delete * from  articles 
+     delete from articles 
      where id = ${article.id}`);
 }
 
