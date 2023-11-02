@@ -122,6 +122,45 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     }
 });
 
+//Processes form for editing an existing article
+router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
+    //Getting user input from form
+    const articleId = req.body.articleId;
+    const articleTitle = req.body.articleTitle;
+    const articleContent = req.body.articleContent;
+    const imageInfo = req.file;
+    const imageCaption = req.body.imageCaption;
+    
+    //Creating article object with updated values
+    const article = {
+        id: articleId,
+        title: articleTitle,
+        content: articleContent,
+    };
+    
+    //Checks if user uploaded a new image
+    if (imageInfo) {
+        //Renames and moves image file
+        const oldFileName = imageInfo.path;
+        const newFileName = `public/images/${imageInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+        
+        //Adds image file name to article object
+        article.imgFileName = imageInfo.originalname;
+    }
+
+    //Adds caption to article object if it was given
+    if (imageCaption) {
+        article.imgCaption = imageCaption;
+    }    
+
+    //Edit article in database
+    await articleDao.editArticle(article);
+
+    //Redirect to full article
+    res.redirect(`/full-article?id=${articleId}`);
+});
+
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
