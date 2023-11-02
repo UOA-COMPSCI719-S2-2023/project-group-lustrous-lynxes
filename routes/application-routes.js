@@ -53,38 +53,32 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     const imageInfo = req.file;
     const imageCaption = req.body.imageCaption;
 
-    let imgFileName, imgCaption;
-    if (imageInfo == undefined) {
-        //If user did not upload image, default image & caption is stored.
-        imgFileName = "default-image.jpg";
-        imgCaption = "No image available";
-    } else {
-        //If user did upload an image:
+    //Creating new article object
+    const newArticle = {
+        userId: res.locals.user.id,
+        content: articleContent,
+        title: articleTitle,
+        imgFileName: "default-image.jpg",
+        imgCaption: "No image available"
+    };
+
+    //Checks if user uploaded an image
+    if (imageInfo) {
         //Renames and moves image file
         const oldFileName = imageInfo.path;
         const newFileName = `public/images/${imageInfo.originalname}`;
         fs.renameSync(oldFileName, newFileName);
 
         //Stores given image & caption
-        imgFileName = imageInfo.originalname;
-        imgCaption = imageCaption;
+        newArticle.imgFileName = imageInfo.originalname;
+        newArticle.imgCaption = imageCaption;
     }
 
-    //Creating new article object
-    const newArticle = {
-        userId: res.locals.user.id,
-        content: articleContent,
-        title: articleTitle,
-        imgFileName: imgFileName,
-        imgCaption: imgCaption
-    };
+    //Adding new article to database
+    const newArticleId = await articleDao.addNewArticle(newArticle);
 
-    //Adding new article & image to database
-    await articleDao.addNewArticle(newArticle);
-
-    //Redirect to all articles - might change later
-    //Probably makes sense to redirect to user's page of their own articles
-    res.redirect("/articles");
+    //Redirects to full article
+    res.redirect(`/full-article?id=${newArticleId}`);
 });
 
 //Renders edit-article page which allows user to edit their own article
@@ -154,10 +148,10 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
         article.imgCaption = imageCaption;
     }    
 
-    //Edit article in database
+    //Edits article in database
     await articleDao.editArticle(article);
 
-    //Redirect to full article
+    //Redirects to full article
     res.redirect(`/full-article?id=${articleId}`);
 });
 

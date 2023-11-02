@@ -28,10 +28,12 @@ async function viewUserArticles(userId, criteria) {
 async function addNewArticle(article) {
     const db = await dbPromise;
     
-    return await db.run(SQL`
-    insert into articles (authorId, content, title, imgFileName, imgCaption) 
-    values(${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
+    const result = await db.run(SQL`
+        INSERT INTO articles (authorId, content, title, imgFileName, imgCaption) 
+        VALUES (${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
     `);
+
+    return result.lastID;
 }
 
 async function editArticle(article) {
