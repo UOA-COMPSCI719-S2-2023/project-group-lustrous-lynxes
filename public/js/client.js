@@ -28,19 +28,25 @@ window.addEventListener("load", () =>{
           }
         });    
     }
-    //Get Like Buttons for comments.
+    //Get add/remove Like Buttons for comments.
     const likeCommentButtons = Array.from(document.querySelectorAll(".likeButtons"));
-
+    //For Each button add an async event listener.
     likeCommentButtons.forEach(button =>{
         button.addEventListener("click", async () =>{
+            //Get the buttons current setting - add or remove.
             const buttonSetting = button.getAttribute("setting");
+            //Get commentId for use in updating Database.
             const commentId = button.getAttribute("commentId")
+            //If add, do the logic to add like to comment.
             if (buttonSetting == "add"){
                 const likes = await addLike(commentId);
+                //Change Buttons setting and text.
                 button.setAttribute('setting', 'remove');
                 button.innerHTML = "Remove Like";
+                //Update display of likes for given comment.
                 document.querySelector(`#display${commentId}`).innerHTML = `likes: ${likes}`
             }else{
+                //Do the same, but in reverse. Remove a like and set button to add.
                 const likes = await removeLike(commentId)
                 button.setAttribute('setting', 'add');
                 button.innerHTML = "Add Like"

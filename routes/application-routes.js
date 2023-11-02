@@ -355,24 +355,30 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     res.redirect("/full-article?id=" + req.params.articleId);
 });
-//Add Like to Comment. Still need to do logic to add like
+//Add Like to Comment. Fetch Request made by client js.
 router.get("/add-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
+    //Add Like.
     await commentDao.likeComment(like);
+    //Get New Count of Likes.
     const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    //Return to client.
     res.json({likes: commentLikes});
 });
-//Remove Like from Comment
+//Remove Like from Comment. Fetch Request made by client js.
 router.get("/remove-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
+    //Remove Like.
     await commentDao.removeCommentLike(like);
+    //Get new count of likes for comment.
     const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    //Return to client.
     res.json({likes: commentLikes});
 });
 
