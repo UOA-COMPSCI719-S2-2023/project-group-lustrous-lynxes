@@ -31,7 +31,9 @@ window.addEventListener("load", () =>{
 
     //Add event handler to file input for add-article and edit-article pages
     const fileInput = document.querySelector("#imageInput");
+    if(fileInput){
     fileInput.onchange = addCaptionInput;
+    }
 
     //Adds input requiring caption if a file is chosen
     function addCaptionInput() {
