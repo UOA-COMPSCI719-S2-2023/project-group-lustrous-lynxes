@@ -25,22 +25,44 @@ async function viewUserArticles(userId, criteria) {
     return allArticles;
 }
 
+async function addNewArticle(article) {
+    const db = await dbPromise;
+    
+    const result = await db.run(SQL`
+        INSERT INTO articles (authorId, content, title, imgFileName, imgCaption) 
+        VALUES (${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
+    `);
+
+    return result.lastID;
+}
+
 async function editArticle(article) {
     const db = await dbPromise;
 
-    return await db.run(SQL`
-     update articles 
-     set content = ${article.content}, title = ${article.title}, imgFileName = ${article.imgFileName}, imgCaption = ${article.imgCaption}
-     where id = ${article.articleId}`);
-}
-
-async function addNewArticle(article) {
-    const db = await dbPromise;
-
-    return await db.run(SQL`
-        insert into articles (authorId, content, title, imgFileName, imgCaption) 
-        values(${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
+    //Updates title & content as these are always given in the article object
+    await db.run(SQL`
+        UPDATE articles
+        SET content = ${article.content}, title = ${article.title}
+        WHERE id = ${article.id}
     `);
+
+    //Only updates image file name if given
+    if ("imgFileName" in article) {
+        await db.run(SQL`
+            UPDATE articles
+            SET imgFileName = ${article.imgFileName}
+            WHERE id = ${article.id}
+        `);
+    }
+
+    //Only updates image caption if given
+    if ("imgCaption" in article) {
+        await db.run(SQL`
+            UPDATE articles
+            SET imgCaption = ${article.imgCaption}
+            WHERE id = ${article.id}
+        `);
+    }
 }
 
 async function deleteArticle(article) {
