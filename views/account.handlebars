@@ -21,26 +21,26 @@
 
     <div class="all-cards">
         {{#each artCard}}
-        <a href="./full-article?id={{id}}" >
-            <div class="summary-card my-page">
-                <div class="card-image">
-                    <img src="/images/{{imgFileName}}">
-                </div>
-                <div class="card-title">
-                    <h4>{{title}}</h4> 
-                </div>
-                <div class="card-content">
-                    <div class="summary">
-                        <p>{{{content}}}</p>
-                    </div>                    
-                    <p id="read-more">Read More</p>
-                </div>
-                <div class="card-options">
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>                     
+        <div class="summary-card my-page">
+            <div class="card-image">
+                <img src="/images/{{imgFileName}}"> 
             </div>
-         </a> 
+            <div class="card-title">
+                <h4>{{title}}</h4>
+            </div>
+            <div class="card-content">
+                <div class="summary">
+                    <p>{{{content}}}</p>
+                </div>
+                <a href="./full-article?id={{id}}">
+                    <p id="read-more">Read More</p>
+                </a>                    
+            </div>
+            <div class="card-options">
+                <button>Edit</button>
+                <button>Delete</button>
+            </div>                     
+        </div>
         {{/each}}
     </div>
 </div>
