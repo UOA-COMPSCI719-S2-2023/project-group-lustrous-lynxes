@@ -9,6 +9,9 @@
     <div class="article-form form-container">
         <h1>Edit your article</h1>
         <form action="./edit-article" method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" name="articleId" value="{{article.id}}">
+
             <label for="articleTitle">Title:</label>
             <input type="text" name="articleTitle" id="articleTitle" value="{{article.title}}">
             <br>
