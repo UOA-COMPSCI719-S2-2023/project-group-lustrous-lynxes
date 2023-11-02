@@ -258,6 +258,11 @@ router.get("/full-article", async (req, res) => {
             const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
             allArticleComments[i].likes = likes;
         }
+        //Sort Comments by likes.
+        allArticleComments.sort( (a,b) =>{
+            return b.likes - a.likes;
+        });
+        console.log(allArticleComments);
         res.locals.comFull = allArticleComments;
         res.render("./full-article");
     } else {
