@@ -6,7 +6,7 @@ drop table if exists users;
 drop table if exists avatars;
 
 create table avatars (
-    filName VARCHAR(50) NOT NULL PRIMARY KEY,
+    fileName VARCHAR(50) NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL   
 );
 
@@ -20,7 +20,7 @@ create table users (
     description VARCHAR(260),
     avatar VARCHAR(50) NOT NULL,
     token BLOB,
-    FOREIGN KEY (avatar) references avatars (filName)
+    FOREIGN KEY (avatar) references avatars (fileName)
 );
 
 create table articles (
@@ -60,7 +60,7 @@ create table likes (
     FOREIGN KEY (commentId) references comment (id) ON DELETE CASCADE                      
 );
 
-insert into avatars (filName, name) values 
+insert into avatars (fileName, name) values 
 ("avocado.png", "avocado"),
 ("bell-pepper.png", "bell-pepper"),
 ("donut.png", "donut"), 

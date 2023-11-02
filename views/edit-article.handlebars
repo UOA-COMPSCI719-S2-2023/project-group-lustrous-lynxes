@@ -18,7 +18,7 @@
             <div class="image-box-container">
                 <div class="image-box existing-image-container">
                     <p class="inner-label">Current image:</p>
-                    <img src="/images/{{article.image.filName}}" alt="{{article.image.caption}}" class="existing-image">
+                    <img src="/images/{{article.imgFileName}}" alt="{{article.imgCaption}}" class="existing-image">
                 </div>
                 <div class="image-box image-input-container">
                     <p class="inner-label">To change your image, upload a new image here:</p>
@@ -27,7 +27,7 @@
             </div>
 
             <label for="imageCaption" class="if-file-chosen">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen" value="{{article.image.caption}}" required>
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen" value="{{article.imgCaption}}" required>
             <br class="if-file-chosen">
             {{else}}
             <input type="file" id="imageInput" class="image-box" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">

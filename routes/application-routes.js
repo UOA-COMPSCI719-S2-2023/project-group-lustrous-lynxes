@@ -53,14 +53,11 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     const imageInfo = req.file;
     const imageCaption = req.body.imageCaption;
 
-    //Creating new image object
-    let newImage = {};
+    let imgFileName, imgCaption;
     if (imageInfo == undefined) {
         //If user did not upload image, default image & caption is stored.
-        newImage = {
-            filName: "default-image.jpg",
-            caption: "No image available"
-        };
+        imgFileName = "default-image.jpg";
+        imgCaption = "No image available";
     } else {
         //If user did upload an image:
         //Renames and moves image file
@@ -69,21 +66,21 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
         fs.renameSync(oldFileName, newFileName);
 
         //Stores given image & caption
-        newImage = {
-            filName: imageInfo.originalname,
-            caption: imageCaption
-        };
+        imgFileName = imageInfo.originalname;
+        imgCaption = imageCaption;
     }
 
     //Creating new article object
     const newArticle = {
         userId: res.locals.user.id,
         content: articleContent,
-        title: articleTitle
+        title: articleTitle,
+        imgFileName: imgFileName,
+        imgCaption: imgCaption
     };
 
     //Adding new article & image to database
-    await articleDao.addNewArticles(newArticle, newImage);
+    await articleDao.addNewArticle(newArticle);
 
     //Redirect to all articles - might change later
     //Probably makes sense to redirect to user's page of their own articles
@@ -108,7 +105,7 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
         //Checks whether the user currently logged in is the author of the article
         if (article.authorId == res.locals.user.id) {
             //Stores whether or not the article is using the default image
-            const hasImage = (article.image.filName != "default-image.jpg");
+            const hasImage = (article.imgFileName != "default-image.jpg");
 
             //Renders page with all necessary info
             res.render("edit-article", {

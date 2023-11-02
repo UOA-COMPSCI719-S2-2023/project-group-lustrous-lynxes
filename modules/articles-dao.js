@@ -8,7 +8,7 @@ async function viewAllArticles(criteria) {
     const allArticles = await db.all(SQL`
      select * 
      from articles
-     order by ${criteria}`);  
+     order by ${criteria}`);
 
     return allArticles;
 }
@@ -20,36 +20,35 @@ async function viewUserArticles(userId, criteria) {
      select * 
      from articles 
      where authorId = ${userId}
-     order by ${criteria}`);  
+     order by ${criteria}`);
 
     return allArticles;
 }
 
-async function editArticles(article, image) {
+async function editArticle(article) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      update articles 
-     set content = ${article.content}, title = ${article.title}, imgFileName = ${image.filName}, imgCaption = ${image.caption}
-     where id = ${article.articleId}`);  
+     set content = ${article.content}, title = ${article.title}, imgFileName = ${article.imgFileName}, imgCaption = ${article.imgCaption}
+     where id = ${article.articleId}`);
 }
 
-async function addNewArticles(article, image) {
+async function addNewArticle(article) {
     const db = await dbPromise;
-    
+
     return await db.run(SQL`
         insert into articles (authorId, content, title, imgFileName, imgCaption) 
-        values(${article.userId}, ${article.content}, ${article.title}, ${image.filName}, ${image.caption})
+        values(${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
     `);
-
 }
 
-async function deleteArticles(article) {
+async function deleteArticle(article) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      delete * from  articles 
-     where id = ${article.id}`);       
+     where id = ${article.id}`);
 }
 
 //Order by Average Rating for when we display articles.
@@ -60,7 +59,7 @@ async function viewArticlesCards() {
      select a.imgFileName, a.title, a.content, a.imgCaption, u.fName, u.lName, a.id
      from  articles a, users u 
      where a.authorId = u.id
-     order by a.avRating desc`);  
+     order by a.avRating desc`);
     return artCards;
 }
 
@@ -73,8 +72,8 @@ async function userArticlesCards(userId) {
      from  articles a, users u 
      where u.id = ${userId}
      and a.authorId = u.id
-     order by a.avRating desc`); 
-     
+     order by a.avRating desc`);
+
     return artCards;
 }
 
@@ -85,24 +84,24 @@ async function viewFullArticle(givenId) {
      select a.id, a.imgFileName, a.imgCaption, a.title, a.content, u.fName, u.lName 
      from articles a, users u 
      where a.id = ${givenId}
-     and a.authorId = u.id`);  
-    
+     and a.authorId = u.id`);
+
     return artFull;
 }
+
 //Get article by ID
-async function getArticleById(articleId){
+async function getArticleById(articleId) {
     const db = await dbPromise;
     const article = await db.get(SQL`select * from articles where id = ${articleId}`);
     return article;
 }
 
-
 module.exports = {
     viewAllArticles,
     viewUserArticles,
-    addNewArticles,
-    editArticles,
-    deleteArticles,
+    addNewArticle,
+    editArticle,
+    deleteArticle,
     viewArticlesCards,
     userArticlesCards,
     viewFullArticle,
