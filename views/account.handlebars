@@ -22,7 +22,7 @@
     <div class="all-cards">
         {{#each artCard}}
         <a href="./full-article?id={{id}}" >
-            <div class="summary-card">
+            <div class="summary-card my-page">
                 <div class="card-image">
                     <img src="/images/{{imgFileName}}">
                 </div>
@@ -34,6 +34,10 @@
                         <p>{{{content}}}</p>
                     </div>                    
                     <p id="read-more">Read More</p>
+                </div>
+                <div class="card-options">
+                    <button>Edit</button>
+                    <button>Delete</button>
                 </div>                     
             </div>
          </a> 
