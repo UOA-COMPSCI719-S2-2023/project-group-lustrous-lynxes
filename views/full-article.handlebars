@@ -59,7 +59,7 @@
             </div>
         {{else}}
             {{!-- <p>please login first</p>  --}}
-            <p id="login-request">To add comments and rate article: <a href="/login">login</a></p>
+            <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
         {{/if}}
         <h2>Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
     </div>
@@ -68,6 +68,7 @@
         <div class="header-details">
             <h1>Comments</h1>
         </div>
+        {{#if user}}
         {{#each comFull}}
         <div class="comment-card">
             <div class="card-avatar">
@@ -87,6 +88,7 @@
             </div>                     
         </div>
         {{/each}}
+        {{/if}}
 
         </div>
         {{#if user}} 
@@ -97,9 +99,6 @@
                 <button type="submit">Publish Comment</button>
             </form>
         </div>
-      {{else}}
-            {{!-- <p>please login first</p>  --}}
-            <p id="login-request">To add comments and rate article: <a href="/login">login</a></p>
         {{/if}}     
     </div>    
     {{/if}}

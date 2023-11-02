@@ -361,19 +361,19 @@ router.get("/add-like/:commentId", async (req,res)=>{
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
-    console.log(like);
     await commentDao.likeComment(like);
-    res.json({key:1});
-    //res.redirect("/full-article?id=" + req.params.articleId);
+    const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    res.json({likes: commentLikes});
 });
 //Remove Like from Comment
-router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
+router.get("/remove-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
     await commentDao.removeCommentLike(like);
-    res.redirect("/full-article?id=" + req.params.articleId);
+    const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    res.json({likes: commentLikes});
 });
 
 module.exports = router;

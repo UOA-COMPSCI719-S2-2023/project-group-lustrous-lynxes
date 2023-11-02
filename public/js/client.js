@@ -28,34 +28,35 @@ window.addEventListener("load", () =>{
           }
         });    
     }
-
+    //Get Like Buttons for comments.
     const likeCommentButtons = Array.from(document.querySelectorAll(".likeButtons"));
+
     likeCommentButtons.forEach(button =>{
-        button.addEventListener("click", () =>{
+        button.addEventListener("click", async () =>{
             const buttonSetting = button.getAttribute("setting");
             const commentId = button.getAttribute("commentId")
             if (buttonSetting == "add"){
-                const likes = addLike(commentId)
+                const likes = await addLike(commentId);
                 button.setAttribute('setting', 'remove');
                 button.innerHTML = "Remove Like";
                 document.querySelector(`#display${commentId}`).innerHTML = `likes: ${likes}`
             }else{
-                removeLike(commentId)
+                const likes = await removeLike(commentId)
                 button.setAttribute('setting', 'add');
                 button.innerHTML = "Add Like"
                 document.querySelector(`#display${commentId}`).innerHTML = `likes: ${likes}`
             }
         });
     });
-
     async function addLike(commentId){
         const response = await fetch(`add-like/${commentId}`);
         const jsonData = await response.json();
-        
+        return jsonData.likes; 
     }
     async function removeLike(commentId){
-        console.log("remove");
-        
+        const response = await fetch(`remove-like/${commentId}`);
+        const jsonData = await response.json();
+        return jsonData.likes;
     }
 
     //Add event handler to file input for add-article and edit-article pages
