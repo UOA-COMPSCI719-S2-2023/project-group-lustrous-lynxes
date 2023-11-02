@@ -67,12 +67,12 @@ async function addComment(comment) {
      (${comment.userId}, ${comment.articleId}, ${comment.content})`);     
 }
 
-async function likeComment(likes) {
+async function likeComment(like) {
     const db = await dbPromise;
 
      return await db.run (SQL`
      insert into likes (userId, commentId) values
-     (${likes.userId}, ${likes.commentId})`);
+     (${like.userId}, ${like.commentId})`);
 }
 
 async function viewComments(articleId) {
@@ -113,6 +113,16 @@ async function checkLikeByCurrentUser(userId, commentId){
     return likeByUser;
 }
 
+async function removeCommentLike(like){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from likes
+     where userId = ${like.userId}
+     and commentId = ${like.commentId}`);
+
+}
+
 module.exports = {
     rateArticles,
     allRatingArticle,
@@ -124,5 +134,6 @@ module.exports = {
     changeArticleRating,
     addArticleRating,
     getCommentLikes,
-    checkLikeByCurrentUser
+    checkLikeByCurrentUser,
+    removeCommentLike
 };

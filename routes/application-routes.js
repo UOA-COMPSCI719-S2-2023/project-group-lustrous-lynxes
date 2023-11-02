@@ -357,14 +357,20 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 });
 //Add Like to Comment. Still need to do logic to add like
 router.get("/add-like/:articleId/:commentId", async (req,res)=>{
-    console.log(req.params.commentId);
-    console.log(req.params.articleId);
+    const like = {
+        userId: res.locals.user.id,
+        commentId: req.params.commentId
+    };
+    await commentDao.likeComment(like);
     res.redirect("/full-article?id=" + req.params.articleId);
 });
 //Remove Like from Comment
 router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
-    console.log(req.params.commentId);
-    console.log(req.params.articleId);
+    const like = {
+        userId: res.locals.user.id,
+        commentId: req.params.commentId
+    };
+    await commentDao.removeCommentLike(like);
     res.redirect("/full-article?id=" + req.params.articleId);
 });
 
