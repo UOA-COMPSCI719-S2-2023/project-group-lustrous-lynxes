@@ -25,12 +25,12 @@ async function viewUserArticles(userId, criteria) {
     return allArticles;
 }
 
-async function editArticle(article, image) {
+async function editArticle(article) {
     const db = await dbPromise;
 
     return await db.run(SQL`
      update articles 
-     set content = ${article.content}, title = ${article.title}, imgFileName = ${image.filName}, imgCaption = ${image.caption}
+     set content = ${article.content}, title = ${article.title}, imgFileName = ${article.imgFileName}, imgCaption = ${article.imgCaption}
      where id = ${article.articleId}`);
 }
 
