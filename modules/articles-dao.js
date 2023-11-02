@@ -25,7 +25,7 @@ async function viewUserArticles(userId, criteria) {
     return allArticles;
 }
 
-async function editArticles(article, image) {
+async function editArticle(article, image) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -34,7 +34,7 @@ async function editArticles(article, image) {
      where id = ${article.articleId}`);  
 }
 
-async function addNewArticles(article) {
+async function addNewArticle(article) {
     const db = await dbPromise;
     
     return await db.run(SQL`
@@ -43,7 +43,7 @@ async function addNewArticles(article) {
     `);
 }
 
-async function deleteArticles(article) {
+async function deleteArticle(article) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -99,9 +99,9 @@ async function getArticleById(articleId){
 module.exports = {
     viewAllArticles,
     viewUserArticles,
-    addNewArticles,
-    editArticles,
-    deleteArticles,
+    addNewArticle,
+    editArticle,
+    deleteArticle,
     viewArticlesCards,
     userArticlesCards,
     viewFullArticle,

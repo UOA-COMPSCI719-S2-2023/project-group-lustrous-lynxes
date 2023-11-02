@@ -80,7 +80,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     };
 
     //Adding new article & image to database
-    await articleDao.addNewArticles(newArticle);
+    await articleDao.addNewArticle(newArticle);
 
     //Redirect to all articles - might change later
     //Probably makes sense to redirect to user's page of their own articles
