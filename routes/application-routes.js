@@ -355,23 +355,31 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     res.redirect("/full-article?id=" + req.params.articleId);
 });
-//Add Like to Comment. Still need to do logic to add like
-router.get("/add-like/:articleId/:commentId", async (req,res)=>{
+//Add Like to Comment. Fetch Request made by client js.
+router.get("/add-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
+    //Add Like.
     await commentDao.likeComment(like);
-    res.redirect("/full-article?id=" + req.params.articleId);
+    //Get New Count of Likes.
+    const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    //Return to client.
+    res.json({likes: commentLikes});
 });
-//Remove Like from Comment
-router.get("/remove-like/:articleId/:commentId", async (req,res)=>{
+//Remove Like from Comment. Fetch Request made by client js.
+router.get("/remove-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
+    //Remove Like.
     await commentDao.removeCommentLike(like);
-    res.redirect("/full-article?id=" + req.params.articleId);
+    //Get new count of likes for comment.
+    const commentLikes = await commentDao.getCommentLikes(like.commentId);
+    //Return to client.
+    res.json({likes: commentLikes});
 });
 
 module.exports = router;
