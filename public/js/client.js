@@ -29,5 +29,24 @@ window.addEventListener("load", () =>{
         });    
     }
 
+    //Add event handler to file input for add-article and edit-article pages
+    const fileInput = document.querySelector("#imageInput");
+    fileInput.onchange = addCaptionInput;
+
+    //Adds input requiring caption if a file is chosen
+    function addCaptionInput() {
+        //Only executes code if a file is chosen
+        if (fileInput.files.length > 0) {
+            //Removes "hidden" class from elements for caption input
+            const captionInputElements = document.querySelectorAll(".if-file-chosen");
+            captionInputElements.forEach(function(element) {
+                element.classList.remove("hidden");
+            });
+            
+            //Adds "required" attribute to caption input
+            const captionInput = document.querySelector("#imageCaption");
+            captionInput.setAttribute("required", "required");
+        }
+    }
     
 });

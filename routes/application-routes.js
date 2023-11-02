@@ -53,22 +53,33 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     const imageInfo = req.file;
     const imageCaption = req.body.imageCaption;
 
-    //Renaming and moving image file
-    const oldFileName = imageInfo.path;
-    const newFileName = `public/images/${imageInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
+    //Creating new image object
+    let newImage = {};
+    if (imageInfo == undefined) {
+        //If user did not upload image, default image & caption is stored.
+        newImage = {
+            filName: "default-image.jpg",
+            caption: "No image available"
+        };
+    } else {
+        //If user did upload an image:
+        //Renames and moves image file
+        const oldFileName = imageInfo.path;
+        const newFileName = `public/images/${imageInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+
+        //Stores given image & caption
+        newImage = {
+            filName: imageInfo.originalname,
+            caption: imageCaption
+        };
+    }
 
     //Creating new article object
     const newArticle = {
         userId: res.locals.user.id,
         content: articleContent,
         title: articleTitle
-    };
-
-    //Creating new image object
-    const newImage = {
-        filName: imageInfo.originalname,
-        caption: imageCaption
     };
 
     //Adding new article & image to database
@@ -82,7 +93,6 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 //Renders edit-article page which allows user to edit their own article
 //Later we will use query parameters to specify which article to edit
 //e.g. edit-article?id=5 using the articleId
-//will need to verify that current user is writer of this article
 router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     //Retrieves article object with corresponding ID from database
     const articleId = req.query.id;
@@ -90,17 +100,24 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
 
     //Checks whether the article exists
     if (article == undefined) {
+        //Informs user that the article does not exist
         res.render("edit-article", {
             noArticle: true
         });
     } else {
         //Checks whether the user currently logged in is the author of the article
         if (article.authorId == res.locals.user.id) {
+            //Stores whether or not the article is using the default image
+            const hasImage = (article.image.filName != "default-image.jpg");
+
+            //Renders page with all necessary info
             res.render("edit-article", {
                 includeTinyMCEScripts: true,
+                hasImage: hasImage,
                 article: article
             });
         } else {
+            //Informs user that they cannot edit this article
             res.render("edit-article", {
                 wrongAuthor: true
             });

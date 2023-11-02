@@ -14,6 +14,7 @@
             <br>
 
             <label for="imageInput">Upload your image:</label>
+            {{#if hasImage}}
             <div class="image-box-container">
                 <div class="image-box existing-image-container">
                     <p class="inner-label">Current image:</p>
@@ -25,9 +26,17 @@
                 </div>
             </div>
 
-            <label for="imageCaption">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" value="{{article.image.caption}}">
+            <label for="imageCaption" class="if-file-chosen">Image Caption:</label>
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen" value="{{article.image.caption}}" required>
+            <br class="if-file-chosen">
+            {{else}}
+            <input type="file" id="imageInput" class="image-box" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
             <br>
+
+            <label for="imageCaption" class="if-file-chosen hidden">Image Caption:</label>
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen hidden" placeholder="What's in this picture?">
+            <br class="if-file-chosen hidden">
+            {{/if}}
 
             <label for="articleContent">Content:</label>
             <div class="wysiwyg-container">

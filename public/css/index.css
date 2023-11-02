@@ -260,6 +260,7 @@ button:hover {
 
 .centred-text {
     text-align: center;
+}
 
 #comment-form {
     max-width: 600px;
@@ -347,4 +348,6 @@ button:hover {
     font-weight: bolder;
 }
 
-
+.hidden {
+    display: none !important;
+}
