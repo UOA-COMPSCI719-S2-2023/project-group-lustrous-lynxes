@@ -58,7 +58,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     if (imageInfo == undefined) {
         //If user did not upload image, default image & caption is stored.
         newImage = {
-            filName: "default-image.jpg",
+            fileName: "default-image.jpg",
             caption: "No image available"
         };
     } else {
@@ -70,7 +70,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 
         //Stores given image & caption
         newImage = {
-            filName: imageInfo.originalname,
+            fileName: imageInfo.originalname,
             caption: imageCaption
         };
     }
@@ -108,7 +108,7 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
         //Checks whether the user currently logged in is the author of the article
         if (article.authorId == res.locals.user.id) {
             //Stores whether or not the article is using the default image
-            const hasImage = (article.image.filName != "default-image.jpg");
+            const hasImage = (article.image.fileName != "default-image.jpg");
 
             //Renders page with all necessary info
             res.render("edit-article", {
