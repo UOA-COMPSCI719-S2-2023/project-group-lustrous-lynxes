@@ -34,14 +34,13 @@ async function editArticles(article, image) {
      where id = ${article.articleId}`);  
 }
 
-async function addNewArticles(article, image) {
+async function addNewArticles(article) {
     const db = await dbPromise;
     
     return await db.run(SQL`
         insert into articles (authorId, content, title, imgFileName, imgCaption) 
-        values(${article.userId}, ${article.content}, ${article.title}, ${image.filName}, ${image.caption})
+        values(${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
     `);
-
 }
 
 async function deleteArticles(article) {
