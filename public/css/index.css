@@ -12,6 +12,18 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1em 2em 1em 2em;
+}
+
+footer a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.75em;
+}
+
 h1, h2 {
     font-family: 'Roboto Slab', sans-serif;
     text-align: center;
@@ -43,6 +55,11 @@ h3 {
 .navbar-left, .navbar-right {
     display: flex;
     align-items: center;
+}
+
+.navbar a:hover {
+    font-size: 1.25em;
+    color: #E2F3E3;
 }
 
 
