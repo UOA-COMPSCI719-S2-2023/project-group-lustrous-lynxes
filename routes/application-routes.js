@@ -11,7 +11,6 @@ const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
-
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
@@ -156,6 +155,15 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
 
     //Redirects to full article
     res.redirect(`/full-article?id=${articleId}`);
+});
+
+//Handles request to delete article
+router.post("/delete-article/:id", async (req, res) => {
+    const articleId = req.params.id;
+
+    await articleDao.deleteArticle(articleId);
+    
+    res.redirect("/");
 });
 
 //Render form to create account
