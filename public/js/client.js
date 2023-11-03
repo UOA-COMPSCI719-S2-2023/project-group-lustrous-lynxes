@@ -5,13 +5,11 @@ window.addEventListener("load", () =>{
     //Everytime an input is made in form trigger event listener.
     //The Try-catch is optional, but could use it if calling server then DB from client.
     if (usernameInput != null){
-    usernameInput.addEventListener("input", async () => {
-        const currentInput = usernameInput.value;
-        try {
-            //make call to server
-            const response = await fetch(`./new/${currentInput}`);
-            //reponse will be json {value: boolean}
-            const json = await response.json();
+        usernameInput.addEventListener("input", async () => {
+            const currentInput = usernameInput.value;
+            try {
+                const response = await fetch(`./new/${currentInput}`);
+                const json = await response.json();
             //Get boolean of key "value" from json
             const usernameExists = json.value;
             //If the username exists change inner.HTML to reflect this.
@@ -71,9 +69,9 @@ window.addEventListener("load", () =>{
 
     //Form for adding rating.
     const addRating = document.querySelector("#addRating");
-    if (addRating) {
+  
+    if(addRating){
         addRating.addEventListener('submit', async (event) =>{
-            //Prevent Submittion of form. Process on client by making fetch request.
             event.preventDefault();
             const selectedRating = document.querySelectorAll('.ratingValue');
             const currentArticle = document.querySelector('#currentArticle');
@@ -82,7 +80,6 @@ window.addEventListener("load", () =>{
             for (let i = 0; i < selectedRating.length; i++){
                 if (selectedRating[i].checked){
                     const rating = selectedRating[i].value;
-                    //Process to integer for DB later.
                     userRating = parseInt(rating);
                 }
             }
@@ -97,17 +94,19 @@ window.addEventListener("load", () =>{
     //Client Side processing for comments.
     const addCommentForm = document.querySelector('#comment-form');
 
-    addCommentForm.addEventListener('submit', async (event)=>{
-        event.preventDefault();
-        const userComment = document.querySelector("#userComment").value;
-        //If no comment in field. Ignore the event handler.
-        if(userComment != null){
-        const articleId = document.querySelector("#articleComment").value;
-        const response = await fetch(`comment/${articleId}/${userComment}`);
-        const jsonData = await response.json();
-        displayNewComment(jsonData);
-        }
-    });
+    if(addCommentForm){
+        addCommentForm.addEventListener('submit', async (event)=>{
+            event.preventDefault();
+            const userComment = document.querySelector("#userComment").value;
+            //If no comment in field. Ignore the event handler.
+            if(userComment != null){
+                const articleId = document.querySelector("#articleComment").value;
+                const response = await fetch(`comment/${articleId}/${userComment}`);
+                const jsonData = await response.json();
+                displayNewComment(jsonData);
+            }
+        });
+    }
 
     //Process json response into new comment to be sent back to client.
     function displayNewComment(commentJson){
@@ -152,7 +151,7 @@ window.addEventListener("load", () =>{
     //Add event handler to file input for add-article and edit-article pages
     const fileInput = document.querySelector("#imageInput");
     if(fileInput){
-    fileInput.onchange = addCaptionInput;
+        fileInput.onchange = addCaptionInput;
     }
 
     //Adds input requiring caption if a file is chosen
@@ -164,13 +163,12 @@ window.addEventListener("load", () =>{
             captionInputElements.forEach(function(element) {
                 element.classList.remove("hidden");
             });
-            
             //Adds "required" attribute to caption input
             const captionInput = document.querySelector("#imageCaption");
             captionInput.setAttribute("required", "required");
         }
-    }
-    
+    } 
+
     //Adds confirmation dialog before deleting articles
     const deleteFormsArray = document.querySelectorAll(".delete-article-form");
     if (deleteFormsArray) {
@@ -180,5 +178,4 @@ window.addEventListener("load", () =>{
             }
         });
     }
-    
 });
