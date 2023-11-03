@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", () =>{
+window.addEventListener("load", () =>{
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
@@ -115,7 +115,7 @@ window.addEventListener("DOMContentLoaded", () =>{
 
 document.addEventListener("DOMContentLoaded", function () {
     const themeChangeButton = document.querySelector("#theme-change");
-    
+
     themeChangeButton.addEventListener("click", function() {
       document.body.classList.toggle("theme-light");
       document.body.classList.toggle("theme-dark");
