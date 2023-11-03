@@ -43,8 +43,10 @@
                 <a href="./edit-article?id={{id}}">
                     <button>Edit</button>
                 </a>
-                <button>Delete</button>
-            </div>                     
+                <form action="./delete-article/{{id}}" method="POST" class="delete-article-form" data-article-title="{{title}}">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </div>
         {{/each}}
     </div>
