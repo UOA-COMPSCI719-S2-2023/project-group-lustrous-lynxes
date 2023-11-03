@@ -88,13 +88,16 @@ window.addEventListener("load", () =>{
         document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
     });
 
+    //Client Side processing for comments.
     const addCommentForm = document.querySelector('#comment-form');
 
     addCommentForm.addEventListener('submit', async (event)=>{
         event.preventDefault();
-        const userComment = document.querySelector("#userComment");
-        const comment = userComment.value;
-        console.log(comment);
+        const userComment = document.querySelector("#userComment").value;
+        const articleId = document.querySelector("#articleComment").value;
+        const response = await fetch(`comment/${articleId}/${userComment}`);
+        const jsonData = await response.json();
+        console.log(jsonData);
     });
 
 

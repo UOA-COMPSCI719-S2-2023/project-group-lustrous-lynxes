@@ -329,13 +329,13 @@ router.get("/full-article", async (req, res) => {
     }
 });
 
-//add comment to article, and make sure comment not empty
-router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async(req, res) => {
-
+//add comment to article, and make sure comment not empty. Fetch Request done by client side.
+router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(req, res) => {
+console.log("Comments processing");
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
     //get comment from form, and make sure it's not empty
-    const content = (req.body.comment || "").trim();
+    const content = (req.params.comment || "").trim();
 
     //Comment cannot be empty
     if (!content) {
@@ -352,9 +352,9 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     //Add comment to database.
     await commentDao.addComment(commentData);
-    //Add comment likes to comment.
+    const getNewComment = await 
+    res.json(getNewComment);
 
-    res.redirect("/full-article?id=" + req.params.articleId);
 });
 //Add Like to Comment. Fetch Request made by client js.
 router.get("/add-like/:commentId", async (req,res)=>{
