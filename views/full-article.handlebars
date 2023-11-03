@@ -26,33 +26,33 @@
             {{!-- <p>user already logged in</p>  --}}
              <div>
                    <h2 class="form-title">Rate the Article</h2> 
-                   <form  action="./rating" method="post">
+                   <form id = "addRating">
                    <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" value= '1'>
+                        <input type="radio" name="rating" class="ratingValue" value= '1'>
                         <div class="radio-div"></div>1
                         <img class="star" src="/images/icons/star.png">
                     </label>
                     <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" value= '2'>
+                        <input type="radio" name="rating" class="ratingValue" value= '2'>
                         <div class="radio-div"></div>2
                         <img class="star" src="/images/icons/two-star.png">
                     </label>
                     <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" value= '3'>
+                        <input type="radio" name="rating" class="ratingValue" value= '3'>
                         <div class="radio-div"></div>3
                         <img class="star" src="/images/icons/three-star.png">
                     </label>
                     <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" value= '4'>
+                        <input type="radio" name="rating"class="ratingValue" value= '4'>
                         <div class="radio-div"></div>4
                         <img class="star" src="/images/icons/four-star.png">
                     </label>
                     <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" value= '5'>
+                        <input type="radio" name="rating" class="ratingValue" value= '5'>
                         <div class="radio-div"></div>5
                         <img class="star" src="/images/icons/five-star.png">
                     </label>
-                    <input type="hidden" name="id" value="{{artFull.id}}">
+                    <input type="hidden" name="id"  id ="currentArticle" value="{{artFull.id}}">
                     <button type="submit">Submit</button>
                     </form>
 
@@ -61,7 +61,7 @@
             {{!-- <p>please login first</p>  --}}
             <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
         {{/if}}
-        <h2>Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
+        <h2 id = "displayRating">Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
     </div>
 
     <div class="all-cards">
