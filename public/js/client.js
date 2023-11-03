@@ -88,6 +88,15 @@ window.addEventListener("load", () =>{
         document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
     });
 
+    const addCommentForm = document.querySelector('#comment-form');
+
+    addCommentForm.addEventListener('submit', async (event)=>{
+        event.preventDefault();
+        const userComment = document.querySelector("#userComment");
+        const comment = userComment.value;
+        console.log(comment);
+    });
+
 
 
     //Add event handler to file input for add-article and edit-article pages
