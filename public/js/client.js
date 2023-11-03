@@ -1,4 +1,4 @@
-window.addEventListener("load", () =>{
+window.addEventListener("DOMContentLoaded", () =>{
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
@@ -110,6 +110,31 @@ window.addEventListener("load", () =>{
             const captionInput = document.querySelector("#imageCaption");
             captionInput.setAttribute("required", "required");
         }
-    }
-    
+    } 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const themeChangeButton = document.querySelector("#theme-change");
+    
+    themeChangeButton.addEventListener("click", function() {
+      document.body.classList.toggle("theme-light");
+      document.body.classList.toggle("theme-dark");
+  
+      //save theme
+      const theme = document.body.classList.contains("theme-dark") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+    });
+  
+    //loading theme which saved
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("theme-dark");
+      document.body.classList.remove("theme-light");
+    } else {
+      document.body.classList.add("theme-light");
+      document.body.classList.remove("theme-dark");
+    }
+});
+  
+  
+  
