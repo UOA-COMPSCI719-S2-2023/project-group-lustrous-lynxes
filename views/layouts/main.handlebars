@@ -28,7 +28,9 @@
             <div class="navbar-right">    
                 {{#if user}}
                 <a class="logout" href="./logout">Logout</a>
-                <a href ="./edit-account"><img src="/images/icons/settings.png" alt="Settings Icon" class="icon"></a>
+                <a href ="./edit-account">
+                    <img src="/images/icons/settings.png" alt="Settings Icon" title="Settings" class="icon">
+                </a>
                 {{else}}
                 <a class="login" href= "./login">Login</a>
                 {{/if}}

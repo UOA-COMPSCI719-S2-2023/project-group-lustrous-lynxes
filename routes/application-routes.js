@@ -16,7 +16,8 @@ const fs = require("fs");
 router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
     //Set the average rating for all articles into DB.
-    await allArticles.setAllArticleAverageRating();
+    res.locals.rating = await allArticles.setAllArticleAverageRating();
+    console.log(res.locals.title);
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
     
