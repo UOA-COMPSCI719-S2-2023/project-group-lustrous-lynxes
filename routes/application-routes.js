@@ -162,7 +162,8 @@ router.post("/delete-article/:id", async (req, res) => {
     const articleId = req.params.id;
 
     await articleDao.deleteArticle(articleId);
-    
+
+    res.setToastMessage("Article deleted successfully.");    
     res.redirect("/");
 });
 
