@@ -37,6 +37,12 @@
                 {{/if}}
             </div>
         </nav>
+        
+        {{#if toastMessage}}
+        <div class="toast-container">
+            <p class="toast-message">{{toastMessage}}</p>
+        </div>
+        {{/if}}
     </header>
     
     {{{body}}}
