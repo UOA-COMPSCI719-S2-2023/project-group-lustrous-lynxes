@@ -111,4 +111,14 @@ window.addEventListener("load", () =>{
         }
     }
     
+    //Adds confirmation dialog before deleting articles
+    const deleteFormsArray = document.querySelectorAll(".delete-article-form");
+    if (deleteFormsArray) {
+        deleteFormsArray.forEach((element) => {
+            element.onsubmit = () => {
+                return confirm(`Are you sure you want to permanently delete "${element.dataset.articleTitle}"?`);
+            }
+        });
+    }
+    
 });
