@@ -188,12 +188,6 @@ button:hover {
     color:red;
 }
 
-/*Scale icon to appropriate size*/
-.icon {
-    max-width: 50px;
-    max-height: 50px;
-  }
-
 .all-cards {
     background-color: #E2F3E3;
     padding: 5%;
@@ -459,6 +453,62 @@ header {
     color: black;
     margin: 1em;
     margin-right: 3em;
+}
+
+.user-header {
+    background-color: #E2F3E3;
+    width: 100%;
+    padding: 4em;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    column-gap: 2em;
+}
+
+.user-header img {
+    width: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    align-self: flex-start;
+}
+
+.user-header button {
+    margin: 8px;
+}
+
+.user-header-button-container {
+    align-self: center;
+    min-width: 14em;
+}
+
+.user-header-button-container a {
+    display: block;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-right: 1em;
+}
+
+.user-info h1 {
+    text-align: left;
+    font-size: 5em;
+    margin: 0;
+}
+
+.user-info th, .user-info td {
+    text-align: left;
+}
+
+.user-info th {
+    vertical-align: top;
+    min-width: 6em;
+}
+
+.empty-flex-div {
+    flex-grow: 1;
 }
 
 @media only screen and (max-width: 900px) {
