@@ -31,6 +31,10 @@ window.addEventListener("load", () =>{
     const likeCommentButtons = Array.from(document.querySelectorAll(".likeButtons"));
     //For Each button add an async event listener.
     likeCommentButtons.forEach(button =>{
+        likeButtonEventListener(button);
+        });
+
+    async function likeButtonEventListener(button){
         button.addEventListener("click", async () =>{
             //Get the buttons current setting - add or remove.
             const buttonSetting = button.getAttribute("setting");
@@ -51,8 +55,9 @@ window.addEventListener("load", () =>{
                 button.innerHTML = "Add Like"
                 document.querySelector(`#display${commentId}`).innerHTML = `likes: ${likes}`
             }
-        });
     });
+    }
+
     async function addLike(commentId){
         const response = await fetch(`add-like/${commentId}`);
         const jsonData = await response.json();
@@ -88,7 +93,60 @@ window.addEventListener("load", () =>{
         document.querySelector("#displayRating").innerHTML = `Average Rating= ${jsonData.avRating}`;
     });
 
+    //Client Side processing for comments.
+    const addCommentForm = document.querySelector('#comment-form');
 
+    addCommentForm.addEventListener('submit', async (event)=>{
+        event.preventDefault();
+        const userComment = document.querySelector("#userComment").value;
+        //If no comment in field. Ignore the event handler.
+        if(userComment != null){
+        const articleId = document.querySelector("#articleComment").value;
+        const response = await fetch(`comment/${articleId}/${userComment}`);
+        const jsonData = await response.json();
+        displayNewComment(jsonData);
+        }
+    });
+
+    //Process json response into new comment to be sent back to client.
+    function displayNewComment(commentJson){
+        //Get location to display new comments
+        const container = document.querySelector("#newCommentCard");
+
+        //Create div containers and add correct CSS class.
+        const commentCard = document.createElement('div');
+        commentCard.classList.add('comment-card');
+        const cardAvatar = document.createElement('div');
+        cardAvatar.classList.add('card-avatar');
+        const cardTitle = document.createElement('div');
+        cardTitle.classList.add('card-title');
+        const cardContent = document.createElement('div');
+        cardContent.classList.add('card-content');
+
+        //Populate the comment.
+        const avatar = document.createElement('img')
+        avatar.src = `/images/avatars/${commentJson.avatar}`
+        cardAvatar.appendChild(avatar);
+        cardTitle.innerHTML = `<h4>${commentJson.fName} ${commentJson.lName}</h4>`;
+        cardContent.innerHTML = `<p>${commentJson.content}</p>
+        <h3 id = "display${commentJson.id}">likes: 0</h3>`
+
+        //Create like button and add to event listener.
+        const likeButton = document.createElement('button');
+        likeButton.classList.add('likeButtons');
+        likeButton.setAttribute("commentId",`${commentJson.id}`)
+        likeButton.setAttribute("setting", "add");
+        likeButton.innerHTML = "Add Like"
+        //Add event listener to button for adding likes.
+        cardContent.appendChild(likeButton);
+        likeButtonEventListener(likeButton);
+        
+        //Append the divs together.
+        commentCard.appendChild(cardAvatar);
+        commentCard.appendChild(cardTitle);
+        commentCard.appendChild(cardContent);
+        container.appendChild(commentCard);
+    }
 
     //Add event handler to file input for add-article and edit-article pages
     const fileInput = document.querySelector("#imageInput");

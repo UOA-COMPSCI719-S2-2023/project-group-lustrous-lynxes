@@ -74,28 +74,28 @@
             <div class="card-avatar">
                 <img src="/images/avatars/{{avatar}}">
             </div>
-        <div class="card-title">
-                <h4>{{fName}}  {{lName}}</h4>
+            <div class="card-title">
+                <h4>{{fName}} {{lName}}</h4>
             </div>
             <div class="card-content">
                 <p>{{content}}</p>
                 <h3 id = "display{{id}}">likes: {{likes}}</h3>
                 {{#if enableUserLike}}
-                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</button>
                 {{else}}
-                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</button>
                 {{/if}}
             </div>                     
         </div>
         {{/each}}
-        {{/if}}
-
+        <div id="newCommentCard"></div>
         </div>
-        {{#if user}} 
+        {{!-- Container to add new comments  --}}
         <div>
             <h1>Add a Comment</h1>
-            <form id="comment-form" class="all-cards" action="/articles/{{artFull.id}}/comments" method="post">
-                <textarea name="comment" placeholder="Add your comments here..."></textarea>
+            <form id="comment-form" class="all-cards">
+                <textarea name="comment" placeholder="Add your comments here..." id="userComment"></textarea>
+                <input type="hidden" name="id"  id ="articleComment" value="{{artFull.id}}">
                 <button type="submit">Publish Comment</button>
             </form>
         </div>
