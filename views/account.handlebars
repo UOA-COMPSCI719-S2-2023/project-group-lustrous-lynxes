@@ -1,23 +1,42 @@
-<div class="page-container"> 
-
-    <h1> {{user.fName}}'s  Account Page</h1>
+<div class="user-header">
     <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
 
-    <p>Username: {{user.username}}</p>
-    <p>Name: {{user.fName}} {{user.lName}}</p>
+    <div class="user-info">
+        <h1>{{user.username}}</h1>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>{{user.fName}} {{user.lName}}</td>
+            </tr>
+            {{#if user.dateOfBirth}}
+            <tr>
+                <th>Date of Birth:</th>
+                <td>{{user.dateOfBirth}}</td>
+            </tr>
+            {{/if}}
+            {{#if user.description}}
+            <tr>
+                <th>Description:</th>
+                <td>{{user.description}}</td>
+            </tr>
+            {{/if}}
+        </table>
+    </div>
 
-    {{#if user.dateOfBirth}}
-    <p>Date of Birth: {{user.dateOfBirth}}</p>
-    {{/if}}
+    <div class="empty-flex-div"></div>
 
-    {{#if user.description}}
-    <p>Description: {{user.description}}</p>
-    {{/if}}
+    <div class="user-header-button-container">
+        <a href="./add-article">
+            <button>Create new article</button>
+        </a>
+        <a href="./edit-account">
+            <button>Edit profile</button>
+        </a>
+    </div>
 
-    <a href="./add-article">
-        <button>Create New Article</button>
-    </a>
+</div>
 
+<div class="page-container"> 
     <h2>{{user.fName}}'s Articles</h2>
 
     <div class="all-cards">
@@ -51,4 +70,3 @@
         {{/each}}
     </div>
 </div>
-
