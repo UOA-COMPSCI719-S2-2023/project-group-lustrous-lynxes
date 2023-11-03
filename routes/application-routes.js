@@ -330,17 +330,12 @@ router.get("/full-article", async (req, res) => {
 });
 
 //add comment to article, and make sure comment not empty. Fetch Request done by client side.
+//No longer require check for empty string as it is done client.
 router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(req, res) => {
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
     //get comment and make sure it's not empty
-    const content = (req.params.comment || "").trim();
-
-    //Comment cannot be empty
-    if (!content) {
-        res.setToastMessage("Comment cannot be empty");
-        return res.redirect("/full-article?id=" + req.params.articleId);
-    }
+    const content = req.params.comment
 
     //Add comment to database
     const commentData = {

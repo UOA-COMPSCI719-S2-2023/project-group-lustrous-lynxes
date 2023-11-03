@@ -99,10 +99,13 @@ window.addEventListener("load", () =>{
     addCommentForm.addEventListener('submit', async (event)=>{
         event.preventDefault();
         const userComment = document.querySelector("#userComment").value;
+        //If no comment in field. Ignore the event handler.
+        if(userComment != null){
         const articleId = document.querySelector("#articleComment").value;
         const response = await fetch(`comment/${articleId}/${userComment}`);
         const jsonData = await response.json();
         displayNewComment(jsonData);
+        }
     });
 
     //Process json response into new comment to be sent back to client.
