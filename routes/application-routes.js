@@ -171,6 +171,7 @@ router.post("/delete-article/:id", async (req, res) => {
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
+
     //Render create account form using avatars.
     res.render("create-account");
 });
@@ -211,7 +212,21 @@ router.get("/logout",(req, res) => {
 
 //Request made to change user's settings. Need to verify login first.
 router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
-    res.locals.avatars = await avatarDao.retrieveAllIcons();
+    const avatars = await avatarDao.retrieveAllIcons();
+    const userAvatar = res.locals.user.avatar;
+    let userAvatarName;
+    for (let i=0; i < avatars.length; i++){
+        if (userAvatar == avatars[i].fileName){
+            userAvatarName = avatars[i].name;
+            avatars.splice(i, 1);
+        }
+    }
+    const defaultAvatar = {
+        fileName: userAvatar,
+        name: userAvatar
+    }
+    avatars.unshift(defaultAvatar);
+    res.locals.avatars = avatars;
     res.render("edit-account");
 });
 
