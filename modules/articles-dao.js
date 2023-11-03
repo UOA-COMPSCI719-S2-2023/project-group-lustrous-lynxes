@@ -64,13 +64,14 @@ async function editArticle(article) {
         `);
     }
 }
-//Should just be delete from...not delete * from.
-async function deleteArticle(article) {
+
+async function deleteArticle(articleId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     delete from articles 
-     where id = ${article.id}`);
+        DELETE FROM articles
+        WHERE id = ${articleId}
+    `);
 }
 
 //Order by Average Rating for when we display articles.
