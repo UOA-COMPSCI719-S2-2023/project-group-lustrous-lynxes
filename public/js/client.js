@@ -75,6 +75,8 @@ window.addEventListener("load", () =>{
     addRating.addEventListener('submit', async (event) =>{
         //Prevent Submittion of form. Process on client by making fetch request.
         event.preventDefault();
+        //set HTML to nothing
+        document.querySelector("#displayRating").innerHTML ="";
         const selectedRating = document.querySelectorAll('.ratingValue');
         const currentArticle = document.querySelector('#currentArticle');
         let userRating;
@@ -89,9 +91,33 @@ window.addEventListener("load", () =>{
         const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
         //Return article with new average result.
         const jsonData = await response.json();
+        //find correct star image to use
+        const starImage = getRatingStars(jsonData.avRating);
         //Process back to client. To be changed later to star images.
-        document.querySelector("#displayRating").innerHTML = `Average Rating= ${jsonData.avRating}`;
+        document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png">`;
     });
+
+    function getRatingStars(score) {
+        if (score < 1.8) {
+            return "one";
+        }
+        else if (score < 2.8) {
+            return "two";
+        }
+        else if (score < 3.8) {
+            return "three";
+        }
+        else if (score < 4.8) {
+            return "four";
+        }
+        else {
+            return "five";
+        }
+    }
+
+    function isHalfStar(rating){
+        return false;
+    }
 
     //Client Side processing for comments.
     const addCommentForm = document.querySelector('#comment-form');
