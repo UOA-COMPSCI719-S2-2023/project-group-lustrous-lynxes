@@ -97,8 +97,13 @@ window.addEventListener("load", () =>{
         const articleId = document.querySelector("#articleComment").value;
         const response = await fetch(`comment/${articleId}/${userComment}`);
         const jsonData = await response.json();
-        console.log(jsonData);
+        displayNewComment(jsonData);
     });
+
+    //Process json response into new comment to be sent back to client.
+    function displayNewComment(commentJson){
+
+    }
 
 
 

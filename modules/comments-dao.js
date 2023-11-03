@@ -1,6 +1,20 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
 
+async function getLatestCommentByUser(commentJson) {
+    const db = await dbPromise;
+
+    const allComments =  await db.get(SQL`
+     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId
+     from comment c, articles a, users u 
+     where a.id = ${commentJson.articleId}
+     and c.userId = ${commentJson.userId}
+     and a.id = c.articleId
+     and c.userId = u.id
+     order by c.id desc`);  
+     
+     return allComments;
+}
 async function rateArticles(rate) {
     const db = await dbPromise;
 
@@ -135,5 +149,6 @@ module.exports = {
     addArticleRating,
     getCommentLikes,
     checkLikeByCurrentUser,
-    removeCommentLike
+    removeCommentLike,
+    getLatestCommentByUser
 };
