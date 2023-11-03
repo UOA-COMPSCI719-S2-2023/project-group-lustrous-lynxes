@@ -51,9 +51,11 @@ async function addUserArticleRating(ratingJson){
     }
 }
 
+
 module.exports = {
     allCardDetails,
     userCardDetails,
     setAllArticleAverageRating,
-    addUserArticleRating
+    addUserArticleRating,
+    addAverageRating
 };

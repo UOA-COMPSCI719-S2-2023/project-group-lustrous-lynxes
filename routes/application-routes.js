@@ -272,28 +272,29 @@ router.get("/delete-account", async (req,res)=>{
 //go to articles page - no login required
 router.get("/articles", async (req, res) => {    
     //Set the average rating for all articles into DB.
-    await allArticles.setAllArticleAverageRating();
-    
+    await allArticles.setAllArticleAverageRating(); 
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.allCardDetails();
   
     res.render("./articles");
 });
 //Add Rating to article
-router.post("/rating",authUser.verifyAuthenticated,async(req,res)=>{
-    //Convert String to Number.
-    const userRating = Number(req.body.rating);
+router.get("/rating/:score/:articleId",authUser.verifyAuthenticated,async(req,res)=>{
     const articleRating = {
-        articleId: req.body.id,
+        articleId: req.params.articleId,
         userId: res.locals.user.id,
-        rating: userRating
+        rating: req.params.score
     }
     await allArticles.addUserArticleRating(articleRating);
-    res.redirect("/full-article?id=" + req.body.id);
+    await allArticles.addAverageRating(articleRating.articleId);
+    const articleResult = await articleDao.getArticleById(articleRating.articleId);
+    res.json(articleResult);
 });
 
 //read a full article - no login required
 router.get("/full-article", async (req, res) => {
+    //Ensure average rating is updated first.
+    await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
         //Could change this later to reuse code since we are getting the article

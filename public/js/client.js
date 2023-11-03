@@ -1,8 +1,7 @@
 window.addEventListener("load", () =>{
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
-    const viewArticle = document.querySelectorAll("#read-more");
-    const testing = document.querySelector("#arthead")
+
     //Everytime an input is made in form trigger event listener.
     //The Try-catch is optional, but could use it if calling server then DB from client.
     if (usernameInput != null){
@@ -64,6 +63,32 @@ window.addEventListener("load", () =>{
         const jsonData = await response.json();
         return jsonData.likes;
     }
+
+    //Form for adding rating.
+    const addRating = document.querySelector("#addRating");
+
+    addRating.addEventListener('submit', async (event) =>{
+        //Prevent Submittion of form. Process on client by making fetch request.
+        event.preventDefault();
+        const selectedRating = document.querySelectorAll('.ratingValue');
+        const currentArticle = document.querySelector('#currentArticle');
+        let userRating;
+        //Get Radio Button the was checked by using class and loop
+        for (let i = 0; i < selectedRating.length; i++){
+            if (selectedRating[i].checked){
+                const rating = selectedRating[i].value;
+                //Process to integer for DB later.
+                userRating = parseInt(rating);
+            }
+        }
+        const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
+        //Return article with new average result.
+        const jsonData = await response.json();
+        //Process back to client. To be changed later to star images.
+        document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
+    });
+
+
 
     //Add event handler to file input for add-article and edit-article pages
     const fileInput = document.querySelector("#imageInput");
