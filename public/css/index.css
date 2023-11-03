@@ -33,6 +33,10 @@
     .login-form p {
         color: #000;
     }
+
+    .page-container legend, label {
+        color: #000;
+    }
 }
 
 button#theme-change {
@@ -120,12 +124,6 @@ h3 {
     padding: 14px 20px;
     text-decoration: none;
 }
-
-.page-container legend, label {
-    color: #000;
-}
-
-
 
 input:not(#imageInput), textarea, .image-box {
     width: 100%;
