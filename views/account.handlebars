@@ -1,5 +1,6 @@
-<div class="page-container">    
-    <h1>Account Page</h1>
+<div class="page-container"> 
+
+    <h1> {{user.fName}}'s  Account Page</h1>
     <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
 
     <p>Username: {{user.username}}</p>
@@ -32,9 +33,11 @@
                 <div class="summary">
                     <p>{{{content}}}</p>
                 </div>
-                <a href="./full-article?id={{id}}">
-                    <p id="read-more">Read More</p>
-                </a>                    
+                <div class="card-info">
+                    <a href="./full-article?id={{id}}">
+                        <p id="read-more">Read More</p>
+                    </a>
+                </div>                    
             </div>
             <div class="card-options">
                 <a href="./edit-article?id={{id}}">

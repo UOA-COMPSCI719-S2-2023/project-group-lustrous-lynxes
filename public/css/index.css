@@ -4,11 +4,24 @@
   font-family: 'Kavoon', cursive;
   font-family: 'Roboto', sans-serif;
   font-family: 'Roboto Slab', sans-serif;
+  color: #333;
 }
 
 body {
     margin: 0px;
     font-family: 'Roboto', sans-serif;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1em 2em 1em 2em;
+}
+
+footer a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.75em;
 }
 
 h1, h2 {
@@ -44,6 +57,11 @@ h3 {
     align-items: center;
 }
 
+.navbar a:hover {
+    font-size: 1.25em;
+    color: #E2F3E3;
+}
+
 
 .navbar a {
     float: left;
@@ -55,8 +73,8 @@ h3 {
 
 input:not(#imageInput), textarea, .image-box {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 1em 2em;
+    margin: 1em auto;
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
@@ -68,11 +86,12 @@ input:not(#imageInput), textarea, .image-box {
 
 .existing-image-container {
     border-right: 0px;
-    width: auto;
+    width: auto; 
 }
 
 .image-input-container {
     flex: 1;
+    width: 100%;
 }
 
 .existing-image {
@@ -119,36 +138,44 @@ button:hover {
 
 .form-container {
     margin: 0px auto;
-    padding: 20px;
-    background-color:#f9f9f9;
+    padding: 2em;
+    background-color:#E2F3E3;
     border: 1px solid #333;
+    box-shadow: 5px 10px 5px #777;
 }
 
 .narrow-form {
-    width: 300px;
+    width: 30em;
+}
+
+.landing {
+    background-color: #333;
+    padding: 2em;
+    margin-top: 5em;
 }
 
 .article-form {
-    margin-top: 30px;
-    width: 90vw;
+    margin-top: 3em;
+    width: 90%;
+    margin: auto;
 }
 
 .login-form {
-    margin: 50px auto;
+    margin: 5em auto;
 }
 
 .page-container {
-    padding: 10px 50px 50px 50px;
+    padding: 1em 5em 5em 5em;
 }
 
 .settings-forms-container {
     display: flex;
-    gap: 25px;
+    gap: 2em;
 }
 
 .settings-form {
-    margin: 0px;
-    flex: 0 0 300px;
+    margin: 0;
+    flex: 0 0 30em;
 }
 
 .create-btn {
@@ -185,9 +212,16 @@ button:hover {
 }
 
 .summary-card.my-page {
-    grid-template-columns: 1fr 1fr 3fr 1fr;
+    grid-template-columns: 1fr 1.5fr 3fr 1fr;
     grid-template-areas: 
     "image title content content options";
+}
+
+.summary-card.my-page .card-title {
+    padding-left: 1em;
+    grid-area: title;
+    justify-self: centre;
+    color: black; 
 }
 
 .card-image {
@@ -195,15 +229,9 @@ button:hover {
 }
 
 .card-image img {
-    width: 12em;
+    width: 10em;
     height: 10em;
     object-fit: cover;
-}
-
-.card-title {
-    grid-area: title;
-    justify-self: left;
-    color: black;
 }
 
 .card-content {
@@ -213,6 +241,17 @@ button:hover {
 .card-content p {
     padding-right: 2em;
     text-align: justify;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.card-info p {
+    font-size: 1.25em;
+
 }
 
 .card-options {
@@ -227,16 +266,18 @@ button:hover {
     width: 8em;
     font-size: medium;
     font-weight: bold;
-    padding: 10px 0px;
+    padding: 1em 0px;
 }
 
 #read-more {
     color: #4caf50;
     font-weight: bolder;
+    font-size: 1.25em;
 }
 
 #read-more:hover {
     color: #333;
+    font-size: 1.5em;
 }
 
 .all-cards a {
@@ -284,24 +325,10 @@ button:hover {
     text-align: center;
 }
 
-/* 
-comment-form styling below was deleted in a new branch but merge conflict 
-- so keeping this but commenting out to see how it goes
-- delete later if nothing is affected
-#comment-form {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-*/
-
 #comment-form textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 1em;
+    margin-bottom: 1em;
     border-radius: 8px;
     border: #5cb85c solid 1px;
     height: 7em;
@@ -349,7 +376,10 @@ comment-form styling below was deleted in a new branch but merge conflict
 
 .comment-text {
     margin-top: 5px;
+}
 
+.likeButtons {
+    max-width: 10em;
 }
 
 #login-request {
@@ -400,5 +430,80 @@ comment-form styling below was deleted in a new branch but merge conflict
 
 .hidden {
     display: none !important;
+}
+
+.logo {
+    background-size: cover;
+    background-position: center;
+}
+
+.logo img {
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 900px) {
+    .full-card {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "image"
+        "content";
+    }
+    .header-image {
+        grid-area: image;
+        width: 100%;
+        margin: auto;
+    }
+    
+    .full-content {
+        grid-area: content;
+    }
+    
+    .full-content p {
+        text-align: justify;
+    }
+
+    .article-form {
+        margin-top: 2em;
+        width: 95%;
+        margin: auto;
+    }
+
+    .image-box-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "current"
+        "new";
+
+    }
+    
+    .existing-image-container {
+       grid-area: current;
+       border: #333 solid 1px;
+    }
+    
+    .image-input-container {
+        grid-area: new;
+    }
+
+    .card-content {
+        display: none;
+    }
+
+    .summary-card.my-page {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 
+        "title read options";
+    }
+
+    .summary-card.my-page .card-info {
+        grid-area: read;
+    }
+    
+    .summary-card.my-page .card-title {
+        padding-left: 2em;
+    }
+
 }
 
