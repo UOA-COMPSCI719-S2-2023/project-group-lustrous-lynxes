@@ -111,7 +111,7 @@ window.addEventListener("load", () =>{
     //Process json response into new comment to be sent back to client.
     function displayNewComment(commentJson){
         //Get location to display new comments
-        const container = document.querySelector("#newCommentCard");
+        const container = document.querySelector("#commentCardContainer");
 
         //Create div containers and add correct CSS class.
         const commentCard = document.createElement('div');
