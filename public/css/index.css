@@ -441,6 +441,26 @@ button:hover {
     max-width: 100%;
 }
 
+header {
+    position: relative;
+}
+
+.toast-container {
+    position: absolute;
+    top: calc(100% + 1em);
+    left: 1em;
+    background-color: white;
+    box-shadow: 2px 4px 5px #C1E5C7;
+    border: #5cb85c solid 1px;
+    border-left-width: 0.5em;
+}
+
+.toast-container p {
+    color: black;
+    margin: 1em;
+    margin-right: 3em;
+}
+
 @media only screen and (max-width: 900px) {
     .full-card {
         display: grid;
