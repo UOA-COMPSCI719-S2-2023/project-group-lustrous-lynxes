@@ -4,6 +4,7 @@ const router = express.Router();
 const authUser = require("../middleware/auth-middleware.js");
 const newUser = require("../middleware/new-account-middleware.js");
 const allArticles = require("../middleware/articles-middleware.js");
+const allComments = require("../middleware/comments-middleware.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const commentDao = require("../modules/comments-dao.js");
@@ -250,7 +251,6 @@ router.post("/edit-account", async (req,res) =>{
 //Changes made to password by user.
 router.post("/edit-password", async (req,res) =>{
     const userId = res.locals.user.id;
-    //Have User input current password as validation.
     const currentPasswordInput = req.body.password;
     //Check actual password in DB for user.
     const user = await userDao.getUserById(userId);
@@ -312,22 +312,8 @@ router.get("/full-article", async (req, res) => {
         //Could change this later to reuse code since we are getting the article
         //eg instead of viewing article directly from db, we could have display article functions in middleware
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
-        const allArticleComments = await commentDao.viewComments(req.query.id);
-        //Add amount of likes to the comment then add back to res.locals.
-        for(let i = 0; i < allArticleComments.length; i++){
-            const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
-            allArticleComments[i].likes = likes;
-            //Only run this if user is logged in.
-            if (res.locals.user){
-            const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
-            //If the user has already liked the comment, then disable the ability to like that comment.
-            if(likeByUser){
-                allArticleComments[i].enableUserLike = false;
-            }else{
-                allArticleComments[i].enableUserLike = true;
-            }
-        }
-        }
+        //Moved logic to middleware.
+        const allArticleComments = await allComments.getCommentData(res.locals.user, req.query.id);
         //Sort Comments by likes.
         allArticleComments.sort((a,b) =>{
             return b.likes - a.likes;

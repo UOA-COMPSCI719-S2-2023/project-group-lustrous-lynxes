@@ -1,5 +1,5 @@
 const articlesDao = require("../modules/articles-dao.js");
-const commentDao = require("../modules/comments-dao.js")
+const commentDao = require("../modules/comments-dao.js");
 
 //Get all articles. Ordered by highest to lowest average rating.
 async function allCardDetails() {

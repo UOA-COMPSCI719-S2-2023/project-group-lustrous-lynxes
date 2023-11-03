@@ -53,11 +53,9 @@ async function addUserToLocals(req, res, next) {
 
 //Check user is authenticatied before rendering account page.
 function verifyAuthenticated(req, res, next) {
-    //If res.locals user exists verfication accepted call next
     if (res.locals.user) {
         next();
     }
-    //If does not exists redirect to login page.
     else {
         res.redirect("./login");
     }

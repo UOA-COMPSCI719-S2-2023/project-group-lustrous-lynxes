@@ -93,7 +93,7 @@ async function viewComments(articleId) {
     const db = await dbPromise;
 
     const allComments =  await db.all(SQL`
-     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId
+     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId, u.id as userId
      from comment c, articles a, users u 
      where ${articleId} = a.id
      and a.id = c.articleId
