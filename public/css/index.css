@@ -28,18 +28,14 @@
     --button-border-color: var(--button-border-color-night);
 
     .all-cards {
-        color: #000;
+        color: #333;
     }
     .login-form p {
-        color: #000;
+        color: #333;
     }
 
     .page-container legend, label {
-        color: #000;
-    }
-
-    .article-form {
-        color: #000;
+        color: #333;
     }
 }
 
@@ -216,6 +212,7 @@ button:hover {
     margin-top: 3em;
     width: 90%;
     margin: auto;
+    color: #333;
 }
 
 .login-form {
@@ -279,7 +276,7 @@ button:hover {
     padding-left: 1em;
     grid-area: title;
     justify-self: centre;
-    color: black; 
+    color: #333; 
 }
 
 .card-image {
@@ -377,7 +374,7 @@ button:hover {
 .full-content p {
     padding: 2em;
     text-align: justify;
-    color: #000;
+    color: #333;
 }
 
 .centred-text {
@@ -565,19 +562,3 @@ button:hover {
     }
 
 }
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  

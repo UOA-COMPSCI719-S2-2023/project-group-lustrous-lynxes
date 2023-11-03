@@ -1,4 +1,28 @@
 window.addEventListener("load", () =>{
+
+    const themeToggleButton = document.querySelector("#theme-change");
+    const body = document.body;
+    
+    //Initialize theme based on saved preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        body.classList.add("theme-dark");
+        body.classList.remove("theme-light");
+    } else {
+        body.classList.add("theme-light");
+        body.classList.remove("theme-dark");
+    }
+    
+    //Set up the theme toggle button event listener
+    themeToggleButton.addEventListener("click", function() {
+        body.classList.toggle("theme-light");
+        body.classList.toggle("theme-dark");
+
+        //Save the theme preference
+        const theme = body.classList.contains("theme-dark") ? "dark" : "light";
+        localStorage.setItem("theme", theme);
+    });
+
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
@@ -88,8 +112,6 @@ window.addEventListener("load", () =>{
         document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
     });
 
-
-
     //Add event handler to file input for add-article and edit-article pages
     const fileInput = document.querySelector("#imageInput");
     if(fileInput){
@@ -113,28 +135,5 @@ window.addEventListener("load", () =>{
     } 
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const themeChangeButton = document.querySelector("#theme-change");
-
-    themeChangeButton.addEventListener("click", function() {
-      document.body.classList.toggle("theme-light");
-      document.body.classList.toggle("theme-dark");
-  
-      //save theme
-      const theme = document.body.classList.contains("theme-dark") ? "dark" : "light";
-      localStorage.setItem("theme", theme);
-    });
-  
-    //loading theme which saved
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.body.classList.add("theme-dark");
-      document.body.classList.remove("theme-light");
-    } else {
-      document.body.classList.add("theme-light");
-      document.body.classList.remove("theme-dark");
-    }
-});
-  
   
   
