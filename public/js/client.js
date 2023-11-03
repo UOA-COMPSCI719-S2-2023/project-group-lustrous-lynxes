@@ -69,7 +69,7 @@ window.addEventListener("load", () =>{
 
     //Form for adding rating.
     const addRating = document.querySelector("#addRating");
-
+  
     if(addRating){
         addRating.addEventListener('submit', async (event) =>{
             event.preventDefault();
@@ -168,4 +168,14 @@ window.addEventListener("load", () =>{
             captionInput.setAttribute("required", "required");
         }
     } 
+
+    //Adds confirmation dialog before deleting articles
+    const deleteFormsArray = document.querySelectorAll(".delete-article-form");
+    if (deleteFormsArray) {
+        deleteFormsArray.forEach((element) => {
+            element.onsubmit = () => {
+                return confirm(`Are you sure you want to permanently delete "${element.dataset.articleTitle}"?`);
+            }
+        });
+    }
 });
