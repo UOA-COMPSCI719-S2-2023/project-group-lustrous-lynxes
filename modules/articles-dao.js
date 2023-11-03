@@ -103,7 +103,7 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select a.id, a.imgFileName, a.imgCaption, a.title, a.content, u.fName, u.lName 
+     select a.id, a.imgFileName, a.imgCaption, a.title, a.content, a.avRating, u.fName, u.lName 
      from articles a, users u 
      where a.id = ${givenId}
      and a.authorId = u.id`);

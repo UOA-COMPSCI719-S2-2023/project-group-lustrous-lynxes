@@ -292,15 +292,21 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns: 3fr 7fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-    "image content";
+    "image"
+    "content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
 }
 
 .header-image {
     grid-area: image;
+    max-height: 20em;
+    overflow: hidden;
+}
+.header-image img {
+    max-width: 100%;
 }
 
 .header-image img {

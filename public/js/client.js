@@ -85,7 +85,7 @@ window.addEventListener("load", () =>{
         //Return article with new average result.
         const jsonData = await response.json();
         //Process back to client. To be changed later to star images.
-        document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
+        document.querySelector("#displayRating").innerHTML = `Average Rating= ${jsonData.avRating}`;
     });
 
 
