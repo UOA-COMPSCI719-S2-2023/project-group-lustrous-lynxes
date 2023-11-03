@@ -78,6 +78,7 @@ input:not(#imageInput), textarea, .image-box {
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .image-box-container {
@@ -277,7 +278,6 @@ button:hover {
 
 #read-more:hover {
     color: #333;
-    font-size: 1.5em;
 }
 
 .all-cards a {

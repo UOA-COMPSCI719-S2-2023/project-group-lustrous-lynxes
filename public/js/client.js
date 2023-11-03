@@ -71,27 +71,28 @@ window.addEventListener("load", () =>{
 
     //Form for adding rating.
     const addRating = document.querySelector("#addRating");
-
-    addRating.addEventListener('submit', async (event) =>{
-        //Prevent Submittion of form. Process on client by making fetch request.
-        event.preventDefault();
-        const selectedRating = document.querySelectorAll('.ratingValue');
-        const currentArticle = document.querySelector('#currentArticle');
-        let userRating;
-        //Get Radio Button the was checked by using class and loop
-        for (let i = 0; i < selectedRating.length; i++){
-            if (selectedRating[i].checked){
-                const rating = selectedRating[i].value;
-                //Process to integer for DB later.
-                userRating = parseInt(rating);
+    if (addRating) {
+        addRating.addEventListener('submit', async (event) =>{
+            //Prevent Submittion of form. Process on client by making fetch request.
+            event.preventDefault();
+            const selectedRating = document.querySelectorAll('.ratingValue');
+            const currentArticle = document.querySelector('#currentArticle');
+            let userRating;
+            //Get Radio Button the was checked by using class and loop
+            for (let i = 0; i < selectedRating.length; i++){
+                if (selectedRating[i].checked){
+                    const rating = selectedRating[i].value;
+                    //Process to integer for DB later.
+                    userRating = parseInt(rating);
+                }
             }
-        }
-        const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
-        //Return article with new average result.
-        const jsonData = await response.json();
-        //Process back to client. To be changed later to star images.
-        document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
-    });
+            const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
+            //Return article with new average result.
+            const jsonData = await response.json();
+            //Process back to client. To be changed later to star images.
+            document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
+        });
+    }
 
     //Client Side processing for comments.
     const addCommentForm = document.querySelector('#comment-form');
