@@ -351,7 +351,6 @@ router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(r
     //Add comment to database.
     await commentDao.addComment(commentData);
     const getNewComment = await commentDao.getLatestCommentByUser(commentData);
-    console.log(getNewComment);
     res.json(getNewComment);
 });
 //Add Like to Comment. Fetch Request made by client js.
