@@ -70,39 +70,31 @@ window.addEventListener("load", () =>{
     //Form for adding rating.
     const addRating = document.querySelector("#addRating");
 
-    addRating.addEventListener('submit', async (event) =>{
-        //Prevent Submittion of form. Process on client by making fetch request.
-        event.preventDefault();
-        //set HTML to nothing
-        document.querySelector("#displayRating").innerHTML ="";
-        const selectedRating = document.querySelectorAll('.ratingValue');
-        const currentArticle = document.querySelector('#currentArticle');
-        let userRating;
-        let half;
-        //Get Radio Button the was checked by using class and loop
-        for (let i = 0; i < selectedRating.length; i++){
-            if (selectedRating[i].checked){
-                const rating = selectedRating[i].value;
-                //Process to integer for DB later.
-                userRating = parseInt(rating);
+    if (addRating){
+        addRating.addEventListener('submit', async (event) =>{
+            event.preventDefault();
+            document.querySelector("#displayRating").innerHTML ="";
+            const selectedRating = document.querySelectorAll('.ratingValue');
+            const currentArticle = document.querySelector('#currentArticle');
+            let userRating;
+            for (let i = 0; i < selectedRating.length; i++){
+                if (selectedRating[i].checked){
+                    const rating = selectedRating[i].value;
+                    userRating = parseInt(rating);
+                }
             }
-        }
-        const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
-        //Return article with new average result.
-        const jsonData = await response.json();
-        //find correct star image to use
-        const starImage = getRatingStars(jsonData.avRating);
-        //do we need a half star file?
-        const halfStar = isHalfStar(jsonData.avRating);
-        //Process back to client as star images.
-        if(halfStar) {
-            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
-        }
-        else {
-            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png">`;
-        }
-           
-    });
+            const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
+            const jsonData = await response.json();
+            const starImage = getRatingStars(jsonData.avRating);
+            const halfStar = isHalfStar(jsonData.avRating);
+
+            if(halfStar) {
+                document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+            }else {
+                document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png">`;
+            }
+        });
+    }
 
     function getRatingStars(score) {
         if (score < 1.8) {
