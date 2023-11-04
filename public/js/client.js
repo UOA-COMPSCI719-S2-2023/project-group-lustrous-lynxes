@@ -1,4 +1,28 @@
 window.addEventListener("load", () =>{
+
+    const themeToggleButton = document.querySelector("#theme-change");
+    const body = document.body;
+    
+    //Initialize theme based on saved preference
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        body.classList.add("theme-dark");
+        body.classList.remove("theme-light");
+    } else {
+        body.classList.add("theme-light");
+        body.classList.remove("theme-dark");
+    }
+    
+    //Set up the theme toggle button event listener
+    themeToggleButton.addEventListener("click", function() {
+        body.classList.toggle("theme-light");
+        body.classList.toggle("theme-dark");
+
+        //Save the theme preference
+        const theme = body.classList.contains("theme-dark") ? "dark" : "light";
+        localStorage.setItem("theme", theme);
+    });
+
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
 
@@ -211,3 +235,4 @@ window.addEventListener("load", () =>{
         });
     }
 });
+
