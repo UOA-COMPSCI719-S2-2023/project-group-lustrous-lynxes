@@ -126,8 +126,8 @@ button {
     color: #fff;
     font-size: larger;
     font-weight: bolder;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 1em 1.5em;
+    margin: 0.5em 0;
     border: none;
     cursor: pointer;
 }
@@ -465,59 +465,40 @@ header {
 }
 
 .user-header {
-    background-color: #E2F3E3;
-    width: 100%;
-    padding: 4em;
-    box-sizing: border-box;
-    display: flex;
-    align-items: flex-end;
-    column-gap: 2em;
+    display: grid;
+    grid-template-columns: 20em 3fr 2fr 1fr;
+    grid-template-areas: 
+    ". info  buttons .";
+    background-image: url(/images/header/background.png);
+    width: 99%;
+    margin: auto;
+    padding: 2em;
 }
 
 .user-header img {
-    width: 200px;
-    max-width: 200px;
-    max-height: 200px;
-    align-self: flex-start;
+    max-width: 1em;
+    margin: auto;
+    align-self: end;
 }
 
-.user-header button {
-    margin: 8px;
+.user-header h1 {
+    text-align: left;
+    font-size: 5em;
 }
 
 .user-header-button-container {
-    align-self: center;
-    min-width: 14em;
+    grid-area: buttons;
+    align-items: end;
+    align-self: end;
 }
 
-.user-header-button-container a {
-    display: block;
+.user-header-button-container button {
+    margin-top: 1em;
+    align-self: end;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-right: 1em;
-}
-
-.user-info h1 {
-    text-align: left;
-    font-size: 5em;
-    margin: 0;
-}
-
-.user-info th, .user-info td {
-    text-align: left;
-}
-
-.user-info th {
-    vertical-align: top;
-    min-width: 6em;
-}
-
-.empty-flex-div {
-    flex-grow: 1;
+    grid-area: info;
 }
 
 @media only screen and (max-width: 900px) {
@@ -545,7 +526,7 @@ header {
     }
 
     .article-form {
-        margin-top: 2em;
+        margin-top: 4em;
         width: 95%;
         margin: auto;
     }
