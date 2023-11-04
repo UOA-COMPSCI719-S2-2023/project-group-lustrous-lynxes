@@ -69,6 +69,7 @@
             <h1>Comments</h1>
         </div>
         {{#if user}}
+        <div id="newCommentCard">
         {{#each comFull}}
         <div class="comment-card">
             <div class="card-avatar">
@@ -88,7 +89,6 @@
             </div>                     
         </div>
         {{/each}}
-        <div id="newCommentCard"></div>
         </div>
         {{!-- Container to add new comments  --}}
         <div>
