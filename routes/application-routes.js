@@ -42,6 +42,38 @@ router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
     res.render("account")
 });
 
+//Route handler to visit particular user's profile by ID in query parameter
+router.get("/user", async (req, res) => {
+    //Get user object
+    const visitUserId = req.query.id;
+    const visitUser = await userDao.getUserById(visitUserId);
+    
+    //Why do we need to do this???
+    //Set the average rating for all articles into DB.
+    res.locals.rating = await allArticles.setAllArticleAverageRating();
+
+    //If user is not found, displays "user not found" message
+    if (visitUser == undefined) {
+        res.render("account", {
+            noUser: true
+        });
+    } else {
+        //Save required information to res.locals
+        res.locals.title = `${visitUser.username}'s Articles`;
+        res.locals.artCard =  await allArticles.userCardDetails(visitUserId);
+        res.locals.visitUser = visitUser;
+        
+        //Renders account page
+        if (visitUserId == res.locals.user.id) {
+            res.render("account", {
+                myAccount: true
+            });
+        } else {
+            res.render("account");
+        }
+    }
+});
+
 //Renders add-article page which allows user to create an article
 router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     res.render("add-article", {

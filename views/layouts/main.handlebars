@@ -23,7 +23,9 @@
         <nav class="navbar">
             <div class="navbar-left">
                 <a href="./articles">Home</a>
-                <a href="/">Profile</a>
+                {{#if user}}
+                <a href="/user?id={{user.id}}">Profile</a>
+                {{/if}}
             </div>
 
             <div class="navbar-right">    
