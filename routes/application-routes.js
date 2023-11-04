@@ -28,35 +28,32 @@ router.get("/articles", async (req, res) => {
     res.render("articles");
 });
 
-//Render user's own user page
+//Renders user's own user page
 router.get("/profile", authUser.verifyAuthenticated, (req, res) => {
     res.redirect(`/user?id=${res.locals.user.id}`);
 });
 
-//If a logged in user makes get request (URL) then redirect.
+//Renders login page
 router.get("/login", (req, res) => {
     if (res.locals.user){
-        res.redirect("./");
+        //Redirects to home if user is already logged in
+        res.redirect("/");
     }else{
     res.render("login");
     }
 });
 
-//Login Clicked
+//Redirects to profile if user successfully logs in
 router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
     res.redirect("/profile");
 });
 
-//Route handler to visit particular user's profile by ID in query parameter
+//Renders particular user's profile by ID in query parameter
 router.get("/user", async (req, res) => {
     //Get user object
     const visitUserId = req.query.id;
     const visitUser = await userDao.getUserById(visitUserId);
     
-    //Why do we need to do this???
-    //Set the average rating for all articles into DB.
-    res.locals.rating = await allArticles.setAllArticleAverageRating();
-
     //If user is not found, displays "user not found" message
     if (visitUser == undefined) {
         res.render("account", {
@@ -64,9 +61,10 @@ router.get("/user", async (req, res) => {
         });
     } else {
         //Save required information to res.locals
+        res.locals.visitUser = visitUser;
         res.locals.title = `${visitUser.username}'s Articles`;
         res.locals.artCard =  await allArticles.userCardDetails(visitUserId);
-        res.locals.visitUser = visitUser;
+        res.locals.rating = await allArticles.setAllArticleAverageRating();
         
         //Renders account page
         if (visitUserId == res.locals.user.id) {
