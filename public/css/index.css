@@ -474,10 +474,11 @@ Styles for user header on account page
     background-color: #E2F3E3;
     background-image: url("../images/header/background.png");
     background-size: cover;
+    background-position: right center;
 
     width: 100%;
     padding: 4em;
-    padding-left: 15%;
+    padding-left: 8%;
     box-sizing: border-box;
 
     display: grid;
@@ -517,6 +518,8 @@ Styles for user header on account page
 
 .user-info th, .user-info td {
     text-align: left;
+    vertical-align: center;
+    padding-right: 1em;
 }
 
 .user-info th {
@@ -538,12 +541,21 @@ Styles for user header on account page
     align-self: center;
 }
 
-.user-header-button-container a {
-    display: block;
+.user-header-button-container button {
+    width: 12em;
+    margin: 0.5em 0;
 }
 
-.user-header-button-container button {
-    margin: 8px;
+@media only screen and (max-width: 1280px) {
+    .user-header {
+        background-position: calc(100% + 150px) center;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .user-header {
+        grid-template-areas: "image name buttons" "image info buttons" "description description buttons";
+    }
 }
 
 @media only screen and (max-width: 900px) {
@@ -555,6 +567,7 @@ Styles for user header on account page
         "title"
         "content";
     }
+
     .header-image {
         grid-area: image;
         width: 98%;
@@ -615,6 +628,31 @@ Styles for user header on account page
     .summary-card {
         height: fit-content;
     }
-
 }
 
+@media only screen and (max-width: 850px) {
+    .user-header {
+        background-position: calc(100% + 320px) center;
+        grid-template-areas: "image name" "image info" "description description" "buttons buttons";
+        grid-template-columns: 8em 1fr;
+        padding-right: 20%;
+    }
+
+    .user-username h1 {
+        text-align: left;
+        font-size: clamp(2em, 10vw, 5em);;
+        margin: 0;
+    }
+
+    .user-description {
+        margin-bottom: 1em;
+    }
+
+    .user-header-button-container {
+        text-align: center;
+    }
+
+    .user-header-button-container button {
+        margin: 0.2em 0.5em;
+    }
+}
