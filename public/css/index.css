@@ -126,8 +126,8 @@ button {
     color: #fff;
     font-size: larger;
     font-weight: bolder;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 1em 1.5em;
+    margin: 0.5em 0;
     border: none;
     cursor: pointer;
 }
@@ -171,12 +171,13 @@ button:hover {
 
 .settings-forms-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 2em;
 }
 
 .settings-form {
     margin: 0;
-    flex: 0 0 30em;
+    flex: 0 0 25em;
 }
 
 .create-btn {
@@ -286,24 +287,32 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns: 3fr 7fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "image content";
+    "image title"
+    "content content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
 }
 
 .header-image {
     grid-area: image;
+    max-height: 15em;
+    overflow: hidden;
 }
-
 .header-image img {
-    max-width: 100%;
+    max-height: 15em;
 }
 
 .header-image p {
     text-align: center;
     color: #4caf50;
+}
+
+.header-details {
+    grid-area: title;
+    padding-top: 2em;
+    justify-self: start;
 }
 
 .full-content {
@@ -387,7 +396,7 @@ button:hover {
 }
 
 .rating {
-    max-width: 90%;
+    max-width: 95%;
     margin: auto;
 }
 
@@ -413,9 +422,10 @@ button:hover {
 }
 
 .rating form {
-    background-color: #E2F3E3;
+    background-color: #555;
     text-align: center;
     padding: 2em;
+    color: #E2F3E3;
 }
 
 .radio-div {
@@ -456,59 +466,40 @@ header {
 }
 
 .user-header {
-    background-color: #E2F3E3;
-    width: 100%;
-    padding: 4em;
-    box-sizing: border-box;
-    display: flex;
-    align-items: flex-end;
-    column-gap: 2em;
+    display: grid;
+    grid-template-columns: 20em 3fr 2fr 1fr;
+    grid-template-areas: 
+    ". info  buttons .";
+    background-image: url(/images/header/background.png);
+    width: 99%;
+    margin: auto;
+    padding: 2em;
 }
 
 .user-header img {
-    width: 200px;
-    max-width: 200px;
-    max-height: 200px;
-    align-self: flex-start;
+    max-width: 1em;
+    margin: auto;
+    align-self: end;
 }
 
-.user-header button {
-    margin: 8px;
+.user-header h1 {
+    text-align: left;
+    font-size: 5em;
 }
 
 .user-header-button-container {
-    align-self: center;
-    min-width: 14em;
+    grid-area: buttons;
+    align-items: end;
+    align-self: end;
 }
 
-.user-header-button-container a {
-    display: block;
+.user-header-button-container button {
+    margin-top: 1em;
+    align-self: end;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-right: 1em;
-}
-
-.user-info h1 {
-    text-align: left;
-    font-size: 5em;
-    margin: 0;
-}
-
-.user-info th, .user-info td {
-    text-align: left;
-}
-
-.user-info th {
-    vertical-align: top;
-    min-width: 6em;
-}
-
-.empty-flex-div {
-    flex-grow: 1;
+    grid-area: info;
 }
 
 @media only screen and (max-width: 900px) {
@@ -517,12 +508,14 @@ header {
         grid-template-columns: 1fr;
         grid-template-areas: 
         "image"
+        "title"
         "content";
     }
     .header-image {
         grid-area: image;
-        width: 100%;
+        width: 98%;
         margin: auto;
+        height: auto;
     }
     
     .full-content {
@@ -534,7 +527,7 @@ header {
     }
 
     .article-form {
-        margin-top: 2em;
+        margin-top: 4em;
         width: 95%;
         margin: auto;
     }
@@ -557,7 +550,7 @@ header {
         grid-area: new;
     }
 
-    .card-content {
+    .summary {
         display: none;
     }
 
@@ -567,12 +560,16 @@ header {
         "title read options";
     }
 
-    .summary-card.my-page .card-info {
+    .summary-card.my-page .card-content{
         grid-area: read;
     }
     
-    .summary-card.my-page .card-title {
+    .card-title {
         padding-left: 2em;
+    }
+
+    .summary-card {
+        height: fit-content;
     }
 
 }

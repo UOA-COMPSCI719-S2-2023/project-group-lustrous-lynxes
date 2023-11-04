@@ -69,26 +69,66 @@ window.addEventListener("load", () =>{
 
     //Form for adding rating.
     const addRating = document.querySelector("#addRating");
-  
-    if(addRating){
-        addRating.addEventListener('submit', async (event) =>{
-            event.preventDefault();
-            const selectedRating = document.querySelectorAll('.ratingValue');
-            const currentArticle = document.querySelector('#currentArticle');
-            let userRating;
-            //Get Radio Button the was checked by using class and loop
-            for (let i = 0; i < selectedRating.length; i++){
-                if (selectedRating[i].checked){
-                    const rating = selectedRating[i].value;
-                    userRating = parseInt(rating);
-                }
+
+    addRating.addEventListener('submit', async (event) =>{
+        //Prevent Submittion of form. Process on client by making fetch request.
+        event.preventDefault();
+        //set HTML to nothing
+        document.querySelector("#displayRating").innerHTML ="";
+        const selectedRating = document.querySelectorAll('.ratingValue');
+        const currentArticle = document.querySelector('#currentArticle');
+        let userRating;
+        let half;
+        //Get Radio Button the was checked by using class and loop
+        for (let i = 0; i < selectedRating.length; i++){
+            if (selectedRating[i].checked){
+                const rating = selectedRating[i].value;
+                //Process to integer for DB later.
+                userRating = parseInt(rating);
             }
-            const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
-            //Return article with new average result.
-            const jsonData = await response.json();
-            //Process back to client. To be changed later to star images.
-            document.querySelector("#displayRating").innerHTML = `Current Average Rating= ${jsonData.avRating}`
-        });
+        }
+        const response = await fetch(`rating/${userRating}/${currentArticle.value}`);
+        //Return article with new average result.
+        const jsonData = await response.json();
+        //find correct star image to use
+        const starImage = getRatingStars(jsonData.avRating);
+        //do we need a half star file?
+        const halfStar = isHalfStar(jsonData.avRating);
+        //Process back to client as star images.
+        if(halfStar) {
+            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+        }
+        else {
+            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png">`;
+        }
+           
+    });
+
+    function getRatingStars(score) {
+        if (score < 1.8) {
+            return "one";
+        }
+        else if (score < 2.8) {
+            return "two";
+        }
+        else if (score < 3.8) {
+            return "three";
+        }
+        else if (score < 4.8) {
+            return "four";
+        }
+        else {
+            return "five";
+        }
+    }
+
+    function isHalfStar(score){
+        if (score < 1.3 || (score >= 1.8 && score < 2.3) || (score >= 2.8 && score < 3.3) || (score >= 3.8 && score < 4.3) || score >= 4.8) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     //Client Side processing for comments.
