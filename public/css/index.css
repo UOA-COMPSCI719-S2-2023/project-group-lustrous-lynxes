@@ -401,7 +401,7 @@ button:hover {
 }
 
 .rating {
-    max-width: 90%;
+    max-width: 95%;
     margin: auto;
 }
 
@@ -427,9 +427,10 @@ button:hover {
 }
 
 .rating form {
-    background-color: #E2F3E3;
+    background-color: #555;
     text-align: center;
     padding: 2em;
+    color: #E2F3E3;
 }
 
 .radio-div {
@@ -497,7 +498,7 @@ button:hover {
         grid-area: new;
     }
 
-    .card-content {
+    .summary {
         display: none;
     }
 
@@ -507,7 +508,7 @@ button:hover {
         "title read options";
     }
 
-    .summary-card.my-page .card-info {
+    .summary-card.my-page .card-content{
         grid-area: read;
     }
     
