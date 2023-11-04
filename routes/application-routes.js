@@ -20,6 +20,9 @@ router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.rating = await allArticles.setAllArticleAverageRating();
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
+    //Fix to get request
+    res.locals.visitUser = res.locals.user;
+
     
     res.render("account");
 });
@@ -35,11 +38,10 @@ router.get("/login", (req, res) => {
 
 //Login Clicked
 router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
-    //Set the average rating for all articles into DB.
-    await allArticles.setAllArticleAverageRating();
-    //Get allCardDetails in order of rating.
-    res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
-    res.render("account")
+    //This is exactly the same as get request to home....just redirect to home.
+    //await allArticles.setAllArticleAverageRating();
+    //res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
+    res.redirect('/');
 });
 
 //Route handler to visit particular user's profile by ID in query parameter
