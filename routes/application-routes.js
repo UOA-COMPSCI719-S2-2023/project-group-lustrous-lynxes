@@ -18,7 +18,6 @@ router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
     //Set the average rating for all articles into DB.
     res.locals.rating = await allArticles.setAllArticleAverageRating();
-    console.log(res.locals.title);
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
     
@@ -160,10 +159,21 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
     res.redirect(`/full-article?id=${articleId}`);
 });
 
+//Handles request to delete article
+router.post("/delete-article/:id", async (req, res) => {
+    const articleId = req.params.id;
+
+    await articleDao.deleteArticle(articleId);
+
+    res.setToastMessage("Article deleted successfully.");    
+    res.redirect("/");
+});
+
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
+
     //Render create account form using avatars.
     res.render("create-account");
 });
@@ -204,7 +214,21 @@ router.get("/logout",(req, res) => {
 
 //Request made to change user's settings. Need to verify login first.
 router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
-    res.locals.avatars = await avatarDao.retrieveAllIcons();
+    const avatars = await avatarDao.retrieveAllIcons();
+    const userAvatar = res.locals.user.avatar;
+    let userAvatarName;
+    for (let i=0; i < avatars.length; i++){
+        if (userAvatar == avatars[i].fileName){
+            userAvatarName = avatars[i].name;
+            avatars.splice(i, 1);
+        }
+    }
+    const defaultAvatar = {
+        fileName: userAvatar,
+        name: userAvatar
+    }
+    avatars.unshift(defaultAvatar);
+    res.locals.avatars = avatars;
     res.render("edit-account");
 });
 
@@ -357,7 +381,6 @@ router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(r
     //Add comment to database.
     await commentDao.addComment(commentData);
     const getNewComment = await commentDao.getLatestCommentByUser(commentData);
-    console.log(getNewComment);
     res.json(getNewComment);
 });
 //Add Like to Comment. Fetch Request made by client js.

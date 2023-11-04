@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+
     {{#if title}}
     <title>{{title}}</title>
     {{else}}
@@ -36,25 +37,26 @@
                 {{/if}}
             </div>
         </nav>
-
-{{#if toastMessage}}
-    <p>{{toastMessage}}</p>
-{{/if}}
-    {{{body}}}
+        
+        {{#if toastMessage}}
+        <div class="toast-container">
+            <p class="toast-message">{{toastMessage}}</p>
+        </div>
+        {{/if}}
     </header>
+    
+    {{{body}}}
 
     <footer>
-       <h5>Image licenses</h5> 
-       <a href="https://www.flaticon.com/free-icons/hamburger" title="hamburger icons">Hamburger icons   created by Freepik - Flaticon</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <h5>Image licenses</h5> 
+        <a href="https://www.flaticon.com/free-icons/hamburger" title="hamburger icons">Hamburger icons   created by Freepik - Flaticon</a> &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/pizza" title="pizza icons">Pizza icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/food-and-restaurant" title="food and restaurant icons">Food and restaurant icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/pasta" title="pasta icons">Pasta icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/fast-food" title="fast food icons">Fast food icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/strawberry" title="strawberry icons">Strawberry icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="https://www.flaticon.com/free-icons/avocado" title="avocado icons">Avocado icons created by Freepik - Flaticon</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="https://www.flaticon.com/free-icons/bell-pepper" title="Bell pepper icons">Bell pepper icons created by Freepik - Flaticon</a>
-
-        
+        <a href="https://www.flaticon.com/free-icons/bell-pepper" title="Bell pepper icons">Bell pepper icons created by Freepik - Flaticon</a> 
     </footer>
 </body>
 
