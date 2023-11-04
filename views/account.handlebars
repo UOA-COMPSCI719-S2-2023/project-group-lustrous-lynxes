@@ -1,45 +1,47 @@
 <div class="user-header">
     <div class="user-avatar">
-        <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
+        <img src="/images/avatars/{{visitUser.avatar}}" alt="{{visitUser.avatar}}" class="icon">
     </div>
 
     <div class="user-username">
-        <h1>{{user.username}}</h1>
+        <h1>{{visitUser.username}}</h1>
     </div>
 
     <div class="user-info">
         <table>
             <tr>
                 <th>Name:</th>
-                <td>{{user.fName}} {{user.lName}}</td>
+                <td>{{visitUser.fName}} {{visitUser.lName}}</td>
             </tr>
-            {{#if user.dateOfBirth}}
+            {{#if visitUser.dateOfBirth}}
             <tr>
                 <th>Date of Birth:</th>
-                <td>{{user.dateOfBirth}}</td>
+                <td>{{visitUser.dateOfBirth}}</td>
             </tr>
             {{/if}}
         </table>
     </div>
 
     <div class="user-description">
-        {{#if user.description}}
-        <p>{{user.description}}</p>
+        {{#if visitUser.description}}
+        <p>{{visitUser.description}}</p>
         {{/if}}
     </div>
 
     <div class="user-header-button-container">
+        {{#if myAccount}}
         <a href="./add-article">
             <button>Create new article</button>
         </a>
         <a href="./edit-account">
             <button>Edit profile</button>
         </a>
+        {{/if}}
     </div>
 </div>
 
 <div class="page-container"> 
-    <h2>{{user.fName}}'s Articles</h2>
+    <h2>{{visitUser.fName}}'s Articles</h2>
 
     <div class="all-cards">
         {{#each artCard}}
@@ -72,3 +74,4 @@
         {{/each}}
     </div>
 </div>
+{{/if}}
