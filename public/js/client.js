@@ -80,6 +80,7 @@ window.addEventListener("load", () =>{
         const selectedRating = document.querySelectorAll('.ratingValue');
         const currentArticle = document.querySelector('#currentArticle');
         let userRating;
+        let half;
         //Get Radio Button the was checked by using class and loop
         for (let i = 0; i < selectedRating.length; i++){
             if (selectedRating[i].checked){
@@ -93,8 +94,16 @@ window.addEventListener("load", () =>{
         const jsonData = await response.json();
         //find correct star image to use
         const starImage = getRatingStars(jsonData.avRating);
-        //Process back to client. To be changed later to star images.
-        document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png">`;
+        //do we need a half star file?
+        const halfStar = isHalfStar(jsonData.avRating);
+        //Process back to client as star images.
+        if(halfStar) {
+            document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+        }
+        else {
+            document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png">`;
+        }
+           
     });
 
     function getRatingStars(score) {
@@ -115,8 +124,13 @@ window.addEventListener("load", () =>{
         }
     }
 
-    function isHalfStar(rating){
-        return false;
+    function isHalfStar(score){
+        if (score < 1.3 || (score >= 1.8 && score < 2.3) || (score >= 2.8 && score < 3.3) || (score >= 3.8 && score < 4.3) || score >= 4.8) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     //Client Side processing for comments.
