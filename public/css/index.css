@@ -126,8 +126,8 @@ button {
     color: #fff;
     font-size: larger;
     font-weight: bolder;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 1em 1.5em;
+    margin: 0.5em 0;
     border: none;
     cursor: pointer;
 }
@@ -171,12 +171,13 @@ button:hover {
 
 .settings-forms-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 2em;
 }
 
 .settings-form {
     margin: 0;
-    flex: 0 0 30em;
+    flex: 0 0 25em;
 }
 
 .create-btn {
@@ -286,24 +287,32 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns: 3fr 7fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "image content";
+    "image title"
+    "content content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
 }
 
 .header-image {
     grid-area: image;
+    max-height: 15em;
+    overflow: hidden;
 }
-
 .header-image img {
-    max-width: 100%;
+    max-height: 15em;
 }
 
 .header-image p {
     text-align: center;
     color: #4caf50;
+}
+
+.header-details {
+    grid-area: title;
+    padding-top: 2em;
+    justify-self: start;
 }
 
 .full-content {
@@ -387,7 +396,7 @@ button:hover {
 }
 
 .rating {
-    max-width: 90%;
+    max-width: 95%;
     margin: auto;
 }
 
@@ -413,9 +422,10 @@ button:hover {
 }
 
 .rating form {
-    background-color: #E2F3E3;
+    background-color: #555;
     text-align: center;
     padding: 2em;
+    color: #E2F3E3;
 }
 
 .radio-div {
@@ -462,7 +472,7 @@ Styles for user header on account page
 .user-header {
     /* Setting background image */
     background-color: #E2F3E3;
-    background-image: url("../images/logo/background.png");
+    background-image: url("../images/header/background.png");
     background-size: cover;
 
     width: 100%;
@@ -542,12 +552,14 @@ Styles for user header on account page
         grid-template-columns: 1fr;
         grid-template-areas: 
         "image"
+        "title"
         "content";
     }
     .header-image {
         grid-area: image;
-        width: 100%;
+        width: 98%;
         margin: auto;
+        height: auto;
     }
     
     .full-content {
@@ -559,7 +571,7 @@ Styles for user header on account page
     }
 
     .article-form {
-        margin-top: 2em;
+        margin-top: 4em;
         width: 95%;
         margin: auto;
     }
@@ -582,7 +594,7 @@ Styles for user header on account page
         grid-area: new;
     }
 
-    .card-content {
+    .summary {
         display: none;
     }
 
@@ -592,12 +604,16 @@ Styles for user header on account page
         "title read options";
     }
 
-    .summary-card.my-page .card-info {
+    .summary-card.my-page .card-content{
         grid-area: read;
     }
     
-    .summary-card.my-page .card-title {
+    .card-title {
         padding-left: 2em;
+    }
+
+    .summary-card {
+        height: fit-content;
     }
 
 }

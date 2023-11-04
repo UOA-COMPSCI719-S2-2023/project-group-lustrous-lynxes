@@ -3,23 +3,23 @@
     <h1>Something went wrong</h1>
     <p class="centred-text">This article does not exist.</p>
     {{else}}
-    <div id="full-article">
-        <div class="header-details">
-            <h1>{{artFull.title}}</h1>
-            <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
-        </div>
-        <div class="all-cards">
-            <div class="full-card">
-                <div class="header-image">
-                    <img src="/images/{{artFull.imgFileName}}">
-                    <p>{{artFull.imgCaption}} </p>
-                </div>
-                <div class="full-content">
-                    <p>{{{artFull.content}}}</p>
-                </div>
-            </div>        
-        </div>    
-    </div>
+
+    
+    <div class="all-cards">
+        <div class="full-card">
+            <div class="header-image">
+                <img src="/images/{{artFull.imgFileName}}">
+                <p>{{artFull.imgCaption}} </p>
+            </div>
+            <div class="header-details">
+                <h1>{{artFull.title}}</h1>
+                <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
+            </div>
+            <div class="full-content">
+                <p>{{{artFull.content}}}</p>
+            </div>
+        </div>        
+    </div>    
 
     <div class="rating">    
         {{#if user}}
@@ -30,7 +30,7 @@
                    <label for="rating" class="rate-form" >
                         <input type="radio" name="rating" class="ratingValue" value= '1'>
                         <div class="radio-div"></div>1
-                        <img class="star" src="/images/icons/star.png">
+                        <img class="star" src="/images/icons/one-star.png">
                     </label>
                     <label for="rating" class="rate-form" >
                         <input type="radio" name="rating" class="ratingValue" value= '2'>
@@ -61,7 +61,7 @@
             {{!-- <p>please login first</p>  --}}
             <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
         {{/if}}
-        <h2 id = "displayRating">Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
+        <h2 id = "displayRating">{{{starRating}}} </h2>
     </div>
 
     <div class="all-cards">

@@ -51,11 +51,54 @@ async function addUserArticleRating(ratingJson){
     }
 }
 
+function ratingStarsArticles(score) {
+    //find correct star image to use
+    const starImage = getRatingStars(score);
+    //do we need a half star 
+    const halfStar = isHalfStar(score);
+    //Process back to routes.js
+    if(halfStar) {
+        return `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+    }
+    else {
+        return`Average Rating <img src="images/icons/${starImage}-star.png">`;
+    }
+       
+}
+
+function getRatingStars(score) {
+    if (score < 1.8) {
+        return "one";
+    }
+    else if (score < 2.8) {
+        return "two";
+    }
+    else if (score < 3.8) {
+        return "three";
+    }
+    else if (score < 4.8) {
+        return "four";
+    }
+    else {
+        return "five";
+    }
+}
+
+function isHalfStar(score){
+    if (score < 1.3 || (score >= 1.8 && score < 2.3) || (score >= 2.8 && score < 3.3) || (score >= 3.8 && score < 4.3) || score >= 4.8) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 
 module.exports = {
     allCardDetails,
     userCardDetails,
     setAllArticleAverageRating,
     addUserArticleRating,
-    addAverageRating
+    addAverageRating,
+    ratingStarsArticles
 };

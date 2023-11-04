@@ -11,6 +11,8 @@ const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
+
+
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
@@ -171,6 +173,7 @@ router.post("/delete-article/:id", async (req, res) => {
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
+
     //Render create account form using avatars.
     res.render("create-account");
 });
@@ -211,7 +214,21 @@ router.get("/logout",(req, res) => {
 
 //Request made to change user's settings. Need to verify login first.
 router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
-    res.locals.avatars = await avatarDao.retrieveAllIcons();
+    const avatars = await avatarDao.retrieveAllIcons();
+    const userAvatar = res.locals.user.avatar;
+    let userAvatarName;
+    for (let i=0; i < avatars.length; i++){
+        if (userAvatar == avatars[i].fileName){
+            userAvatarName = avatars[i].name;
+            avatars.splice(i, 1);
+        }
+    }
+    const defaultAvatar = {
+        fileName: userAvatar,
+        name: userAvatar
+    }
+    avatars.unshift(defaultAvatar);
+    res.locals.avatars = avatars;
     res.render("edit-account");
 });
 
@@ -309,9 +326,14 @@ router.get("/full-article", async (req, res) => {
     await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
-        //Could change this later to reuse code since we are getting the article
-        //eg instead of viewing article directly from db, we could have display article functions in middleware
+
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+
+        //get star rating of articles
+        if (res.locals.artFull.avRating){
+            res.locals.starRating = allArticles.ratingStarsArticles(res.locals.artFull.avRating);
+        }
+
         const allArticleComments = await commentDao.viewComments(req.query.id);
         //Add amount of likes to the comment then add back to res.locals.
         for(let i = 0; i < allArticleComments.length; i++){
