@@ -77,7 +77,7 @@ router.get("/user", async (req, res) => {
     }
 });
 
-//Renders add-article page which allows user to create an article
+//Renders add-article page, allowing user to create an article
 router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
     res.render("add-article", {
         includeTinyMCEScripts: true
@@ -120,9 +120,7 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     res.redirect(`/full-article?id=${newArticleId}`);
 });
 
-//Renders edit-article page which allows user to edit their own article
-//Later we will use query parameters to specify which article to edit
-//e.g. edit-article?id=5 using the articleId
+//Renders edit-article page, allowing user to edit their own article, specified by ID in query parameter
 router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
     //Retrieves article object with corresponding ID from database
     const articleId = req.query.id;
@@ -204,7 +202,7 @@ router.post("/delete-article/:id", async (req, res) => {
     res.redirect("/");
 });
 
-//Render form to create account
+//Renders form to create an account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
@@ -213,7 +211,7 @@ router.get("/create-account", async (req,res)=>{
     res.render("create-account");
 });
 
-//If form values are valid proceed with putting in database and re-route to login.
+//Processes form for creating account and redirects to login
 router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
     //Encrypt Password
     hashedPassword = await newUser.encryptPassword(req.body.password);
@@ -230,25 +228,25 @@ router.post("/create-account", newUser.checkFormInput, async(req,res)=>{
     //Add new user to Database.
     await userDao.createUser(user);
     res.setToastMessage("New Account Created Successfully");
-    res.redirect("./login");
+    res.redirect("/login");
 });
 
-//Check against db if username is already taken.
+//Checks against db if username is already taken
 router.get("/new/:input", async (req,res) =>{
     const userExists = await newUser.checkUsernameExists(req.params.input);
     res.json({ value: userExists }); 
 });
 
-//Logout Clicked
+//Logs out user and redirects back to login
 router.get("/logout",(req, res) => {
     userDao.removeUserToken(res.locals.user);
     res.clearCookie("authToken");
     res.locals.user = null;
-    res.redirect("./login");
+    res.redirect("/login");
 });
 
-//Request made to change user's settings. Need to verify login first.
-router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
+//Renders edit-account page, allowing user to edit their own profile
+router.get("/edit-account", authUser.verifyAuthenticated, async (req,res)=>{
     const avatars = await avatarDao.retrieveAllIcons();
     const userAvatar = res.locals.user.avatar;
     let userAvatarName;
@@ -267,7 +265,7 @@ router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
     res.render("edit-account");
 });
 
-//Changes made to user settings (everything but password).
+//Processes form for editing user profile
 router.post("/edit-account", async (req,res) =>{
     //Get current ID and username for user.
     userId = res.locals.user.id;
@@ -290,16 +288,16 @@ router.post("/edit-account", async (req,res) =>{
         //If Username exists, do not process form in DB.
         if (usernameExists){
             res.setToastMessage("Username Taken");
-            return res.redirect("./edit-account");
+            return res.redirect("/edit-account");
         }
     }
     //If the Username is the same as the original.
     await userDao.changeUserSettings(userId, newUserSettings);
     res.setToastMessage("User Details Changed");
-    res.redirect("./");
+    res.redirect("/profile");
 });
 
-//Changes made to password by user.
+//Processes form for editing user password
 router.post("/edit-password", async (req,res) =>{
     const userId = res.locals.user.id;
     //Have User input current password as validation.
@@ -317,24 +315,31 @@ router.post("/edit-password", async (req,res) =>{
         const encryptNewPassword = await newUser.encryptPassword(newPassword);
         await userDao.changePassword(userId, encryptNewPassword);
         res.setToastMessage("Password Changed");
-        res.redirect("./logout");
+        res.redirect("/logout");
     }else{
         res.setToastMessage("Password input not valid.");
-        res.redirect("./edit-account");
+        res.redirect("/edit-account");
     }
 });
-//Get Request to delete account. Remove the authentication token and set user to null.
-//Then process the delete in Database and redirect to Login (NOT LOGOUT!!!).
+
+//Deletes account and redirects to home
 router.get("/delete-account", async (req,res)=>{
+    //Deletes account
     await userDao.deleteUser(res.locals.user.id);
+    
+    //Toast message
     res.setToastMessage("Account Deleted");
+
+    //Removes authentication token and sets user to null
     res.locals.user = null;
     res.clearCookie("authToken");
-    res.redirect("./articles");
+
+    //Redirects to home
+    res.redirect("/");
 });
 
-//Add Rating to article
-router.get("/rating/:score/:articleId",authUser.verifyAuthenticated,async(req,res)=>{
+//Adds rating to article
+router.get("/rating/:score/:articleId", authUser.verifyAuthenticated, async(req,res) => {
     const articleRating = {
         articleId: req.params.articleId,
         userId: res.locals.user.id,
@@ -346,7 +351,7 @@ router.get("/rating/:score/:articleId",authUser.verifyAuthenticated,async(req,re
     res.json(articleResult);
 });
 
-//read a full article - no login required
+//Renders a full article page, specified by article ID in query parameter
 router.get("/full-article", async (req, res) => {
     //Ensure average rating is updated first.
     await allArticles.addAverageRating(req.query.id);
@@ -389,8 +394,8 @@ router.get("/full-article", async (req, res) => {
     }
 });
 
-//add comment to article, and make sure comment not empty. Fetch Request done by client side.
-//No longer require check for empty string as it is done client.
+//Adds comment to article, and make sure comment not empty. Fetch Request done by client side.
+//No longer requires check for empty string as it is done client.
 router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(req, res) => {
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
@@ -409,7 +414,8 @@ router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(r
     const getNewComment = await commentDao.getLatestCommentByUser(commentData);
     res.json(getNewComment);
 });
-//Add Like to Comment. Fetch Request made by client js.
+
+//Adds Like to Comment. Fetch Request made by client js.
 router.get("/add-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
@@ -422,7 +428,8 @@ router.get("/add-like/:commentId", async (req,res)=>{
     //Return to client.
     res.json({likes: commentLikes});
 });
-//Remove Like from Comment. Fetch Request made by client js.
+
+//Removes Like from Comment. Fetch Request made by client js.
 router.get("/remove-like/:commentId", async (req,res)=>{
     const like = {
         userId: res.locals.user.id,
