@@ -11,19 +11,21 @@ const articleDao = require("../modules/articles-dao.js");
 const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
+//Redirects to all articles page
+router.get("/", (req, res) => {
+    res.redirect("/articles");
+});
 
-
-//Render home/account page if user is logged in. Check using middleware.
-router.get("/", authUser.verifyAuthenticated, async (req, res) => {
-    res.locals.title = "Lustrous Lynxes";
+//Renders all articles page - no login required
+router.get("/articles", async (req, res) => {
     //Set the average rating for all articles into DB.
-    res.locals.rating = await allArticles.setAllArticleAverageRating();
-    //Get allCardDetails in order of rating.
-    res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
-    //Fix to get request
-    res.locals.visitUser = res.locals.user;
-    
-    res.render("account");
+    await allArticles.setAllArticleAverageRating(); 
+
+    //Save necessary res.locals
+    res.locals.title = "All Articles | Lustrous Lynxes";
+    res.locals.artCard =  await allArticles.allCardDetails();
+  
+    res.render("articles");
 });
 
 //Render user's own user page
@@ -333,15 +335,6 @@ router.get("/delete-account", async (req,res)=>{
     res.redirect("./articles");
 });
 
-//go to articles page - no login required
-router.get("/articles", async (req, res) => {    
-    //Set the average rating for all articles into DB.
-    await allArticles.setAllArticleAverageRating(); 
-    //Get allCardDetails in order of rating.
-    res.locals.artCard =  await allArticles.allCardDetails();
-  
-    res.render("./articles");
-});
 //Add Rating to article
 router.get("/rating/:score/:articleId",authUser.verifyAuthenticated,async(req,res)=>{
     const articleRating = {
