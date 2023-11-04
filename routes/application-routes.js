@@ -22,9 +22,13 @@ router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
     //Fix to get request
     res.locals.visitUser = res.locals.user;
-
     
     res.render("account");
+});
+
+//Render user's own user page
+router.get("/profile", authUser.verifyAuthenticated, (req, res) => {
+    res.redirect(`/user?id=${res.locals.user.id}`);
 });
 
 //If a logged in user makes get request (URL) then redirect.
@@ -38,10 +42,7 @@ router.get("/login", (req, res) => {
 
 //Login Clicked
 router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
-    //This is exactly the same as get request to home....just redirect to home.
-    //await allArticles.setAllArticleAverageRating();
-    //res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
-    res.redirect('/');
+    res.redirect("/profile");
 });
 
 //Route handler to visit particular user's profile by ID in query parameter
