@@ -563,8 +563,12 @@ header {
         grid-area: read;
     }
     
-    .summary-card.my-page .card-title {
+    .card-title {
         padding-left: 2em;
+    }
+
+    .summary-card {
+        height: fit-content;
     }
 
 }
