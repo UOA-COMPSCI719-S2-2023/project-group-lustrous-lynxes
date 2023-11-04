@@ -3,23 +3,23 @@
     <h1>Something went wrong</h1>
     <p class="centred-text">This article does not exist.</p>
     {{else}}
-    <div id="full-article">
-        <div class="header-details">
-            <h1>{{artFull.title}}</h1>
-            <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
-        </div>
-        <div class="all-cards">
-            <div class="full-card">
-                <div class="header-image">
-                    <img src="/images/{{artFull.imgFileName}}">
-                    <p>{{artFull.imgCaption}} </p>
-                </div>
-                <div class="full-content">
-                    <p>{{{artFull.content}}}</p>
-                </div>
-            </div>        
-        </div>    
-    </div>
+
+    
+    <div class="all-cards">
+        <div class="full-card">
+            <div class="header-image">
+                <img src="/images/{{artFull.imgFileName}}">
+                <p>{{artFull.imgCaption}} </p>
+            </div>
+            <div class="header-details">
+                <h1>{{artFull.title}}</h1>
+                <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
+            </div>
+            <div class="full-content">
+                <p>{{{artFull.content}}}</p>
+            </div>
+        </div>        
+    </div>    
 
     <div class="rating">    
         {{#if user}}
@@ -30,7 +30,7 @@
                    <label for="rating" class="rate-form" >
                         <input type="radio" name="rating" class="ratingValue" value= '1'>
                         <div class="radio-div"></div>1
-                        <img class="star" src="/images/icons/star.png">
+                        <img class="star" src="/images/icons/one-star.png">
                     </label>
                     <label for="rating" class="rate-form" >
                         <input type="radio" name="rating" class="ratingValue" value= '2'>
@@ -60,7 +60,7 @@
         {{else}}
             <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
         {{/if}}
-        <h2 id = "displayRating">Current Rating: &nbsp; &nbsp;<img class="stars" src="/images/icons/three-star.png"></h2>
+        <h2 id = "displayRating">{{{starRating}}} </h2>
     </div>
 
     <div class="all-cards">
@@ -68,33 +68,33 @@
             <h1>Comments</h1>
         </div>
         {{#if user}}
+        <div id="newCommentCard">
         {{#each comFull}}
         <div class="comment-card">
             <div class="card-avatar">
                 <img src="/images/avatars/{{avatar}}">
             </div>
-        <div class="card-title">
-                <h4>{{fName}}  {{lName}}</h4>
+            <div class="card-title">
+                <h4>{{fName}} {{lName}}</h4>
             </div>
             <div class="card-content">
                 <p>{{content}}</p>
                 <h3 id = "display{{id}}">likes: {{likes}}</h3>
                 {{#if enableUserLike}}
-                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</button>
                 {{else}}
-                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</a></button>
+                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</button>
                 {{/if}}
             </div>                     
         </div>
         {{/each}}
-        {{/if}}
-
         </div>
-        {{#if user}} 
+        {{!-- Container to add new comments  --}}
         <div>
             <h1>Add a Comment</h1>
-            <form id="comment-form" class="all-cards" action="/articles/{{artFull.id}}/comments" method="post">
-                <textarea name="comment" placeholder="Add your comments here..."></textarea>
+            <form id="comment-form" class="all-cards">
+                <textarea name="comment" placeholder="Add your comments here..." id="userComment"></textarea>
+                <input type="hidden" name="id"  id ="articleComment" value="{{artFull.id}}">
                 <button type="submit">Publish Comment</button>
             </form>
         </div>

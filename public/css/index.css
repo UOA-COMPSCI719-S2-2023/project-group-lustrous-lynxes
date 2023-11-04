@@ -132,6 +132,7 @@ input:not(#imageInput), textarea, .image-box {
     display: inline-block;
     border: 1px solid #333;
     box-sizing: border-box;
+    background-color: white;
 }
 
 .image-box-container {
@@ -179,8 +180,8 @@ button {
     color: #fff;
     font-size: larger;
     font-weight: bolder;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 1em 1.5em;
+    margin: 0.5em 0;
     border: none;
     cursor: pointer;
 }
@@ -225,12 +226,13 @@ button:hover {
 
 .settings-forms-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 2em;
 }
 
 .settings-form {
     margin: 0;
-    flex: 0 0 30em;
+    flex: 0 0 25em;
 }
 
 .create-btn {
@@ -241,12 +243,6 @@ button:hover {
 #checkExists{
     color:red;
 }
-
-/*Scale icon to appropriate size*/
-.icon {
-    max-width: 50px;
-    max-height: 50px;
-  }
 
 .all-cards {
     background-color: #E2F3E3;
@@ -332,7 +328,6 @@ button:hover {
 
 #read-more:hover {
     color: #333;
-    font-size: 1.5em;
 }
 
 .all-cards a {
@@ -347,24 +342,32 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns: 3fr 7fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "image content";
+    "image title"
+    "content content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
 }
 
 .header-image {
     grid-area: image;
+    max-height: 15em;
+    overflow: hidden;
 }
-
 .header-image img {
-    max-width: 100%;
+    max-height: 15em;
 }
 
 .header-image p {
     text-align: center;
     color: #4caf50;
+}
+
+.header-details {
+    grid-area: title;
+    padding-top: 2em;
+    justify-self: start;
 }
 
 .full-content {
@@ -449,7 +452,7 @@ button:hover {
 }
 
 .rating {
-    max-width: 90%;
+    max-width: 95%;
     margin: auto;
 }
 
@@ -475,9 +478,10 @@ button:hover {
 }
 
 .rating form {
-    background-color: #E2F3E3;
+    background-color: #555;
     text-align: center;
     padding: 2em;
+    color: #E2F3E3;
 }
 
 .radio-div {
@@ -497,18 +501,134 @@ button:hover {
     max-width: 100%;
 }
 
+header {
+    position: relative;
+}
+
+.toast-container {
+    position: absolute;
+    top: calc(100% + 1em);
+    left: 1em;
+    background-color: white;
+    box-shadow: 2px 4px 5px #C1E5C7;
+    border: #5cb85c solid 1px;
+    border-left-width: 0.5em;
+}
+
+.toast-container p {
+    color: black;
+    margin: 1em;
+    margin-right: 3em;
+}
+
+/*
+Styles for user header on account page
+*/
+
+.user-header {
+    /* Setting background image */
+    background-color: #E2F3E3;
+    background-image: url("../images/header/background.png");
+    background-size: cover;
+    background-position: right center;
+
+    width: 100%;
+    padding: 4em;
+    padding-left: 8%;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-areas: "image name buttons" "image info buttons" ". description buttons";
+    grid-template-columns: 8em 1fr 14em;
+    column-gap: 2em;
+    align-items: end;
+}
+
+.user-avatar {
+    grid-area: image;
+}
+
+.user-avatar img {
+    width: 100%;
+}
+
+.user-username {
+    grid-area: name;
+}
+
+.user-username h1 {
+    text-align: left;
+    font-size: 5em;
+    margin: 0;
+}
+
+.user-info {
+    grid-area: info;
+    padding-right: 3em;
+}
+
+.user-info table {
+    border-collapse: collapse;
+    border: none;
+}
+
+.user-info th, .user-info td {
+    text-align: left;
+    vertical-align: center;
+    padding-right: 1em;
+}
+
+.user-info th {
+    width: 7em;
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+.user-description {
+    grid-area: description;
+}
+
+.user-description p {
+    margin: 0.5em 3em 0 0;
+}
+
+.user-header-button-container {
+    grid-area: buttons;
+    align-self: center;
+}
+
+.user-header-button-container button {
+    width: 12em;
+    margin: 0.5em 0;
+}
+
+@media only screen and (max-width: 1280px) {
+    .user-header {
+        background-position: calc(100% + 150px) center;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .user-header {
+        grid-template-areas: "image name buttons" "image info buttons" "description description buttons";
+    }
+}
+
 @media only screen and (max-width: 900px) {
     .full-card {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas: 
         "image"
+        "title"
         "content";
     }
+
     .header-image {
         grid-area: image;
-        width: 100%;
+        width: 98%;
         margin: auto;
+        height: auto;
     }
     
     .full-content {
@@ -520,7 +640,7 @@ button:hover {
     }
 
     .article-form {
-        margin-top: 2em;
+        margin-top: 4em;
         width: 95%;
         margin: auto;
     }
@@ -543,7 +663,7 @@ button:hover {
         grid-area: new;
     }
 
-    .card-content {
+    .summary {
         display: none;
     }
 
@@ -553,12 +673,42 @@ button:hover {
         "title read options";
     }
 
-    .summary-card.my-page .card-info {
+    .summary-card.my-page .card-content{
         grid-area: read;
     }
     
-    .summary-card.my-page .card-title {
+    .card-title {
         padding-left: 2em;
     }
 
+    .summary-card {
+        height: fit-content;
+    }
+
+
+@media only screen and (max-width: 850px) {
+    .user-header {
+        background-position: calc(100% + 320px) center;
+        grid-template-areas: "image name" "image info" "description description" "buttons buttons";
+        grid-template-columns: 8em 1fr;
+        padding-right: 20%;
+    }
+
+    .user-username h1 {
+        text-align: left;
+        font-size: clamp(2em, 10vw, 5em);;
+        margin: 0;
+    }
+
+    .user-description {
+        margin-bottom: 1em;
+    }
+
+    .user-header-button-container {
+        text-align: center;
+    }
+
+    .user-header-button-container button {
+        margin: 0.2em 0.5em;
+    }
 }

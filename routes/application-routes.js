@@ -12,14 +12,17 @@ const upload = require("../middleware/multer-uploader.js");
 const fs = require("fs");
 
 
+
 //Render home/account page if user is logged in. Check using middleware.
 router.get("/", authUser.verifyAuthenticated, async (req, res) => {
     res.locals.title = "Lustrous Lynxes";
     //Set the average rating for all articles into DB.
     res.locals.rating = await allArticles.setAllArticleAverageRating();
-    console.log(res.locals.title);
     //Get allCardDetails in order of rating.
     res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
+    //Fix to get request
+    res.locals.visitUser = res.locals.user;
+
     
     res.render("account");
 });
@@ -35,11 +38,42 @@ router.get("/login", (req, res) => {
 
 //Login Clicked
 router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
+    //This is exactly the same as get request to home....just redirect to home.
+    //await allArticles.setAllArticleAverageRating();
+    //res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
+    res.redirect('/');
+});
+
+//Route handler to visit particular user's profile by ID in query parameter
+router.get("/user", async (req, res) => {
+    //Get user object
+    const visitUserId = req.query.id;
+    const visitUser = await userDao.getUserById(visitUserId);
+    
+    //Why do we need to do this???
     //Set the average rating for all articles into DB.
-    await allArticles.setAllArticleAverageRating();
-    //Get allCardDetails in order of rating.
-    res.locals.artCard =  await allArticles.userCardDetails(res.locals.user.id);
-    res.render("account")
+    res.locals.rating = await allArticles.setAllArticleAverageRating();
+
+    //If user is not found, displays "user not found" message
+    if (visitUser == undefined) {
+        res.render("account", {
+            noUser: true
+        });
+    } else {
+        //Save required information to res.locals
+        res.locals.title = `${visitUser.username}'s Articles`;
+        res.locals.artCard =  await allArticles.userCardDetails(visitUserId);
+        res.locals.visitUser = visitUser;
+        
+        //Renders account page
+        if (visitUserId == res.locals.user.id) {
+            res.render("account", {
+                myAccount: true
+            });
+        } else {
+            res.render("account");
+        }
+    }
 });
 
 //Renders add-article page which allows user to create an article
@@ -159,10 +193,21 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
     res.redirect(`/full-article?id=${articleId}`);
 });
 
+//Handles request to delete article
+router.post("/delete-article/:id", async (req, res) => {
+    const articleId = req.params.id;
+
+    await articleDao.deleteArticle(articleId);
+
+    res.setToastMessage("Article deleted successfully.");    
+    res.redirect("/");
+});
+
 //Render form to create account
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
+
     //Render create account form using avatars.
     res.render("create-account");
 });
@@ -203,7 +248,21 @@ router.get("/logout",(req, res) => {
 
 //Request made to change user's settings. Need to verify login first.
 router.get("/edit-account",authUser.verifyAuthenticated, async (req,res)=>{
-    res.locals.avatars = await avatarDao.retrieveAllIcons();
+    const avatars = await avatarDao.retrieveAllIcons();
+    const userAvatar = res.locals.user.avatar;
+    let userAvatarName;
+    for (let i=0; i < avatars.length; i++){
+        if (userAvatar == avatars[i].fileName){
+            userAvatarName = avatars[i].name;
+            avatars.splice(i, 1);
+        }
+    }
+    const defaultAvatar = {
+        fileName: userAvatar,
+        name: userAvatar
+    }
+    avatars.unshift(defaultAvatar);
+    res.locals.avatars = avatars;
     res.render("edit-account");
 });
 
@@ -301,9 +360,14 @@ router.get("/full-article", async (req, res) => {
     await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
-        //Could change this later to reuse code since we are getting the article
-        //eg instead of viewing article directly from db, we could have display article functions in middleware
+
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+
+        //get star rating of articles
+        if (res.locals.artFull.avRating){
+            res.locals.starRating = allArticles.ratingStarsArticles(res.locals.artFull.avRating);
+        }
+
         const allArticleComments = await commentDao.viewComments(req.query.id);
         //Add amount of likes to the comment then add back to res.locals.
         for(let i = 0; i < allArticleComments.length; i++){
@@ -333,19 +397,13 @@ router.get("/full-article", async (req, res) => {
     }
 });
 
-//add comment to article, and make sure comment not empty
-router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async(req, res) => {
-
+//add comment to article, and make sure comment not empty. Fetch Request done by client side.
+//No longer require check for empty string as it is done client.
+router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async(req, res) => {
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
-    //get comment from form, and make sure it's not empty
-    const content = (req.body.comment || "").trim();
-
-    //Comment cannot be empty
-    if (!content) {
-        res.setToastMessage("Comment cannot be empty");
-        return res.redirect("/full-article?id=" + req.params.articleId);
-    }
+    //get comment and make sure it's not empty
+    const content = req.params.comment
 
     //Add comment to database
     const commentData = {
@@ -356,9 +414,8 @@ router.post("/articles/:articleId/comments", authUser.verifyAuthenticated, async
 
     //Add comment to database.
     await commentDao.addComment(commentData);
-    //Add comment likes to comment.
-
-    res.redirect("/full-article?id=" + req.params.articleId);
+    const getNewComment = await commentDao.getLatestCommentByUser(commentData);
+    res.json(getNewComment);
 });
 //Add Like to Comment. Fetch Request made by client js.
 router.get("/add-like/:commentId", async (req,res)=>{

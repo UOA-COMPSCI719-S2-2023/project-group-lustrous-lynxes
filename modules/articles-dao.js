@@ -64,13 +64,14 @@ async function editArticle(article) {
         `);
     }
 }
-//Should just be delete from...not delete * from.
-async function deleteArticle(article) {
+
+async function deleteArticle(articleId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
-     delete from articles 
-     where id = ${article.id}`);
+        DELETE FROM articles
+        WHERE id = ${articleId}
+    `);
 }
 
 //Order by Average Rating for when we display articles.
@@ -103,7 +104,7 @@ async function viewFullArticle(givenId) {
     const db = await dbPromise;
 
     const artFull = await db.get(SQL`
-     select a.id, a.imgFileName, a.imgCaption, a.title, a.content, u.fName, u.lName 
+     select a.id, a.imgFileName, a.imgCaption, a.title, a.content, a.avRating, u.fName, u.lName 
      from articles a, users u 
      where a.id = ${givenId}
      and a.authorId = u.id`);

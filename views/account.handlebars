@@ -1,24 +1,53 @@
+{{#if noUser}}
+<div class="page-container">
+    <h1>Something went wrong</h1>
+    <p class="centred-text">This user does not exist.</p>
+</div>
+{{else}}
+<div class="user-header">
+    <div class="user-avatar">
+        <img src="/images/avatars/{{visitUser.avatar}}" alt="{{visitUser.avatar}}" class="icon">
+    </div>
+
+    <div class="user-username">
+        <h1>{{visitUser.username}}</h1>
+    </div>
+
+    <div class="user-info">
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>{{visitUser.fName}} {{visitUser.lName}}</td>
+            </tr>
+            {{#if visitUser.dateOfBirth}}
+            <tr>
+                <th>Date of Birth:</th>
+                <td>{{visitUser.dateOfBirth}}</td>
+            </tr>
+            {{/if}}
+        </table>
+    </div>
+
+    <div class="user-description">
+        {{#if visitUser.description}}
+        <p>{{visitUser.description}}</p>
+        {{/if}}
+    </div>
+
+    <div class="user-header-button-container">
+        {{#if myAccount}}
+        <a href="./add-article">
+            <button>Create new article</button>
+        </a>
+        <a href="./edit-account">
+            <button>Edit profile</button>
+        </a>
+        {{/if}}
+    </div>
+</div>
+
 <div class="page-container"> 
-
-    <h1> {{user.fName}}'s  Account Page</h1>
-    <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
-
-    <p>Username: {{user.username}}</p>
-    <p>Name: {{user.fName}} {{user.lName}}</p>
-
-    {{#if user.dateOfBirth}}
-    <p>Date of Birth: {{user.dateOfBirth}}</p>
-    {{/if}}
-
-    {{#if user.description}}
-    <p>Description: {{user.description}}</p>
-    {{/if}}
-
-    <a href="./add-article">
-        <button>Create New Article</button>
-    </a>
-
-    <h2>{{user.fName}}'s Articles</h2>
+    <h2>{{visitUser.fName}}'s Articles</h2>
 
     <div class="all-cards">
         {{#each artCard}}
@@ -43,10 +72,12 @@
                 <a href="./edit-article?id={{id}}">
                     <button>Edit</button>
                 </a>
-                <button>Delete</button>
-            </div>                     
+                <form action="./delete-article/{{id}}" method="POST" class="delete-article-form" data-article-title="{{title}}">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </div>
         {{/each}}
     </div>
 </div>
-
+{{/if}}
