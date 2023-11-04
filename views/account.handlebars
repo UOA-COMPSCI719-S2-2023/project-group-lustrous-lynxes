@@ -1,17 +1,30 @@
 <div class="user-header">
-    
-    <div class="user-info">  
-        <h1>{{user.username}}<img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon"> </h1>
-        <div class="user-details">
-            <p>Name: {{user.fName}} {{user.lName}} </p>                                               
+    <div class="user-avatar">
+        <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
+    </div>
+
+    <div class="user-username">
+        <h1>{{user.username}}</h1>
+    </div>
+
+    <div class="user-info">
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>{{user.fName}} {{user.lName}}</td>
+            </tr>
             {{#if user.dateOfBirth}}
                 <p>Date of Birth: {{user.dateOfBirth}}</p>
             {{/if}}
-            {{#if user.description}}
-                <p>Description: {{user.description}}</p>
-            {{/if}}
-        </div> 
+        </table>
     </div>
+
+    <div class="user-description">
+        {{#if user.description}}
+        <p>{{user.description}}</p>
+        {{/if}}
+    </div>
+
     <div class="user-header-button-container">
         <a href="./add-article">
             <button>Create new article</button>
