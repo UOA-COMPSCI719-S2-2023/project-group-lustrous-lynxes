@@ -98,10 +98,10 @@ window.addEventListener("load", () =>{
         const halfStar = isHalfStar(jsonData.avRating);
         //Process back to client as star images.
         if(halfStar) {
-            document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
         }
         else {
-            document.querySelector("#displayRating").innerHTML = `Average Rating= <img src="images/icons/${starImage}-star.png">`;
+            document.querySelector("#displayRating").innerHTML = `Average Rating <img src="images/icons/${starImage}-star.png">`;
         }
            
     });
