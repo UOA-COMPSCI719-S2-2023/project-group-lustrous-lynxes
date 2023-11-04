@@ -292,30 +292,32 @@ button:hover {
 
 .full-card {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-areas: 
-    "image"
-    "content";
+    "image title"
+    "content content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7; 
 }
 
 .header-image {
     grid-area: image;
-    max-height: 20em;
+    max-height: 15em;
     overflow: hidden;
 }
 .header-image img {
-    max-height: 20em;
-}
-
-.header-image img {
-    max-width: 100%;
+    max-height: 15em;
 }
 
 .header-image p {
     text-align: center;
     color: #4caf50;
+}
+
+.header-details {
+    grid-area: title;
+    padding-top: 2em;
+    justify-self: start;
 }
 
 .full-content {
@@ -453,12 +455,14 @@ button:hover {
         grid-template-columns: 1fr;
         grid-template-areas: 
         "image"
+        "title"
         "content";
     }
     .header-image {
         grid-area: image;
-        width: 100%;
+        width: 98%;
         margin: auto;
+        height: auto;
     }
     
     .full-content {

@@ -3,23 +3,23 @@
     <h1>Something went wrong</h1>
     <p class="centred-text">This article does not exist.</p>
     {{else}}
-    <div id="full-article">
-        <div class="header-details">
-            <h1>{{artFull.title}}</h1>
-            <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
-        </div>
-        <div class="all-cards">
-            <div class="full-card">
-                <div class="header-image">
-                    <img src="/images/{{artFull.imgFileName}}">
-                    <p>{{artFull.imgCaption}} </p>
-                </div>
-                <div class="full-content">
-                    <p>{{{artFull.content}}}</p>
-                </div>
-            </div>        
-        </div>    
-    </div>
+
+    
+    <div class="all-cards">
+        <div class="full-card">
+            <div class="header-image">
+                <img src="/images/{{artFull.imgFileName}}">
+                <p>{{artFull.imgCaption}} </p>
+            </div>
+            <div class="header-details">
+                <h1>{{artFull.title}}</h1>
+                <h2>By {{artFull.fName}} {{artFull.lName}} </h2>
+            </div>
+            <div class="full-content">
+                <p>{{{artFull.content}}}</p>
+            </div>
+        </div>        
+    </div>    
 
     <div class="rating">    
         {{#if user}}
