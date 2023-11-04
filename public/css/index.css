@@ -455,47 +455,54 @@ header {
     margin-right: 3em;
 }
 
+/*
+Styles for user header on account page
+*/
+
 .user-header {
+    /* Setting background image */
     background-color: #E2F3E3;
+    background-image: url("../images/logo/background.png");
+    background-size: cover;
+
     width: 100%;
     padding: 4em;
+    padding-left: 15%;
     box-sizing: border-box;
-    display: flex;
-    align-items: flex-end;
+
+    display: grid;
+    grid-template-areas: "image name buttons" "image info buttons" ". description buttons";
+    grid-template-columns: 8em 1fr 14em;
     column-gap: 2em;
+    align-items: end;
 }
 
-.user-header img {
-    width: 200px;
-    max-width: 200px;
-    max-height: 200px;
-    align-self: flex-start;
+.user-avatar {
+    grid-area: image;
 }
 
-.user-header button {
-    margin: 8px;
+.user-avatar img {
+    width: 100%;
 }
 
-.user-header-button-container {
-    align-self: center;
-    min-width: 14em;
+.user-username {
+    grid-area: name;
 }
 
-.user-header-button-container a {
-    display: block;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-right: 1em;
-}
-
-.user-info h1 {
+.user-username h1 {
     text-align: left;
     font-size: 5em;
     margin: 0;
+}
+
+.user-info {
+    grid-area: info;
+    padding-right: 3em;
+}
+
+.user-info table {
+    border-collapse: collapse;
+    border: none;
 }
 
 .user-info th, .user-info td {
@@ -503,12 +510,30 @@ header {
 }
 
 .user-info th {
-    vertical-align: top;
-    min-width: 6em;
+    width: 7em;
+    padding-left: 0;
+    box-sizing: border-box;
 }
 
-.empty-flex-div {
-    flex-grow: 1;
+.user-description {
+    grid-area: description;
+}
+
+.user-description p {
+    margin: 0.5em 3em 0 0;
+}
+
+.user-header-button-container {
+    grid-area: buttons;
+    align-self: center;
+}
+
+.user-header-button-container a {
+    display: block;
+}
+
+.user-header-button-container button {
+    margin: 8px;
 }
 
 @media only screen and (max-width: 900px) {

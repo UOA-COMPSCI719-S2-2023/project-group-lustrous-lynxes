@@ -1,8 +1,13 @@
 <div class="user-header">
-    <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
+    <div class="user-avatar">
+        <img src="/images/avatars/{{user.avatar}}" alt="{{user.avatar}}" class="icon">
+    </div>
+
+    <div class="user-username">
+        <h1>{{user.username}}</h1>
+    </div>
 
     <div class="user-info">
-        <h1>{{user.username}}</h1>
         <table>
             <tr>
                 <th>Name:</th>
@@ -14,16 +19,14 @@
                 <td>{{user.dateOfBirth}}</td>
             </tr>
             {{/if}}
-            {{#if user.description}}
-            <tr>
-                <th>Description:</th>
-                <td>{{user.description}}</td>
-            </tr>
-            {{/if}}
         </table>
     </div>
 
-    <div class="empty-flex-div"></div>
+    <div class="user-description">
+        {{#if user.description}}
+        <p>{{user.description}}</p>
+        {{/if}}
+    </div>
 
     <div class="user-header-button-container">
         <a href="./add-article">
