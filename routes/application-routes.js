@@ -83,7 +83,6 @@ router.get("/user", async (req, res) => {
 });
 
 //Renders add-article page, allowing user to create an article
-
 router.get("/add-article", verifyAuthenticated, (req, res) => {
     res.locals.title = "Add New Article | Lustrous Lynxes";
     res.render("add-article", {
