@@ -74,6 +74,7 @@ insert into users (id, username, fName, lName, password, dateOfBirth, descriptio
 (1, "doggy", "Molly", "Leslie", "dogzRule1", '1995-06-15',"Puppy kitty ipsum dolor sit good dog throw wet nose.", "bell-pepper.png"),
 (2, "pusspuss", "Beauty", "Toogood", "cats89", '2010-05-20', "Cage Fido yawn chow swimming Rover bark Scooby snacks house train", "pizza.png"),
 (3, "BirdSing", "Very", "Loud", "I8worms", '2000-01-02', "Bird Food kisses run fast wet nose purr", "strawberry.png");
+(4, "Lecturer1", "John", "Smith", "$2b$10$ALQLDhk3Jem5KbJlCEVQQeMeF3G1XF4c0SS1R4DLCKsZycgAT4/N.",'2005-10-10',"Testing Features","strawberry.png");
 
 insert into articles (id, authorId, content, title, imgFileName, imgCaption) values 
 (1, 1, "
