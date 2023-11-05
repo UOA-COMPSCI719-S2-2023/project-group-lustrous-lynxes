@@ -262,9 +262,10 @@ window.addEventListener("load", () =>{
     const cards = document.querySelectorAll(".summary-card");
         cards.forEach(function(card) {
             card.addEventListener("click", function() {
-            window.location.href = card.getAttribute("data-href");
-        });
-    });
+                window.location.href = `full-article?id=${card.dataset.articleId}`;
+            });
+        }
+    );
 
     // Find all inner links and add a click event to stop propagation
     const innerLinks = document.querySelectorAll(".inner-link");
