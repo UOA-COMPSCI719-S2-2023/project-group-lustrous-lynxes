@@ -246,15 +246,16 @@ button:hover {
 
 .summary-card {
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-columns: auto 16em 1fr;
     grid-template-areas: 
-    "image title content content"; 
+    "image title content"; 
     background-color: white;
     box-shadow: 5px 10px 5px #C1E5C7;
     margin-bottom: 2%;
     height: 10em;
     overflow: hidden;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .inner-link:hover {
@@ -299,11 +300,6 @@ button:hover {
     justify-content: flex-start;
 }
 
-.card-info p {
-    font-size: 1.25em;
-
-}
-
 .card-options {
     grid-area: options;
     padding: 1em;
@@ -320,9 +316,10 @@ button:hover {
 }
 
 #read-more {
+    margin: 0.2em 0;
     color: #4caf50;
     font-weight: bolder;
-    font-size: 1.25em;
+    font-size: 1.1em;
     font-family: 'Roboto Slab', sans-serif;
 }
 
@@ -462,12 +459,21 @@ button:hover {
 
 .card-title {
     margin-right: 2em;
-    padding-right: 2em;
+    padding: 1em 2em 0.5em 1em;
     border-right: 4px inset #E2F3E3 ;
 }
 
+.card-title h3, h4 {
+    margin: 0;
+}
+
+.card-title h3 {
+    font-size: x-large;
+    margin-bottom: 0.5em;
+}
+
 .card-title h4 {
-    font-size: larger;
+    font-size: large;
     font-weight: bolder;
     font-family: 'Roboto Slab', sans-serif;
 }
