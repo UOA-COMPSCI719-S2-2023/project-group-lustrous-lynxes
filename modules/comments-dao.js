@@ -15,6 +15,7 @@ async function getLatestCommentByUser(commentJson) {
      
      return allComments;
 }
+
 async function rateArticles(rate) {
     const db = await dbPromise;
 
@@ -33,6 +34,7 @@ async function allRatingArticle(articleId) {
      
      return allRatings;
 }
+
 async function changeArticleRating(rate) {
     const db = await dbPromise;
 
@@ -101,6 +103,7 @@ async function viewComments(articleId) {
      
      return allComments;
 }
+
 async function getCommentLikes(commentId){
     const db = await dbPromise;
     
@@ -136,6 +139,7 @@ async function removeCommentLike(like){
      and commentId = ${like.commentId}`);
 
 }
+
 async function removeComment(commentId){
     const db = await dbPromise;
 
@@ -144,6 +148,7 @@ async function removeComment(commentId){
      where id = ${commentId}`);
 
 }
+
 module.exports = {
     rateArticles,
     allRatingArticle,

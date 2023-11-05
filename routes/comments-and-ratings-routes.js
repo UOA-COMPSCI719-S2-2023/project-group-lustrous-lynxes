@@ -23,17 +23,14 @@ router.get("/rating/:score/:articleId", verifyAuthenticated, async (req, res) =>
 router.get("/comment/:articleId/:comment", verifyAuthenticated, async (req, res) => {
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
-    //Get comment and make sure it's not empty
     const content = req.params.comment
 
-    //Add comment to database
     const commentData = {
         userId: userId,
         articleId: articleId,
         content: content
     };
 
-    //Add comment to database.
     await commentDao.addComment(commentData);
     const getNewComment = await commentDao.getLatestCommentByUser(commentData);
     res.json(getNewComment);
@@ -45,11 +42,8 @@ router.get("/add-like/:commentId", async (req, res) => {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
-    //Add Like.
     await commentDao.likeComment(like);
-    //Get New Count of Likes.
     const commentLikes = await commentDao.getCommentLikes(like.commentId);
-    //Return to client.
     res.json({ likes: commentLikes });
 });
 
@@ -59,11 +53,8 @@ router.get("/remove-like/:commentId", async (req, res) => {
         userId: res.locals.user.id,
         commentId: req.params.commentId
     };
-    //Remove Like.
     await commentDao.removeCommentLike(like);
-    //Get new count of likes for comment.
     const commentLikes = await commentDao.getCommentLikes(like.commentId);
-    //Return to client.
     res.json({ likes: commentLikes });
 });
 
@@ -74,7 +65,8 @@ router.get("/remove-comment/:commentId/:articleId", async (req,res) =>{
     await commentDao.removeComment(commentId);
     res.redirect(`/full-article?id=${articleId}`);
 });
-//Delete Via Client for new added comments
+
+//Delete Via client for new added comments.
 router.get("/delete-comment/:commentId", async (req,res) =>{
     await commentDao.removeComment(req.params.commentId);
     res.end();
