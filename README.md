@@ -18,9 +18,11 @@ We have created a food blogging website. Users can create articles about anythin
         - A user can like or unlike a comment.
         - A user cannot like an article more than once.
 
-**4**  `Users can choose a dark or light theme`
+**4**   `Comments can be removed by the user that created them`
 
-**5**   `User can see another user's details`
+**5**  `Users can choose a dark or light theme`
+
+**6**   `User can see another user's details`
         - This is accessed by clicking the author's name on the full article page. 
 
 All extra features are marked **extra** in the information below
@@ -89,7 +91,7 @@ Password: password
 **6** `Edit their account details`
 **7** `Delete their account`
 **8** `View a full article`
-**9**        `View the details and other articles of a user` **extra**
+**9** `View the details and other articles of a user` **extra**
 **10** `Rate and article` **extra**
 **11** `View and article’s average rating` **extra**
 **12** `Users are only allowed to rate and article once` **extra**
@@ -98,6 +100,7 @@ Password: password
 **15** `Like comments` **extra**
         - They can also remove their like if they change their mind **extra**
 **16** `Change the theme of the website` **extra**
+**17** `Remove comment they created` **extra**
 
 ## Account functionality
 
