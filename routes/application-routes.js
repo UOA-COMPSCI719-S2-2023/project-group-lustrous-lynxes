@@ -66,14 +66,16 @@ router.get("/user", async (req, res) => {
         res.locals.artCard =  await allArticles.userCardDetails(visitUserId);
         res.locals.rating = await allArticles.setAllArticleAverageRating();
         
-        //Renders account page
-        if (visitUserId == res.locals.user.id) {
-            res.render("account", {
-                myAccount: true
-            });
-        } else {
-            res.render("account");
+        //Checks whether the user we are visiting is the logged-in user
+        let myAccount = false;
+        if (res.locals.user) {
+            if (visitUserId == res.locals.user.id) {
+                myAccount = true
+            }
         }
+        
+        //Renders account page
+        res.render("account", { myAccount });
     }
 });
 
