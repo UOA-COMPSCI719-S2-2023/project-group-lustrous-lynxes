@@ -19,6 +19,9 @@ We have created a food blogging website. Users can create articles about anythin
 
 **4**  `Users can choose a dark or light theme`
 
+**5**   `User can see another user's details`
+        - This is accessed by clicking the author's name on the full article page. 
+
 All extra features are marked **extra** in the information below
 
 An account has been created for you to test functionality.
@@ -71,7 +74,7 @@ Password: password
 **3** `Browse a list of all articles`
 **4** `View a full article`
 **5** `See the average rating of an article` **extra**
-
+**6**  `View the details and other articles of a user` **extra**
 
 ## Functionality - Logged In
 
@@ -85,14 +88,15 @@ Password: password
 **6** `Edit their account details`
 **7** `Delete their account`
 **8** `View a full article`
-**9** `Rate and article` **extra**
-**10** `View and article’s average rating` **extra**
-**11** `Users are only allowed to rate and article once` **extra**
-**12** `Comment on the article` **extra**
-**13** `View other comments` **extra**
-**14** `Like comments` **extra**
+**9**        `View the details and other articles of a user` **extra**
+**10** `Rate and article` **extra**
+**11** `View and article’s average rating` **extra**
+**12** `Users are only allowed to rate and article once` **extra**
+**13** `Comment on the article` **extra**
+**14** `View other comments` **extra**
+**15** `Like comments` **extra**
         - They can also remove their like if they change their mind **extra**
-**15** `Change the theme of the website` **extra**
+**16** `Change the theme of the website` **extra**
 
 ## Account functionality
 

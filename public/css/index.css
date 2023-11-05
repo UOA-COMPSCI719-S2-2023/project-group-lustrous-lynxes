@@ -366,6 +366,10 @@ button:hover {
     color: #4caf50;
 }
 
+.link-to-author:hover {
+    font-size: 2.2em;
+}
+
 .full-content {
     grid-area: content;
 }
