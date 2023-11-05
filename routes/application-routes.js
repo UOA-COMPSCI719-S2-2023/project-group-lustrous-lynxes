@@ -67,7 +67,7 @@ router.get("/user", async (req, res) => {
         let myAccount = false;
         if (res.locals.user) {
             if (visitUserId == res.locals.user.id) {
-                myAccount = true
+                myAccount = true;
             }
         }
 
