@@ -1,6 +1,7 @@
 const userDao = require("../modules/users-dao.js");
+const {comparePasswords} = require("../routes/helper-functions/user.js");
 const { v4: uuid } = require("uuid");
-const bcrypt = require('bcrypt');
+const {checkUsernameExists} = require("../routes/helper-functions/user.js")
 
 //Check the user username and password match that of in DB.
 //Set user to logged in if validation correct.
@@ -63,14 +64,27 @@ function verifyAuthenticated(req, res, next) {
     }
 }
 
-async function comparePasswords(passwordAttempt, encryptedCorrectPassword){
-    return bcrypt.compareSync(passwordAttempt, encryptedCorrectPassword);
+async function checkFormInput(req, res, next) {
+    const username = req.body.username;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    
+    if (password == confirmPassword){
+        if (await checkUsernameExists(username)){
+            res.setToastMessage("Username already exists.");
+            res.redirect("./create-account");
+        }else{
+            next();
+        }
+    }else{
+        res.setToastMessage("Password does not match confirmation.");
+        res.redirect("./create-account");
+    }
 }
-
 
 module.exports = {
     checkLoginCredentials,
     verifyAuthenticated,
     addUserToLocals,
-    comparePasswords
+    checkFormInput
 }
