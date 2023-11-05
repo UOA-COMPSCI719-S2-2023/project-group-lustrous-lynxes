@@ -16,16 +16,16 @@ async function userCardDetails(id) {
 }
 
 //Sets average rating for all articles.
-async function setAllArticleAverageRating(){
+async function setAllArticleAverageRating() {
     const allArticles = await articlesDao.viewAllArticles("id");
 
-    for (let i = 0; i < allArticles.length; i++){
+    for (let i = 0; i < allArticles.length; i++) {
         await addAverageRating(allArticles[i].id);
     }
 }
 
 //Get ratings from DB and calculate average 
-async function addAverageRating(articleId){
+async function addAverageRating(articleId) {
     const ratingArray = [];
     const allArticleRatings = await commentDao.allRatingArticle(articleId);
 
@@ -42,13 +42,13 @@ async function addAverageRating(articleId){
     await commentDao.avRating(roundAverage, articleId);
 }
 
-async function addUserArticleRating(ratingJson){
+async function addUserArticleRating(ratingJson) {
     const userArticleRating = await commentDao.getUserRatingforArticle(ratingJson);
     //If user already has rating for given article, then change it to new rating.
-    if (userArticleRating){
+    if (userArticleRating) {
         await commentDao.changeArticleRating(ratingJson);
-    //Else create new rating for article.
-    }else{
+        //Else create new rating for article.
+    } else {
         await commentDao.addArticleRating(ratingJson);
     }
 }
@@ -59,13 +59,13 @@ function ratingStarsArticles(score) {
     //do we need a half star 
     const halfStar = isHalfStar(score);
     //Process back to routes.js
-    if(halfStar) {
-        return `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`; 
+    if (halfStar) {
+        return `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`;
     }
     else {
-        return`Average Rating <img src="images/icons/${starImage}-star.png">`;
+        return `Average Rating <img src="images/icons/${starImage}-star.png">`;
     }
-       
+
 }
 
 function getRatingStars(score) {
@@ -82,7 +82,7 @@ function getRatingStars(score) {
     }
 }
 
-function isHalfStar(score){
+function isHalfStar(score) {
     if (score < 1.3 || (score >= 1.8 && score < 2.3) || (score >= 2.8 && score < 3.3) || (score >= 3.8 && score < 4.3) || score >= 4.8) {
         return false;
     } else {
@@ -97,4 +97,4 @@ module.exports = {
     addUserArticleRating,
     addAverageRating,
     ratingStarsArticles
-};
+}

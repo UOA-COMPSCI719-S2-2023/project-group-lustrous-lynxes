@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {checkLoginCredentials,verifyAuthenticated, checkFormInput} = require("../middleware/auth-middleware.js");
+const { checkLoginCredentials, verifyAuthenticated, checkFormInput } = require("../middleware/auth-middleware.js");
 const newUser = require("./helper-functions/user.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
