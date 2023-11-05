@@ -9,14 +9,16 @@
         <div class="full-card">
             <div class="header-image">
                 <img src="/images/{{artFull.imgFileName}}">
-                <p>{{artFull.imgCaption}} </p>
+            </div>
+            <div class="header-caption">
+                <p>{{artFull.imgCaption}}</p>
             </div>
             <div class="header-details">
                 <h1>{{artFull.title}}</h1>
-                <h2 class="link-to-author">By <a href="/user?id={{authorId}}">{{artFull.fName}} {{artFull.lName}}</a></h2>
+                <a href="/user?id={{authorId}}" class="link-to-author"><h2>By {{artFull.fName}} {{artFull.lName}}</h2></a>
             </div>
             <div class="full-content">
-                <p>{{{artFull.content}}}</p>
+                {{{artFull.content}}}
             </div>
         </div>        
     </div>    
