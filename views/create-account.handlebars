@@ -8,7 +8,7 @@
             <p id="checkExists"></p>
             <input type="password" placeholder="Password" name="password" required>
             <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
-        <br>
+            <br>
 
             <legend>Account Details</legend>
             <input type="text" placeholder="First Name" name="fName" required>
@@ -17,12 +17,13 @@
 
             <label for="avatar">Select your avatar:</label>
             <select id="chooseAvatar" name="avatar" required>
-            {{#each avatars}}
+                {{#each avatars}}
                 <option value={{fileName}}>{{name}}</option>
-            {{/each}}
+                {{/each}}
             </select>
             <br>
-            <textarea id="profileText" name="description" rows="4" cols="40" placeholder="Tell Us About Yourself"></textarea>
+            <textarea id="profileText" name="description" rows="4" cols="40"
+                placeholder="Tell Us About Yourself"></textarea>
 
             <button type="submit">Submit</button>
         </form>

@@ -32,7 +32,7 @@ async function addAverageRating(articleId) {
     allArticleRatings.forEach(rating => {
         ratingArray.push(rating.rating);
     });
-    
+
     const sumOfTotal = ratingArray.reduce((total, num) => total + num, 0);
     const averageRating = sumOfTotal / ratingArray.length;
     const roundAverage = (Math.round(averageRating * 2)) / 2;
@@ -52,7 +52,7 @@ async function addUserArticleRating(ratingJson) {
 function ratingStarsArticles(score) {
     const starImage = getRatingStars(score);
     const halfStar = isHalfStar(score);
-    
+
     if (halfStar) {
         return `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`;
     }
@@ -91,4 +91,4 @@ module.exports = {
     addUserArticleRating,
     addAverageRating,
     ratingStarsArticles
-}
+};

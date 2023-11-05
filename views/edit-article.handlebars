@@ -30,14 +30,16 @@
             </div>
 
             <label for="imageCaption" class="if-file-chosen">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen" value="{{article.imgCaption}}" required>
-           <br class="if-file-chosen"> 
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen"
+                value="{{article.imgCaption}}" required>
+            <br class="if-file-chosen">
             {{else}}
             <input type="file" id="imageInput" class="image-box" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
             <br>
 
             <label for="imageCaption" class="if-file-chosen hidden">Image Caption:</label>
-            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen hidden" placeholder="What's in this picture?">
+            <input type="text" name="imageCaption" id="imageCaption" class="if-file-chosen hidden"
+                placeholder="What's in this picture?">
             <br class="if-file-chosen hidden">
             {{/if}}
 
@@ -45,7 +47,7 @@
             <div class="wysiwyg-container">
                 <textarea name="articleContent" id="articleContent" cols="30" rows="10">{{article.content}}</textarea>
             </div>
-            
+
             <button type="submit">Publish article</button>
         </form>
     </div>

@@ -1,5 +1,4 @@
 function toaster(req, res, next) {
-
     res.locals.toastMessage = req.cookies.toastMessage;
     res.clearCookie("toastMessage");
 

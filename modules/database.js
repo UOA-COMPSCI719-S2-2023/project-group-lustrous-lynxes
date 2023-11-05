@@ -7,4 +7,5 @@ const dbPromise = sqlite.open({
     await db.run("pragma foreign_keys=true");
     return db;
 });
+
 module.exports = dbPromise;

@@ -39,7 +39,7 @@ async function removeUserToken(user) {
         where id = ${user.id}`);
 }
 
-async function retrieveUserName(username){
+async function retrieveUserName(username) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`select username from users
@@ -53,10 +53,10 @@ async function createUser(user) {
 
     return await db.run(SQL`
     insert into users (username,fName, lName, password, dateOfBirth, description, avatar) values
-    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.dateOfBirth}, ${user.description}, ${user.avatar})`);  
+    (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.dateOfBirth}, ${user.description}, ${user.avatar})`);
 }
 
-async function getUserById(userId){
+async function getUserById(userId) {
     const db = await dbPromise;
 
     const password = await db.get(SQL`select * from users where id = ${userId}`);
@@ -65,7 +65,7 @@ async function getUserById(userId){
 
 }
 
-async function changePassword(userId, password){
+async function changePassword(userId, password) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -74,9 +74,9 @@ async function changePassword(userId, password){
         where id = ${userId}`);
 }
 
-async function changeUserSettings(userId, user){
+async function changeUserSettings(userId, user) {
     const db = await dbPromise;
-    
+
     return await db.run(SQL`
         update users
         set username = ${user.username},
@@ -88,7 +88,7 @@ async function changeUserSettings(userId, user){
         where id = ${userId}`);
 }
 
-async function deleteUser(userId){
+async function deleteUser(userId) {
     const db = await dbPromise;
 
     await deleteUserInput(userId);
@@ -98,14 +98,14 @@ async function deleteUser(userId){
      where id = ${userId}`);
 }
 
-async function deleteUserInput(userId){
+async function deleteUserInput(userId) {
     await deleteUserArticles(userId);
     await deleteUserComments(userId);
     await deleteUserLikes(userId);
     await deleteUserRatings(userId);
 }
 
-async function deleteUserArticles(userId){
+async function deleteUserArticles(userId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -113,7 +113,7 @@ async function deleteUserArticles(userId){
     where authorId = ${userId}`);
 }
 
-async function deleteUserComments(userId){
+async function deleteUserComments(userId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -121,7 +121,7 @@ async function deleteUserComments(userId){
      where userId = ${userId}`);
 }
 
-async function deleteUserRatings(userId){
+async function deleteUserRatings(userId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
@@ -129,7 +129,7 @@ async function deleteUserRatings(userId){
      where userId = ${userId}`);
 }
 
-async function deleteUserLikes(userId){
+async function deleteUserLikes(userId) {
     const db = await dbPromise;
 
     return await db.run(SQL`
