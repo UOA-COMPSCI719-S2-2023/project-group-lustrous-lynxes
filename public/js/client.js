@@ -14,14 +14,14 @@ window.addEventListener("load", () =>{
     }
     
     //Set up the theme toggle button event listener
-    themeToggleButton.addEventListener("click", function() {
-        body.classList.toggle("theme-light");
-        body.classList.toggle("theme-dark");
-
-        //Save the theme preference
-        const theme = body.classList.contains("theme-dark") ? "dark" : "light";
-        localStorage.setItem("theme", theme);
-    });
+    if(themeToggleButton){
+        themeToggleButton.addEventListener("click", () => {
+            body.classList.toggle("theme-light");
+            body.classList.toggle("theme-dark");
+            const theme = body.classList.contains("theme-dark") ? "dark" : "light";
+            localStorage.setItem("theme", theme);
+        });
+    }
 
     const usernameInput = document.querySelector("#username");
     const serverResponse = document.querySelector("#checkExists");
