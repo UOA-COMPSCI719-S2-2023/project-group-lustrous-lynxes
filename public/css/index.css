@@ -36,6 +36,9 @@
     .page-container legend, label {
         color: #333;
     }
+    .user-header {
+        color: #333;
+    }
 }
 html {
     height: 100%;
