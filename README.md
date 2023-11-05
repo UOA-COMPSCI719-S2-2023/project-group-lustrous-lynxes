@@ -12,6 +12,7 @@ We have created a food blogging website. Users can create articles about anythin
 
 **2** `Comments can be made about articles.`
         - Comments can be viewed on the full article page.
+        - Comments can be deleted by the user that created them.
 
 **3**  `Comments can be liked.`
         - A user can like or unlike a comment.
