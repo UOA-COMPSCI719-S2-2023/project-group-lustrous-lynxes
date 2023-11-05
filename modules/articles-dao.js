@@ -115,8 +115,19 @@ async function viewFullArticle(givenId) {
 //Get article by ID
 async function getArticleById(articleId) {
     const db = await dbPromise;
-    const article = await db.get(SQL`select * from articles where id = ${articleId}`);
+    const article = await db.get(SQL`SELECT * FROM articles WHERE id = ${articleId}`);
     return article;
+}
+
+//Get image by name
+async function doesFileNameExist(fileName) {
+    const db = await dbPromise;
+    const image = await db.get(SQL`SELECT imgFileName FROM articles WHERE imgFileName = ${fileName}`);
+    if (image) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 module.exports = {
@@ -128,5 +139,6 @@ module.exports = {
     viewArticlesCards,
     userArticlesCards,
     viewFullArticle,
-    getArticleById
+    getArticleById,
+    doesFileNameExist
 };

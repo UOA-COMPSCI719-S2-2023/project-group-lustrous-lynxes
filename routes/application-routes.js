@@ -39,7 +39,7 @@ router.get("/login", (req, res) => {
         //Redirects to home if user is already logged in
         res.redirect("/");
     } else {
-        res.locals.title = "Log In | Lustrous Lynxes";
+        res.locals.title = "Login | Lustrous Lynxes";
         res.render("login");
     }
 });
@@ -59,7 +59,7 @@ router.get("/user", async (req, res) => {
     if (visitUser) {
         //Save required information to res.locals
         res.locals.visitUser = visitUser;
-        res.locals.title = `${visitUser.username}'s Articles | Lustrous Lynxes`;
+        res.locals.title = `${visitUser.username}'s articles | Lustrous Lynxes`;
         res.locals.artCard = await allArticles.userCardDetails(visitUserId);
         res.locals.rating = await allArticles.setAllArticleAverageRating();
 
@@ -83,6 +83,7 @@ router.get("/user", async (req, res) => {
 });
 
 //Renders add-article page, allowing user to create an article
+
 router.get("/add-article", verifyAuthenticated, (req, res) => {
     res.locals.title = "Add New Article | Lustrous Lynxes";
     res.render("add-article", {
@@ -109,13 +110,11 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 
     //Checks if user uploaded an image
     if (imageInfo) {
-        //Renames and moves image file
-        const oldFileName = imageInfo.path;
-        const newFileName = `public/images/${imageInfo.originalname}`;
-        fs.renameSync(oldFileName, newFileName);
+        //Renames & moves image file
+        const newFileName = await processNewImage(imageInfo);
 
         //Stores given image & caption
-        newArticle.imgFileName = imageInfo.originalname;
+        newArticle.imgFileName = newFileName;
         newArticle.imgCaption = imageCaption;
     }
 
@@ -125,6 +124,24 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     //Redirects to full article
     res.redirect(`/full-article?id=${newArticleId}`);
 });
+
+//Processes an uploaded image, for use when adding/editing articles
+async function processNewImage(imageInfo) {
+    //Renames and moves image file
+    const oldFileName = imageInfo.path;
+    let newFileName = imageInfo.originalname;
+    //Checks whether image file name already exists
+    const fileNameExists = await articleDao.doesFileNameExist(newFileName);
+    if (fileNameExists) {
+        //Generates unique file name
+        const timestamp = Date.now();
+        const fileExtension = imageInfo.originalname.split(".").pop();
+        const originalNameNoExtension = imageInfo.originalname.replace(`.${fileExtension}`, "");
+        newFileName = `${originalNameNoExtension}_${timestamp}.${fileExtension}`;
+    }
+    fs.renameSync(oldFileName, `public/images/${newFileName}`);
+    return newFileName;
+}
 
 //Renders edit-article page, allowing user to edit their own article, specified by ID in query parameter
 router.get("/edit-article", verifyAuthenticated, async (req, res) => {
@@ -146,7 +163,7 @@ router.get("/edit-article", verifyAuthenticated, async (req, res) => {
             const hasImage = (article.imgFileName != "default-image.jpg");
 
             //Set title
-            res.locals.title = "Edit Article | Lustrous Lynxes";
+            res.locals.title = "Edit article | Lustrous Lynxes";
 
             //Renders page with all necessary info
             res.render("edit-article", {
@@ -183,13 +200,11 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
 
     //Checks if user uploaded a new image
     if (imageInfo) {
-        //Renames and moves image file
-        const oldFileName = imageInfo.path;
-        const newFileName = `public/images/${imageInfo.originalname}`;
-        fs.renameSync(oldFileName, newFileName);
+        //Renames & moves image file
+        const newFileName = await processNewImage(imageInfo);
 
         //Adds image file name to article object
-        article.imgFileName = imageInfo.originalname;
+        article.imgFileName = newFileName;
     }
 
     //Adds caption to article object if it was given
