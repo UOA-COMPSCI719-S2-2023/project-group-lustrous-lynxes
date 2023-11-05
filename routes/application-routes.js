@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const authUser = require("../middleware/auth-middleware.js");
-const newUser = require("../middleware/new-account-middleware.js");
-const allArticles = require("../middleware/articles-middleware.js");
+const {checkLoginCredentials,verifyAuthenticated, checkFormInput} = require("../middleware/auth-middleware.js");
+const newUser = require("./helper-functions/user.js");
+const allArticles = require("./helper-functions/articles.js");
 const userDao = require("../modules/users-dao.js");
 const avatarDao = require("../modules/avatars-dao.js");
 const commentDao = require("../modules/comments-dao.js");
@@ -29,7 +29,7 @@ router.get("/articles", async (req, res) => {
 });
 
 //Renders user's own user page
-router.get("/profile", authUser.verifyAuthenticated, (req, res) => {
+router.get("/profile", verifyAuthenticated, (req, res) => {
     res.redirect(`/user?id=${res.locals.user.id}`);
 });
 
@@ -45,7 +45,7 @@ router.get("/login", (req, res) => {
 });
 
 //Redirects to profile if user successfully logs in
-router.post("/login", authUser.checkLoginCredentials, async (req, res) => {
+router.post("/login", checkLoginCredentials, async (req, res) => {
     res.redirect("/profile");
 });
 
@@ -83,8 +83,9 @@ router.get("/user", async (req, res) => {
 });
 
 //Renders add-article page, allowing user to create an article
-router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
-    res.locals.title = "Add new article | Lustrous Lynxes";
+
+router.get("/add-article", verifyAuthenticated, (req, res) => {
+    res.locals.title = "Add New Article | Lustrous Lynxes";
     res.render("add-article", {
         includeTinyMCEScripts: true
     });
@@ -143,7 +144,7 @@ async function processNewImage(imageInfo) {
 }
 
 //Renders edit-article page, allowing user to edit their own article, specified by ID in query parameter
-router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
+router.get("/edit-article", verifyAuthenticated, async (req, res) => {
     //Retrieves article object with corresponding ID from database
     const articleId = req.query.id;
     const article = await articleDao.getArticleById(articleId);
@@ -239,7 +240,7 @@ router.get("/create-account", async (req, res) => {
 });
 
 //Processes form for creating account and redirects to login
-router.post("/create-account", newUser.checkFormInput, async (req, res) => {
+router.post("/create-account", checkFormInput, async (req, res) => {
     //Encrypt Password
     hashedPassword = await newUser.encryptPassword(req.body.password);
     //Create JSON for user from form values.
@@ -273,7 +274,7 @@ router.get("/logout", (req, res) => {
 });
 
 //Renders edit-account page, allowing user to edit their own profile
-router.get("/edit-account", authUser.verifyAuthenticated, async (req, res) => {
+router.get("/edit-account", verifyAuthenticated, async (req, res) => {
     const avatars = await avatarDao.retrieveAllIcons();
     const userAvatar = res.locals.user.avatar;
     let userAvatarName;
@@ -335,7 +336,7 @@ router.post("/edit-password", async (req, res) => {
     //Check actual password in DB for user.
     const user = await userDao.getUserById(userId);
     //Check the input matches that of the User's actual password.
-    const checkPasswordCorrect = await authUser.comparePasswords(currentPasswordInput, user.password);
+    const checkPasswordCorrect = await newUser.comparePasswords(currentPasswordInput, user.password);
     //New Password and confirmation of that password.
     const newPassword = req.body.newPassword;
     const confirmPassword = req.body.confirmPassword;
@@ -353,23 +354,16 @@ router.post("/edit-password", async (req, res) => {
 });
 
 //Deletes account and redirects to home
-router.get("/delete-account", async (req, res) => {
-    //Deletes account
+router.post("/delete-account", async (req, res) => {
     await userDao.deleteUser(res.locals.user.id);
-
-    //Toast message
     res.setToastMessage("Account Deleted");
-
-    //Removes authentication token and sets user to null
     res.locals.user = null;
     res.clearCookie("authToken");
-
-    //Redirects to home
     res.redirect("/");
 });
 
 //Adds rating to article
-router.get("/rating/:score/:articleId", authUser.verifyAuthenticated, async (req, res) => {
+router.get("/rating/:score/:articleId", verifyAuthenticated, async (req, res) => {
     const articleRating = {
         articleId: req.params.articleId,
         userId: res.locals.user.id,
@@ -434,7 +428,7 @@ router.get("/full-article", async (req, res) => {
 
 //Adds comment to article, and make sure comment not empty. Fetch Request done by client side.
 //No longer requires check for empty string as it is done client.
-router.get("/comment/:articleId/:comment", authUser.verifyAuthenticated, async (req, res) => {
+router.get("/comment/:articleId/:comment", verifyAuthenticated, async (req, res) => {
     const userId = res.locals.user.id;
     const articleId = req.params.articleId;
     //get comment and make sure it's not empty
