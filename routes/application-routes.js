@@ -109,13 +109,11 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
 
     //Checks if user uploaded an image
     if (imageInfo) {
-        //Renames and moves image file
-        const oldFileName = imageInfo.path;
-        const newFileName = `public/images/${imageInfo.originalname}`;
-        fs.renameSync(oldFileName, newFileName);
+        //Renames & moves image file
+        const newFileName = await processNewImage(imageInfo);
 
         //Stores given image & caption
-        newArticle.imgFileName = imageInfo.originalname;
+        newArticle.imgFileName = newFileName;
         newArticle.imgCaption = imageCaption;
     }
 
@@ -125,6 +123,24 @@ router.post("/add-article", upload.single("imageFile"), async (req, res) => {
     //Redirects to full article
     res.redirect(`/full-article?id=${newArticleId}`);
 });
+
+//Processes an uploaded image, for use when adding/editing articles
+async function processNewImage(imageInfo) {
+    //Renames and moves image file
+    const oldFileName = imageInfo.path;
+    let newFileName = imageInfo.originalname;
+    //Checks whether image file name already exists
+    const fileNameExists = await articleDao.doesFileNameExist(newFileName);
+    if (fileNameExists) {
+        //Generates unique file name
+        const timestamp = Date.now();
+        const fileExtension = imageInfo.originalname.split(".").pop();
+        const originalNameNoExtension = imageInfo.originalname.replace(`.${fileExtension}`, "");
+        newFileName = `${originalNameNoExtension}_${timestamp}.${fileExtension}`;
+    }
+    fs.renameSync(oldFileName, `public/images/${newFileName}`);
+    return newFileName;
+}
 
 //Renders edit-article page, allowing user to edit their own article, specified by ID in query parameter
 router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
@@ -183,13 +199,11 @@ router.post("/edit-article", upload.single("imageFile"), async (req, res) => {
 
     //Checks if user uploaded a new image
     if (imageInfo) {
-        //Renames and moves image file
-        const oldFileName = imageInfo.path;
-        const newFileName = `public/images/${imageInfo.originalname}`;
-        fs.renameSync(oldFileName, newFileName);
+        //Renames & moves image file
+        const newFileName = await processNewImage(imageInfo);
 
         //Adds image file name to article object
-        article.imgFileName = imageInfo.originalname;
+        article.imgFileName = newFileName;
     }
 
     //Adds caption to article object if it was given
