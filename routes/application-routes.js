@@ -39,6 +39,7 @@ router.get("/login", (req, res) => {
         //Redirects to home if user is already logged in
         res.redirect("/");
     } else {
+        res.locals.title = "Log In | Lustrous Lynxes";
         res.render("login");
     }
 });
@@ -56,13 +57,14 @@ router.get("/user", async (req, res) => {
     
     //If user is not found, displays "user not found" message
     if (visitUser == undefined) {
+        res.locals.title = "Error | Lustrous Lynxes";
         res.render("account", {
             noUser: true
         });
     } else {
         //Save required information to res.locals
         res.locals.visitUser = visitUser;
-        res.locals.title = `${visitUser.username}'s Articles`;
+        res.locals.title = `${visitUser.username}'s Articles | Lustrous Lynxes`;
         res.locals.artCard =  await allArticles.userCardDetails(visitUserId);
         res.locals.rating = await allArticles.setAllArticleAverageRating();
         
@@ -81,6 +83,7 @@ router.get("/user", async (req, res) => {
 
 //Renders add-article page, allowing user to create an article
 router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
+    res.locals.title = "Add New Article | Lustrous Lynxes";
     res.render("add-article", {
         includeTinyMCEScripts: true
     });
@@ -130,6 +133,7 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
 
     //Checks whether the article exists
     if (article == undefined) {
+        res.locals.title = "Error | Lustrous Lynxes";
         //Informs user that the article does not exist
         res.render("edit-article", {
             noArticle: true
@@ -140,6 +144,9 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
             //Stores whether or not the article is using the default image
             const hasImage = (article.imgFileName != "default-image.jpg");
 
+            //Set title
+            res.locals.title = "Edit Article | Lustrous Lynxes";
+
             //Renders page with all necessary info
             res.render("edit-article", {
                 includeTinyMCEScripts: true,
@@ -147,6 +154,8 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
                 article: article
             });
         } else {
+            res.locals.title = "Error | Lustrous Lynxes";
+
             //Informs user that they cannot edit this article
             res.render("edit-article", {
                 wrongAuthor: true
@@ -208,6 +217,7 @@ router.post("/delete-article/:id", async (req, res) => {
 router.get("/create-account", async (req,res)=>{
     //Get all avatars for create account form.
     res.locals.avatars = await avatarDao.retrieveAllIcons();
+    res.locals.title = "Create new account | Lustrous Lynxes";
 
     //Render create account form using avatars.
     res.render("create-account");
@@ -263,7 +273,10 @@ router.get("/edit-account", authUser.verifyAuthenticated, async (req,res)=>{
         name: userAvatar
     }
     avatars.unshift(defaultAvatar);
+    
     res.locals.avatars = avatars;
+    res.locals.title = "Edit account | Lustrous Lynxes";
+
     res.render("edit-account");
 });
 
@@ -359,9 +372,12 @@ router.get("/full-article", async (req, res) => {
     await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
+        //Get full article info
+        const fullArticleInfo =  await articleDao.viewFullArticle(req.query.id);
+        
         //Save info to res.locals
         res.locals.authorId = article.authorId;
-        res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
+        res.locals.artFull = fullArticleInfo;
 
         //get star rating of articles
         if (res.locals.artFull.avRating){
@@ -384,13 +400,17 @@ router.get("/full-article", async (req, res) => {
                 }
             }
         }
+
         //Sort Comments by likes.
         allArticleComments.sort((a,b) =>{
             return b.likes - a.likes;
         });
         res.locals.comFull = allArticleComments;
+        
+        res.locals.title = `${fullArticleInfo.title} | ${fullArticleInfo.fName} ${fullArticleInfo.lName} | Lustrous Lynxes`;
         res.render("full-article");
     } else {
+        res.locals.title = "Error | Lustrous Lynxes";
         res.render("full-article", {
             noArticle: true
         })
