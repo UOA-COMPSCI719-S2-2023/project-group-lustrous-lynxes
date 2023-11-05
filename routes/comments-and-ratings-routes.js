@@ -67,4 +67,17 @@ router.get("/remove-like/:commentId", async (req, res) => {
     res.json({ likes: commentLikes });
 });
 
+//Remove via server for existing comments.
+router.get("/remove-comment/:commentId/:articleId", async (req,res) =>{
+    const commentId = req.params.commentId;
+    const articleId = req.params.articleId;
+    await commentDao.removeComment(commentId);
+    res.redirect(`/full-article?id=${articleId}`);
+});
+//Delete Via Client for new added comments
+router.get("/delete-comment/:commentId", async (req,res) =>{
+    await commentDao.removeComment(req.params.commentId);
+    res.end();
+});
+
 module.exports = router;

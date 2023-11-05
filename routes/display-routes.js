@@ -53,31 +53,30 @@ router.get("/user", async (req, res) => {
 
 //Renders a full article page, specified by article ID in query parameter
 router.get("/full-article", async (req, res) => {
-    //Ensure average rating is updated first.
     await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
-        //Get full article info
         const fullArticleInfo = await articleDao.viewFullArticle(req.query.id);
-
-        //Save info to res.locals
         res.locals.authorId = article.authorId;
         res.locals.artFull = fullArticleInfo;
 
-        //get star rating of articles
         if (res.locals.artFull.avRating) {
             res.locals.starRating = allArticles.ratingStarsArticles(res.locals.artFull.avRating);
         }
 
         const allArticleComments = await commentDao.viewComments(req.query.id);
-        //Add amount of likes to the comment then add back to res.locals.
         for (let i = 0; i < allArticleComments.length; i++) {
             const likes = await commentDao.getCommentLikes(allArticleComments[i].id);
             allArticleComments[i].likes = likes;
-            //Only run this if user is logged in.
+
             if (res.locals.user) {
                 const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
-                //If the user has already liked the comment, then disable the ability to like that comment.
+
+                if (res.locals.user.id == allArticleComments[i].userId){
+                    allArticleComments[i].enableRemove = true;
+                }else {
+                    allArticleComments[i].enableRemove = false;
+                }
                 if (likeByUser) {
                     allArticleComments[i].enableUserLike = false;
                 } else {
@@ -85,8 +84,6 @@ router.get("/full-article", async (req, res) => {
                 }
             }
         }
-
-        //Sort Comments by likes.
         allArticleComments.sort((a, b) => {
             return b.likes - a.likes;
         });

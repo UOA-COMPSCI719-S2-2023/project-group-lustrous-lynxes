@@ -85,6 +85,9 @@
                 {{else}}
                 <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</button>
                 {{/if}}
+                {{#if enableRemove}}
+                <a href="./remove-comment/{{id}}/{{articleId}}"><button class="removeButtons" commentId = {{id}}>Remove</button></a>
+                {{/if}}
             </div>                     
         </div>
         {{/each}}
