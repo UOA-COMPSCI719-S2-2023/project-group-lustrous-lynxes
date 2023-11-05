@@ -359,7 +359,8 @@ router.get("/full-article", async (req, res) => {
     await allArticles.addAverageRating(req.query.id);
     const article = await articleDao.getArticleById(req.query.id);
     if (article) {
-
+        //Save info to res.locals
+        res.locals.authorId = article.authorId;
         res.locals.artFull =  await articleDao.viewFullArticle(req.query.id);
 
         //get star rating of articles
