@@ -46,14 +46,14 @@
     </div>
 </div>
 
-<div class="page-container"> 
+<div class="page-container">
     <h2>{{visitUser.fName}}'s Articles</h2>
 
     <div class="all-cards">
         {{#each artCard}}
         <div class="summary-card my-page">
             <div class="card-image">
-                <img src="/images/{{imgFileName}}"> 
+                <img src="/images/{{imgFileName}}">
             </div>
             <div class="card-title">
                 <h4>{{title}}</h4>
@@ -66,16 +66,19 @@
                     <a href="./full-article?id={{id}}">
                         <p id="read-more">Read More</p>
                     </a>
-                </div>                    
+                </div>
             </div>
+            {{#if ../myAccount}}
             <div class="card-options">
                 <a href="./edit-article?id={{id}}">
                     <button>Edit</button>
                 </a>
-                <form action="./delete-article/{{id}}" method="POST" class="delete-article-form" data-article-title="{{title}}">
+                <form action="./delete-article/{{id}}" method="POST" class="delete-article-form"
+                    data-article-title="{{title}}">
                     <button type="submit">Delete</button>
                 </form>
             </div>
+            {{/if}}
         </div>
         {{/each}}
     </div>
