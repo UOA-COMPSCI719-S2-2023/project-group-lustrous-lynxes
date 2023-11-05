@@ -481,12 +481,16 @@ button:hover {
 }
 
 .logo {
-    background-size: cover;
-    background-position: center;
+    max-height: 60vh;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center center;
+    box-sizing: border-box;
 }
 
 .logo img {
-    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 header {
