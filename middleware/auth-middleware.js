@@ -1,7 +1,7 @@
 const userDao = require("../modules/users-dao.js");
-const {comparePasswords} = require("../routes/helper-functions/user.js");
+const { comparePasswords } = require("../routes/helper-functions/user.js");
 const { v4: uuid } = require("uuid");
-const {checkUsernameExists} = require("../routes/helper-functions/user.js")
+const { checkUsernameExists } = require("../routes/helper-functions/user.js")
 
 //Set user to logged in if validation correct.
 async function checkLoginCredentials(req, res, next) {
@@ -9,26 +9,26 @@ async function checkLoginCredentials(req, res, next) {
     const passwordAttempt = req.body.password;
 
     const user = await userDao.retrieveUser(username);
-    if (user){
+    if (user) {
         const encryptedCorrectPassword = user.password;
         correctPassword = await comparePasswords(passwordAttempt, encryptedCorrectPassword);
 
-        if (correctPassword){
+        if (correctPassword) {
 
-        const authToken = uuid();
-        user.token = authToken;
-        await userDao.updateUserToken(user);
-        res.cookie("authToken", authToken);
-        res.locals.user = user;
-        res.setToastMessage(`Hello ${res.locals.user.username}`);
-        
-        next();
+            const authToken = uuid();
+            user.token = authToken;
+            await userDao.updateUserToken(user);
+            res.cookie("authToken", authToken);
+            res.locals.user = user;
+            res.setToastMessage(`Hello ${res.locals.user.username}`);
+
+            next();
         }
-        else{
+        else {
             res.setToastMessage("Password Incorrect");
-            res.redirect("./login");  
+            res.redirect("./login");
         }
-    }else{
+    } else {
         res.setToastMessage("Username not found");
         res.redirect("./login");
     }
@@ -37,7 +37,7 @@ async function checkLoginCredentials(req, res, next) {
 
 async function addUserToLocals(req, res, next) {
     const user = await userDao.retrieveUserByToken(req.cookies.authToken);
-    res.locals.user = user; 
+    res.locals.user = user;
     next();
 }
 
@@ -54,15 +54,15 @@ async function checkFormInput(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
-    
-    if (password == confirmPassword){
-        if (await checkUsernameExists(username)){
+
+    if (password == confirmPassword) {
+        if (await checkUsernameExists(username)) {
             res.setToastMessage("Username already exists.");
             res.redirect("./create-account");
-        }else{
+        } else {
             next();
         }
-    }else{
+    } else {
         res.setToastMessage("Password does not match confirmation.");
         res.redirect("./create-account");
     }
@@ -73,4 +73,4 @@ module.exports = {
     verifyAuthenticated,
     addUserToLocals,
     checkFormInput
-}
+};

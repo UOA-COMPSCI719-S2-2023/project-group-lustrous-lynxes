@@ -63,9 +63,9 @@ router.get("/full-article", async (req, res) => {
             if (res.locals.user) {
                 const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
 
-                if (res.locals.user.id == allArticleComments[i].userId){
+                if (res.locals.user.id == allArticleComments[i].userId) {
                     allArticleComments[i].enableRemove = true;
-                }else {
+                } else {
                     allArticleComments[i].enableRemove = false;
                 }
                 if (likeByUser) {

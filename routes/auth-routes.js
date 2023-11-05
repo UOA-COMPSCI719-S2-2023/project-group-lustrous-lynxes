@@ -129,7 +129,7 @@ router.post("/edit-password", async (req, res) => {
     const checkPasswordCorrect = await newUser.comparePasswords(currentPasswordInput, user.password);
     const newPassword = req.body.newPassword;
     const confirmPassword = req.body.confirmPassword;
-    
+
     if (confirmPassword == newPassword && checkPasswordCorrect) {
         const encryptNewPassword = await newUser.encryptPassword(newPassword);
         await userDao.changePassword(userId, encryptNewPassword);

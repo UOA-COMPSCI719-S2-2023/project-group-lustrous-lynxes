@@ -1,6 +1,6 @@
 <div class="page-container">
     <h1 class="page-heading">Account Settings</h1>
-    
+
     <div class="settings-forms-container">
         <div class="login-form form-container settings-form">
             <form action="./edit-account" method="post">
@@ -12,16 +12,18 @@
                 <label for="lName">Last Name</label>
                 <input type="text" placeholder="{{user.lName}}" name="lName" value="{{user.lName}}"><br><br>
                 <label for="dateOfBirth">Date of Birth</label>
-                <input type="date" placeholder="{{user.dateOfBirth}}" name="dateOfBirth" value="{{user.dateOfBirth}}"><br><br>
+                <input type="date" placeholder="{{user.dateOfBirth}}" name="dateOfBirth"
+                    value="{{user.dateOfBirth}}"><br><br>
 
                 <label for="avatar">Select your avatar:</label>
                 <select id="chooseAvatar" name="avatar">
                     {{#each avatars}}
-                        <option value={{fileName}}>{{name}}</option>
+                    <option value={{fileName}}>{{name}}</option>
                     {{/each}}
                 </select><br><br>
 
-                <textarea id="profileText" name="description" rows="4" cols="40" value="{{user.description}}" maxlength="500">{{user.description}}</textarea><br>
+                <textarea id="profileText" name="description" rows="4" cols="40" value="{{user.description}}"
+                    maxlength="500">{{user.description}}</textarea><br>
                 <button type="submit">Save Changes</button>
             </form>
         </div>
@@ -36,17 +38,18 @@
 
                 <label for="newPassword">New Password:</label>
                 <input type="password" name="newPassword" required><br><br>
-                
+
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" name="confirmPassword" required>
                 <button type="submit">Change Password</button>
             </form>
         </div>
-                
+
         <div class="login-form form-container settings-form">
             <h3>Delete Account</h3>
-            <form action="./delete-account" id = "deleteAccount"method="post">
-            <button type="submit">Delete Account</button></form>
+            <form action="./delete-account" id="deleteAccount" method="post">
+                <button type="submit">Delete Account</button>
+            </form>
         </div>
 
         <div class="login-form form-container settings-form">

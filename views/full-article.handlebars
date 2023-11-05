@@ -4,7 +4,7 @@
     <p class="centred-text">This article does not exist.</p>
     {{else}}
 
-    
+
     <div class="all-cards">
         <div class="full-card">
             <div class="header-image">
@@ -15,54 +15,56 @@
             </div>
             <div class="header-details">
                 <h1>{{artFull.title}}</h1>
-                <a href="/user?id={{authorId}}" class="link-to-author"><h2>By {{artFull.fName}} {{artFull.lName}}</h2></a>
+                <a href="/user?id={{authorId}}" class="link-to-author">
+                    <h2>By {{artFull.fName}} {{artFull.lName}}</h2>
+                </a>
             </div>
             <div class="full-content">
                 {{{artFull.content}}}
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 
-    <div class="rating">    
+    <div class="rating">
         {{#if user}}
-            {{!-- <p>user already logged in</p>  --}}
-             <div>
-                   <h2 class="form-title">Rate the Article</h2> 
-                   <form id = "addRating">
-                   <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" class="ratingValue" value= '1'>
-                        <div class="radio-div"></div>1
-                        <img class="star" src="/images/icons/one-star.png">
-                    </label>
-                    <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" class="ratingValue" value= '2'>
-                        <div class="radio-div"></div>2
-                        <img class="star" src="/images/icons/two-star.png">
-                    </label>
-                    <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" class="ratingValue" value= '3'>
-                        <div class="radio-div"></div>3
-                        <img class="star" src="/images/icons/three-star.png">
-                    </label>
-                    <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating"class="ratingValue" value= '4'>
-                        <div class="radio-div"></div>4
-                        <img class="star" src="/images/icons/four-star.png">
-                    </label>
-                    <label for="rating" class="rate-form" >
-                        <input type="radio" name="rating" class="ratingValue" value= '5'>
-                        <div class="radio-div"></div>5
-                        <img class="star" src="/images/icons/five-star.png">
-                    </label>
-                    <input type="hidden" name="id"  id ="currentArticle" value="{{artFull.id}}">
-                    <button type="submit">Submit</button>
-                    </form>
+        {{!-- <p>user already logged in</p> --}}
+        <div>
+            <h2 class="form-title">Rate the Article</h2>
+            <form id="addRating">
+                <label for="rating" class="rate-form">
+                    <input type="radio" name="rating" class="ratingValue" value='1'>
+                    <div class="radio-div"></div>1
+                    <img class="star" src="/images/icons/one-star.png">
+                </label>
+                <label for="rating" class="rate-form">
+                    <input type="radio" name="rating" class="ratingValue" value='2'>
+                    <div class="radio-div"></div>2
+                    <img class="star" src="/images/icons/two-star.png">
+                </label>
+                <label for="rating" class="rate-form">
+                    <input type="radio" name="rating" class="ratingValue" value='3'>
+                    <div class="radio-div"></div>3
+                    <img class="star" src="/images/icons/three-star.png">
+                </label>
+                <label for="rating" class="rate-form">
+                    <input type="radio" name="rating" class="ratingValue" value='4'>
+                    <div class="radio-div"></div>4
+                    <img class="star" src="/images/icons/four-star.png">
+                </label>
+                <label for="rating" class="rate-form">
+                    <input type="radio" name="rating" class="ratingValue" value='5'>
+                    <div class="radio-div"></div>5
+                    <img class="star" src="/images/icons/five-star.png">
+                </label>
+                <input type="hidden" name="id" id="currentArticle" value="{{artFull.id}}">
+                <button type="submit">Submit</button>
+            </form>
 
-            </div>
+        </div>
         {{else}}
-            <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
+        <p id="login-request">To add or view comments and rate article: <a href="/login">login</a></p>
         {{/if}}
-        <h2 id = "displayRating">{{{starRating}}} </h2>
+        <h2 id="displayRating">{{{starRating}}} </h2>
     </div>
 
     <div class="all-cards">
@@ -71,39 +73,40 @@
         </div>
         {{#if user}}
         <div id="newCommentCard">
-        {{#each comFull}}
-        <div class="comment-card">
-            <div class="card-avatar">
-                <img src="/images/avatars/{{avatar}}">
+            {{#each comFull}}
+            <div class="comment-card">
+                <div class="card-avatar">
+                    <img src="/images/avatars/{{avatar}}">
+                </div>
+                <div class="card-title">
+                    <h4>{{fName}} {{lName}}</h4>
+                </div>
+                <div class="card-content">
+                    <p>{{content}}</p>
+                    <h3 id="display{{id}}">likes: {{likes}}</h3>
+                    {{#if enableUserLike}}
+                    <button class="likeButtons" commentId="{{id}}" setting="add">Add Like</button>
+                    {{else}}
+                    <button class="likeButtons" commentId="{{id}}" setting="remove">Remove Like</button>
+                    {{/if}}
+                    {{#if enableRemove}}
+                    <a href="./remove-comment/{{id}}/{{articleId}}"><button class="removeButtons"
+                            commentId={{id}}>Remove</button></a>
+                    {{/if}}
+                </div>
             </div>
-            <div class="card-title">
-                <h4>{{fName}} {{lName}}</h4>
-            </div>
-            <div class="card-content">
-                <p>{{content}}</p>
-                <h3 id = "display{{id}}">likes: {{likes}}</h3>
-                {{#if enableUserLike}}
-                <button class= "likeButtons" commentId="{{id}}" setting="add">Add Like</button>
-                {{else}}
-                <button class= "likeButtons" commentId="{{id}}" setting="remove">Remove Like</button>
-                {{/if}}
-                {{#if enableRemove}}
-                <a href="./remove-comment/{{id}}/{{articleId}}"><button class="removeButtons" commentId = {{id}}>Remove</button></a>
-                {{/if}}
-            </div>                     
+            {{/each}}
         </div>
-        {{/each}}
-        </div>
-        {{!-- Container to add new comments  --}}
+        {{!-- Container to add new comments --}}
         <div>
             <h1>Add a Comment</h1>
             <form id="comment-form" class="all-cards">
                 <textarea name="comment" placeholder="Add your comments here..." id="userComment"></textarea>
-                <input type="hidden" name="id"  id ="articleComment" value="{{artFull.id}}">
+                <input type="hidden" name="id" id="articleComment" value="{{artFull.id}}">
                 <button type="submit">Publish Comment</button>
             </form>
         </div>
-        {{/if}}     
-    </div>    
+        {{/if}}
+    </div>
     {{/if}}
 </div>

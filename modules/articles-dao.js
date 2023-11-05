@@ -26,7 +26,7 @@ async function viewUserArticles(userId, criteria) {
 
 async function addNewArticle(article) {
     const db = await dbPromise;
-    
+
     const result = await db.run(SQL`
         INSERT INTO articles (authorId, content, title, imgFileName, imgCaption) 
         VALUES (${article.userId}, ${article.content}, ${article.title}, ${article.imgFileName}, ${article.imgCaption})
