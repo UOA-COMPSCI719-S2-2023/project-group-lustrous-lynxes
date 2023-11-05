@@ -251,6 +251,7 @@ window.addEventListener("load", () =>{
             }
         });
     }
+    
     const deleteAccountButton = document.querySelector("#deleteAccount");
     if (deleteAccountButton){
         deleteAccountButton.onsubmit = () => {

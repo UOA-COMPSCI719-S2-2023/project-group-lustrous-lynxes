@@ -32,18 +32,14 @@ router.get("/user", async (req, res) => {
         res.locals.artCard = await allArticles.userCardDetails(visitUserId);
         res.locals.rating = await allArticles.setAllArticleAverageRating();
 
-        //Checks whether the user we are visiting is the logged-in user
         let myAccount = false;
         if (res.locals.user) {
             if (visitUserId == res.locals.user.id) {
                 myAccount = true;
             }
         }
-
-        //Renders account page
         res.render("account", { myAccount });
     } else {
-        //Displays error message
         res.locals.title = "Error | Lustrous Lynxes";
         res.render("account", {
             noUser: true
