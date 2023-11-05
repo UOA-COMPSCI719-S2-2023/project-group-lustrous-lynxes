@@ -55,13 +55,8 @@ router.get("/user", async (req, res) => {
     const visitUserId = req.query.id;
     const visitUser = await userDao.getUserById(visitUserId);
     
-    //If user is not found, displays "user not found" message
-    if (visitUser == undefined) {
-        res.locals.title = "Error | Lustrous Lynxes";
-        res.render("account", {
-            noUser: true
-        });
-    } else {
+    //If given user exists, renders user's profile
+    if (visitUser) {
         //Save required information to res.locals
         res.locals.visitUser = visitUser;
         res.locals.title = `${visitUser.username}'s Articles | Lustrous Lynxes`;
@@ -78,6 +73,12 @@ router.get("/user", async (req, res) => {
         
         //Renders account page
         res.render("account", { myAccount });
+    } else {
+        //Displays error message
+        res.locals.title = "Error | Lustrous Lynxes";
+        res.render("account", {
+            noUser: true
+        });
     }
 });
 
