@@ -17,7 +17,6 @@ async function encryptPassword(password) {
     const hash = bcrypt.hashSync(password, saltRounds);
     return hash;
   } catch (err) {
-    //Not yet sure if we need this. Will change later.
     console.error('Error hashing password:', err);
     return null;
   }
