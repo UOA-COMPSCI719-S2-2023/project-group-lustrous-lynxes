@@ -187,17 +187,17 @@ button:hover {
     width: 30em;
 }
 
-.landing {
-    background-color: #333;
-    padding: 2em;
-    margin-top: 5em;
-}
-
 .article-form {
     margin-top: 3em;
     width: 90%;
     margin: auto;
     color: #333;
+}
+
+.login-page {
+    background-image: url("../images/header/background.png");
+    background-size: cover;
+    background-position: center right;
 }
 
 .login-form {

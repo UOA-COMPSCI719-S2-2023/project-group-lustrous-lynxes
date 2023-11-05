@@ -1,18 +1,12 @@
-<div class="page-container">
-    <div class="logo">
-        <img src="/images/logo/logo.png">
+<div class="page-container login-page">
+    <div class="login-form narrow-form form-container">
+        <form action="./login" method= "post">
+            <input type="text" placeholder="Username" name="username" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <a href="./create-account">
+            <button>Create Account</button>
+        </a>
     </div>
-    <div class="landing">
-        <div class="login-form narrow-form form-container">
-            <form action="./login" method= "post">
-                <input type="text" placeholder="Username" name="username" required>
-                <input type="password" placeholder="Password" name="password" required>
-                <button type="submit">Login</button>
-            </form>
-            <a href="./create-account">
-                <button>Create Account</button>
-            </a>
-        </div>
-    </div>
-    
 </div>
