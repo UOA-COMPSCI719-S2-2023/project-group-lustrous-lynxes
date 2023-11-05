@@ -193,8 +193,13 @@ window.addEventListener("load", () =>{
         likeButton.setAttribute("commentId",`${commentJson.id}`)
         likeButton.setAttribute("setting", "add");
         likeButton.innerHTML = "Add Like"
-        //Add event listener to button for adding likes.
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute("commentId", `${commentJson.id}`);
+        removeButton.classList.add('likeButtons');
+        removeButton.innerHTML = "Remove";
+
         cardContent.appendChild(likeButton);
+        cardContent.appendChild(removeButton);
         likeButtonEventListener(likeButton);
         
         //Append the divs together.
@@ -202,6 +207,18 @@ window.addEventListener("load", () =>{
         commentCard.appendChild(cardTitle);
         commentCard.appendChild(cardContent);
         container.appendChild(commentCard);
+
+        removeCommentEventListener(removeButton, commentCard);
+    }
+
+    function removeCommentEventListener(button,comment){
+        button.addEventListener('click', async ()=>{
+            const commentId = button.getAttribute('commentId');
+            await fetch(`delete-comment/${commentId}`);
+            comment.innerHTML = "";
+            return;
+        });
+
     }
 
     //Add event handler to file input for add-article and edit-article pages

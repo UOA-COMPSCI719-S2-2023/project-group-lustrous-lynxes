@@ -5,7 +5,7 @@ async function getLatestCommentByUser(commentJson) {
     const db = await dbPromise;
 
     const allComments =  await db.get(SQL`
-     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId
+     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId, u.id as userId
      from comment c, articles a, users u 
      where a.id = ${commentJson.articleId}
      and c.userId = ${commentJson.userId}
@@ -93,7 +93,7 @@ async function viewComments(articleId) {
     const db = await dbPromise;
 
     const allComments =  await db.all(SQL`
-     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId
+     select u.fName, u.lName, c.content, u.avatar, c.id, a.id as articleId, u.id as userId
      from comment c, articles a, users u 
      where ${articleId} = a.id
      and a.id = c.articleId
@@ -136,6 +136,14 @@ async function removeCommentLike(like){
      and commentId = ${like.commentId}`);
 
 }
+async function removeComment(commentId){
+    const db = await dbPromise;
+
+    return await db.run(SQL`
+     delete from comment
+     where id = ${commentId}`);
+
+}
 
 module.exports = {
     rateArticles,
@@ -150,5 +158,6 @@ module.exports = {
     getCommentLikes,
     checkLikeByCurrentUser,
     removeCommentLike,
-    getLatestCommentByUser
+    getLatestCommentByUser,
+    removeComment
 };

@@ -425,8 +425,9 @@ button:hover {
     margin-top: 5px;
 }
 
-.likeButtons {
+.likeButtons, .removeButtons {
     max-width: 10em;
+    margin: 5px;
 }
 
 #login-request {

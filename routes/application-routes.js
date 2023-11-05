@@ -271,7 +271,7 @@ router.get("/edit-account", verifyAuthenticated, async (req, res) => {
     }
     const defaultAvatar = {
         fileName: userAvatar,
-        name: userAvatar
+        name: userAvatarName
     }
     avatars.unshift(defaultAvatar);
 
@@ -387,6 +387,11 @@ router.get("/full-article", async (req, res) => {
             if (res.locals.user) {
                 const likeByUser = await commentDao.checkLikeByCurrentUser(res.locals.user.id, allArticleComments[i].id);
                 //If the user has already liked the comment, then disable the ability to like that comment.
+                if (res.locals.user.id == allArticleComments[i].userId){
+                    allArticleComments[i].enableRemove = true;
+                }else {
+                    allArticleComments[i].enableRemove = false;
+                }
                 if (likeByUser) {
                     allArticleComments[i].enableUserLike = false;
                 } else {
@@ -458,6 +463,18 @@ router.get("/remove-like/:commentId", async (req, res) => {
     const commentLikes = await commentDao.getCommentLikes(like.commentId);
     //Return to client.
     res.json({ likes: commentLikes });
+});
+//Remove via server for existing comments.
+router.get("/remove-comment/:commentId/:articleId", async (req,res) =>{
+    const commentId = req.params.commentId;
+    const articleId = req.params.articleId;
+    await commentDao.removeComment(commentId);
+    res.redirect(`/full-article?id=${articleId}`);
+});
+//Delete Via Client for new added comments
+router.get("/delete-comment/:commentId", async (req,res) =>{
+    await commentDao.removeComment(req.params.commentId);
+    res.end();
 });
 
 module.exports = router;
