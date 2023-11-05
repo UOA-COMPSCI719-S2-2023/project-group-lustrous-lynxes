@@ -351,8 +351,8 @@ button:hover {
 
 .header-image {
     grid-area: image;
-    max-height: 17em;
     max-width: 22em;
+    max-height: 17em;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -374,6 +374,7 @@ button:hover {
     box-sizing: border-box;
     margin-top: 5px;
     max-width: 20em;
+    justify-self: center;
 }
 
 .header-caption p {
@@ -397,7 +398,7 @@ button:hover {
 }
 
 .link-to-author h2 {
-    color: var(--text-color);
+    color: #333;
 }
 
 .link-to-author h2:hover {
@@ -657,6 +658,7 @@ Styles for user header on account page
         grid-template-columns: 1fr;
         grid-template-areas: 
         "image"
+        "caption"
         "title"
         "content";
     }
@@ -666,6 +668,7 @@ Styles for user header on account page
         width: 98%;
         margin: auto;
         height: auto;
+        max-height: 100vw;
     }
     
     .full-content {
