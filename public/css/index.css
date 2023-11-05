@@ -254,6 +254,11 @@ button:hover {
     margin-bottom: 2%;
     height: 10em;
     overflow: hidden;
+    cursor: pointer;
+}
+
+.inner-link:hover {
+    color: #777;
 }
 
 .summary-card.my-page {

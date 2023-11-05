@@ -79,7 +79,7 @@ async function viewArticlesCards() {
     const db = await dbPromise;
 
     const artCards = await db.all(SQL`
-     select a.imgFileName, a.title, a.content, a.imgCaption, u.fName, u.lName, a.id
+     select a.imgFileName, a.title, a.content, a.imgCaption, a.authorId, u.fName, u.lName, a.id
      from  articles a, users u 
      where a.authorId = u.id
      order by a.avRating desc`);

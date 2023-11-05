@@ -240,5 +240,21 @@ window.addEventListener("load", () =>{
             return confirm(`Are you sure you want to delete your account. This action cannot be undone.`)
         }
     }
+
+    //Add a click event listener to the card
+    const cards = document.querySelectorAll(".summary-card");
+        cards.forEach(function(card) {
+            card.addEventListener("click", function() {
+            window.location.href = card.getAttribute("data-href");
+        });
+    });
+
+    // Find all inner links and add a click event to stop propagation
+    const innerLinks = document.querySelectorAll(".inner-link");
+        innerLinks.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    });
 });
 
