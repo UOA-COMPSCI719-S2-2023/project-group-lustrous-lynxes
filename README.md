@@ -74,7 +74,8 @@ Password: password
 **3** `Browse a list of all articles`
 **4** `View a full article`
 **5** `See the average rating of an article` **extra**
-**6**  `View the details and other articles of a user` **extra**
+**6** `View the details and other articles of a user` **extra**
+**7** `View the details and other articles of user by click author` **extra**
 
 ## Functionality - Logged In
 
@@ -88,15 +89,16 @@ Password: password
 **6** `Edit their account details`
 **7** `Delete their account`
 **8** `View a full article`
-**9**        `View the details and other articles of a user` **extra**
-**10** `Rate and article` **extra**
-**11** `View and article’s average rating` **extra**
-**12** `Users are only allowed to rate and article once` **extra**
-**13** `Comment on the article` **extra**
-**14** `View other comments` **extra**
-**15** `Like comments` **extra**
+**9**         `View the details and other articles of user by click author` **extra**
+**10**        `View the details and other articles of a user` **extra**
+**11** `Rate and article` **extra**
+**12** `View and article’s average rating` **extra**
+**13** `Users are only allowed to rate and article once` **extra**
+**14** `Comment on the article` **extra**
+**15** `View other comments` **extra**
+**16** `Like comments` **extra**
         - They can also remove their like if they change their mind **extra**
-**16** `Change the theme of the website` **extra**
+**17** `Change the theme of the website` **extra**
 
 ## Account functionality
 
