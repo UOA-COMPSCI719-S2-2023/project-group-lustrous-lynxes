@@ -39,7 +39,7 @@ router.get("/login", (req, res) => {
         //Redirects to home if user is already logged in
         res.redirect("/");
     } else {
-        res.locals.title = "Log In | Lustrous Lynxes";
+        res.locals.title = "Login | Lustrous Lynxes";
         res.render("login");
     }
 });
@@ -59,7 +59,7 @@ router.get("/user", async (req, res) => {
     if (visitUser) {
         //Save required information to res.locals
         res.locals.visitUser = visitUser;
-        res.locals.title = `${visitUser.username}'s Articles | Lustrous Lynxes`;
+        res.locals.title = `${visitUser.username}'s articles | Lustrous Lynxes`;
         res.locals.artCard = await allArticles.userCardDetails(visitUserId);
         res.locals.rating = await allArticles.setAllArticleAverageRating();
 
@@ -84,7 +84,7 @@ router.get("/user", async (req, res) => {
 
 //Renders add-article page, allowing user to create an article
 router.get("/add-article", authUser.verifyAuthenticated, (req, res) => {
-    res.locals.title = "Add New Article | Lustrous Lynxes";
+    res.locals.title = "Add new article | Lustrous Lynxes";
     res.render("add-article", {
         includeTinyMCEScripts: true
     });
@@ -146,7 +146,7 @@ router.get("/edit-article", authUser.verifyAuthenticated, async (req, res) => {
             const hasImage = (article.imgFileName != "default-image.jpg");
 
             //Set title
-            res.locals.title = "Edit Article | Lustrous Lynxes";
+            res.locals.title = "Edit article | Lustrous Lynxes";
 
             //Renders page with all necessary info
             res.render("edit-article", {
