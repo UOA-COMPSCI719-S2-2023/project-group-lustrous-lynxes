@@ -8,10 +8,8 @@ const articleDao = require("../modules/articles-dao.js");
 
 //Renders all articles page - no login required
 router.get("/articles", async (req, res) => {
-    //Set the average rating for all articles into DB.
     await allArticles.setAllArticleAverageRating();
 
-    //Save necessary res.locals
     res.locals.title = "All Articles | Lustrous Lynxes";
     res.locals.artCard = await allArticles.allCardDetails();
 
@@ -20,13 +18,10 @@ router.get("/articles", async (req, res) => {
 
 //Renders particular user's profile by ID in query parameter
 router.get("/user", async (req, res) => {
-    //Get user object
     const visitUserId = req.query.id;
     const visitUser = await userDao.getUserById(visitUserId);
 
-    //If given user exists, renders user's profile
     if (visitUser) {
-        //Save required information to res.locals
         res.locals.visitUser = visitUser;
         res.locals.title = `${visitUser.username}'s articles | Lustrous Lynxes`;
         res.locals.artCard = await allArticles.userCardDetails(visitUserId);

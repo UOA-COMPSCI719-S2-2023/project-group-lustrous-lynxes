@@ -29,36 +29,30 @@ async function addAverageRating(articleId) {
     const ratingArray = [];
     const allArticleRatings = await commentDao.allRatingArticle(articleId);
 
-    //Place into an array, so we can easily calculate average.
     allArticleRatings.forEach(rating => {
         ratingArray.push(rating.rating);
     });
-    //Calculate average.
+    
     const sumOfTotal = ratingArray.reduce((total, num) => total + num, 0);
     const averageRating = sumOfTotal / ratingArray.length;
-    //Round to nearest .5 or .0 decimal value.
     const roundAverage = (Math.round(averageRating * 2)) / 2;
-    //Add to Database
     await commentDao.avRating(roundAverage, articleId);
 }
 
 async function addUserArticleRating(ratingJson) {
     const userArticleRating = await commentDao.getUserRatingforArticle(ratingJson);
-    //If user already has rating for given article, then change it to new rating.
+
     if (userArticleRating) {
         await commentDao.changeArticleRating(ratingJson);
-        //Else create new rating for article.
     } else {
         await commentDao.addArticleRating(ratingJson);
     }
 }
 
 function ratingStarsArticles(score) {
-    //find correct star image to use
     const starImage = getRatingStars(score);
-    //do we need a half star 
     const halfStar = isHalfStar(score);
-    //Process back to routes.js
+    
     if (halfStar) {
         return `Average Rating <img src="images/icons/${starImage}-star.png"><img src="images/icons/half-star.png">`;
     }

@@ -1,8 +1,6 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
 
-
-//Check credentials match upon login.
 async function retrieveUser(username) {
     const db = await dbPromise;
 
@@ -40,7 +38,7 @@ async function removeUserToken(user) {
         set token = null
         where id = ${user.id}`);
 }
-//Check if username already exists for new account.
+
 async function retrieveUserName(username){
     const db = await dbPromise;
 
@@ -49,7 +47,7 @@ async function retrieveUserName(username){
 
     return user;
 }
-//Create user using user JSON
+
 async function createUser(user) {
     const db = await dbPromise;
 
@@ -57,7 +55,7 @@ async function createUser(user) {
     insert into users (username,fName, lName, password, dateOfBirth, description, avatar) values
     (${user.username}, ${user.fName}, ${user.lName}, ${user.password}, ${user.dateOfBirth}, ${user.description}, ${user.avatar})`);  
 }
-//Get user password by ID
+
 async function getUserById(userId){
     const db = await dbPromise;
 
@@ -66,7 +64,7 @@ async function getUserById(userId){
     return password;
 
 }
-//Change User's Password
+
 async function changePassword(userId, password){
     const db = await dbPromise;
 
@@ -75,7 +73,7 @@ async function changePassword(userId, password){
         set password = ${password}
         where id = ${userId}`);
 }
-//Change User's details
+
 async function changeUserSettings(userId, user){
     const db = await dbPromise;
     
@@ -89,7 +87,7 @@ async function changeUserSettings(userId, user){
         description = ${user.description}
         where id = ${userId}`);
 }
-//Articles are covered by DELETE CASCADE
+
 async function deleteUser(userId){
     const db = await dbPromise;
 
@@ -99,7 +97,7 @@ async function deleteUser(userId){
      delete from users
      where id = ${userId}`);
 }
-//This is done to ensure each function is only called once.
+
 async function deleteUserInput(userId){
     await deleteUserArticles(userId);
     await deleteUserComments(userId);
@@ -139,7 +137,6 @@ async function deleteUserLikes(userId){
      where userId = ${userId}`);
 }
 
-// Export functions.
 module.exports = {
     retrieveUser,
     updateUserToken,

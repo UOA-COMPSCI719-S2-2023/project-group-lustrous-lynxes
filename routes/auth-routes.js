@@ -124,18 +124,13 @@ router.post("/edit-account", async (req, res) => {
 //Processes form for editing user password
 router.post("/edit-password", async (req, res) => {
     const userId = res.locals.user.id;
-    //Have User input current password as validation.
     const currentPasswordInput = req.body.password;
-    //Check actual password in DB for user.
     const user = await userDao.getUserById(userId);
-    //Check the input matches that of the User's actual password.
     const checkPasswordCorrect = await newUser.comparePasswords(currentPasswordInput, user.password);
-    //New Password and confirmation of that password.
     const newPassword = req.body.newPassword;
     const confirmPassword = req.body.confirmPassword;
-    //Validation- confirm the new password and check user has inputted their current password.
+    
     if (confirmPassword == newPassword && checkPasswordCorrect) {
-        //Encrypt and change password in DB.
         const encryptNewPassword = await newUser.encryptPassword(newPassword);
         await userDao.changePassword(userId, encryptNewPassword);
         res.setToastMessage("Password Changed");

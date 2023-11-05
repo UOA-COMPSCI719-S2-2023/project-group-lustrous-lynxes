@@ -1,7 +1,6 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
 
-//view all articles based on search criteria
 async function viewAllArticles(criteria) {
     const db = await dbPromise;
 
@@ -39,7 +38,6 @@ async function addNewArticle(article) {
 async function editArticle(article) {
     const db = await dbPromise;
 
-    //Updates title & content as these are always given in the article object
     await db.run(SQL`
         UPDATE articles
         SET content = ${article.content}, title = ${article.title}
@@ -55,7 +53,6 @@ async function editArticle(article) {
         `);
     }
 
-    //Only updates image caption if given
     if ("imgCaption" in article) {
         await db.run(SQL`
             UPDATE articles
@@ -74,7 +71,6 @@ async function deleteArticle(articleId) {
     `);
 }
 
-//Order by Average Rating for when we display articles.
 async function viewArticlesCards() {
     const db = await dbPromise;
 
@@ -83,10 +79,10 @@ async function viewArticlesCards() {
      from  articles a, users u 
      where a.authorId = u.id
      order by a.avRating desc`);
+
     return artCards;
 }
 
-//Order by Average Rating for when we display  user's articles.
 async function userArticlesCards(userId) {
     const db = await dbPromise;
 
@@ -112,14 +108,12 @@ async function viewFullArticle(givenId) {
     return artFull;
 }
 
-//Get article by ID
 async function getArticleById(articleId) {
     const db = await dbPromise;
     const article = await db.get(SQL`SELECT * FROM articles WHERE id = ${articleId}`);
     return article;
 }
 
-//Get image by name
 async function doesFileNameExist(fileName) {
     const db = await dbPromise;
     const image = await db.get(SQL`SELECT imgFileName FROM articles WHERE imgFileName = ${fileName}`);

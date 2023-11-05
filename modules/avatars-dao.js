@@ -1,7 +1,6 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
 
-//Get all images for new-account handlebars form to choose between.
 async function retrieveAllIcons(){
     const db = await dbPromise;
 
