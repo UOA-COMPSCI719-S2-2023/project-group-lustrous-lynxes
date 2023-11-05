@@ -38,8 +38,8 @@ router.get("/login", (req, res) => {
     if (res.locals.user){
         //Redirects to home if user is already logged in
         res.redirect("/");
-    }else{
-    res.render("login");
+    } else {
+        res.render("login");
     }
 });
 
@@ -389,9 +389,9 @@ router.get("/full-article", async (req, res) => {
             return b.likes - a.likes;
         });
         res.locals.comFull = allArticleComments;
-        res.render("./full-article");
+        res.render("full-article");
     } else {
-        res.render("./full-article", {
+        res.render("full-article", {
             noArticle: true
         })
     }
