@@ -765,3 +765,30 @@ Styles for user header on account page
     }
 }
 
+@media only screen and (max-width: 450px) {
+    .comment-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 3fr;
+        grid-template-areas: 
+        "avatar name"
+        "content"
+        "content";
+        height: fit-content;
+    }
+
+    .card-avatar {
+        grid-area: avatar;
+    }
+
+    .card-title {
+        grid-area: name;
+    }
+
+    .card-content {
+        grid-area: content;
+        height: fit-content;
+        overflow-wrap: break-word;
+    }
+}
+
