@@ -7,12 +7,14 @@ async function allCardDetails() {
 
     return allCardData;
 }
+
 //Get  articles of one user. Ordered by highest to lowest average rating.
 async function userCardDetails(id) {
     const cardData = await articlesDao.userArticlesCards(id);
 
     return cardData;
 }
+
 //Sets average rating for all articles.
 async function setAllArticleAverageRating(){
     const allArticles = await articlesDao.viewAllArticles("id");
@@ -21,6 +23,7 @@ async function setAllArticleAverageRating(){
         await addAverageRating(allArticles[i].id);
     }
 }
+
 //Get ratings from DB and calculate average 
 async function addAverageRating(articleId){
     const ratingArray = [];
@@ -38,7 +41,6 @@ async function addAverageRating(articleId){
     //Add to Database
     await commentDao.avRating(roundAverage, articleId);
 }
-
 
 async function addUserArticleRating(ratingJson){
     const userArticleRating = await commentDao.getUserRatingforArticle(ratingJson);
@@ -69,17 +71,13 @@ function ratingStarsArticles(score) {
 function getRatingStars(score) {
     if (score < 1.8) {
         return "one";
-    }
-    else if (score < 2.8) {
+    } else if (score < 2.8) {
         return "two";
-    }
-    else if (score < 3.8) {
+    } else if (score < 3.8) {
         return "three";
-    }
-    else if (score < 4.8) {
+    } else if (score < 4.8) {
         return "four";
-    }
-    else {
+    } else {
         return "five";
     }
 }
@@ -87,12 +85,10 @@ function getRatingStars(score) {
 function isHalfStar(score){
     if (score < 1.3 || (score >= 1.8 && score < 2.3) || (score >= 2.8 && score < 3.3) || (score >= 3.8 && score < 4.3) || score >= 4.8) {
         return false;
-    }
-    else {
+    } else {
         return true;
     }
 }
-
 
 module.exports = {
     allCardDetails,
