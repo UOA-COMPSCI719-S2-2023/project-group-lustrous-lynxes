@@ -29,17 +29,21 @@
     .all-cards {
         color: #333;
     }
+
     .login-form p {
         color: #333;
     }
 
-    .page-container legend, label {
+    .page-container legend,
+    label {
         color: #333;
     }
+
     .user-header {
         color: #333;
     }
 }
+
 html {
     height: 100%;
 }
@@ -71,7 +75,8 @@ footer a {
     font-size: 0.75em;
 }
 
-h1, h2 {
+h1,
+h2 {
     font-family: 'Roboto Slab', sans-serif;
     text-align: center;
 }
@@ -93,13 +98,14 @@ h3 {
     overflow: hidden;
     background-color: #333;
     display: flex;
-    width: 100%; /* Set a fixed width for the container */
-    height: 75px; /* Set a fixed height for the container */
+    width: 100%;
+    height: 75px;
     align-items: center;
     justify-content: space-between;
 }
 
-.navbar-left, .navbar-right {
+.navbar-left,
+.navbar-right {
     display: flex;
     align-items: center;
 }
@@ -118,7 +124,9 @@ h3 {
     text-decoration: none;
 }
 
-input:not(#imageInput), textarea, .image-box {
+input:not(#imageInput),
+textarea,
+.image-box {
     width: 100%;
     padding: 1em 2em;
     margin: 1em auto;
@@ -134,7 +142,7 @@ input:not(#imageInput), textarea, .image-box {
 
 .existing-image-container {
     border-right: 0px;
-    width: auto; 
+    width: auto;
 }
 
 .image-input-container {
@@ -162,7 +170,6 @@ input:not(#imageInput), textarea, .image-box {
     border: 1px solid #333;
 }
 
-/*Size of WYSIWYG - can change this later*/
 #articleContent {
     height: 80vh;
 }
@@ -188,7 +195,7 @@ button:hover {
 .form-container {
     margin: 0px auto;
     padding: 2em;
-    background-color:#E2F3E3;
+    background-color: #E2F3E3;
     border: 1px solid #333;
     box-shadow: 5px 10px 5px #777;
 }
@@ -233,9 +240,8 @@ button:hover {
     text-decoration: none;
 }
 
-/*Check if username exists. Show text in red*/
-#checkExists{
-    color:red;
+#checkExists {
+    color: red;
 }
 
 .all-cards {
@@ -247,8 +253,8 @@ button:hover {
 .summary-card {
     display: grid;
     grid-template-columns: auto 16em 1fr;
-    grid-template-areas: 
-    "image title content"; 
+    grid-template-areas:
+        "image title content";
     background-color: white;
     box-shadow: 5px 10px 5px #C1E5C7;
     margin-bottom: 2%;
@@ -264,19 +270,19 @@ button:hover {
 
 .summary-card.my-page {
     grid-template-columns: 1fr 1.5fr 3fr 1fr;
-    grid-template-areas: 
-    "image title content content options";
+    grid-template-areas:
+        "image title content content options";
 }
 
 .summary-card.my-page .card-title {
     padding-left: 1em;
     grid-area: title;
     justify-self: centre;
-    color: #333; 
+    color: #333;
 }
 
 .card-image {
-    grid-area: image;   
+    grid-area: image;
 }
 
 .card-image img {
@@ -341,10 +347,10 @@ button:hover {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto 1fr;
-    grid-template-areas: 
-    "image title"
-    "caption title"
-    "content content";
+    grid-template-areas:
+        "image title"
+        "caption title"
+        "content content";
     background-color: white;
     box-shadow: 15px 20px 10px #C1E5C7;
     padding: 2em;
@@ -395,7 +401,8 @@ button:hover {
     font-size: 2.5em;
 }
 
-.header-details h1, .header-details h2 {
+.header-details h1,
+.header-details h2 {
     margin: 0;
 }
 
@@ -440,15 +447,15 @@ button:hover {
 .comment-card {
     display: grid;
     grid-template-columns: 1fr 2fr 7fr;
-    grid-template-areas: 
-    "image title content content"; 
+    grid-template-areas:
+        "image title content content";
     background-color: white;
     box-shadow: 5px 10px 5px #C1E5C7;
     margin-bottom: 2%;
 }
 
 .card-avatar {
-    grid-area: image;   
+    grid-area: image;
 }
 
 .card-avatar img {
@@ -460,10 +467,11 @@ button:hover {
 .card-title {
     margin-right: 2em;
     padding: 1em 2em 0.5em 1em;
-    border-right: 4px inset #E2F3E3 ;
+    border-right: 4px inset #E2F3E3;
 }
 
-.card-title h3, h4 {
+.card-title h3,
+h4 {
     margin: 0;
 }
 
@@ -482,7 +490,8 @@ button:hover {
     margin-top: 5px;
 }
 
-.likeButtons, .removeButtons {
+.likeButtons,
+.removeButtons {
     max-width: 10em;
     margin: 5px;
 }
@@ -502,7 +511,7 @@ button:hover {
     margin: auto;
 }
 
-.rating button{
+.rating button {
     width: 10em;
 }
 
@@ -510,8 +519,8 @@ button:hover {
     display: inline-flex;
     align-items: center;
     padding: 0.5em 2em 0.5em 2em;
-    cursor: pointer; 
-    font-size: 1.25em; 
+    cursor: pointer;
+    font-size: 1.25em;
     margin-right: 0.5em;
 }
 
@@ -571,10 +580,6 @@ header {
     margin-right: 3em;
 }
 
-/*
-Styles for user header on account page
-*/
-
 .user-header {
     /* Setting background image */
     background-color: #E2F3E3;
@@ -622,7 +627,8 @@ Styles for user header on account page
     border: none;
 }
 
-.user-info th, .user-info td {
+.user-info th,
+.user-info td {
     text-align: left;
     vertical-align: center;
     padding-right: 1em;
@@ -668,11 +674,11 @@ Styles for user header on account page
     .full-card {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-areas: 
-        "image"
-        "caption"
-        "title"
-        "content";
+        grid-template-areas:
+            "image"
+            "caption"
+            "title"
+            "content";
     }
 
     .header-image {
@@ -682,11 +688,11 @@ Styles for user header on account page
         height: auto;
         max-height: 100vw;
     }
-    
+
     .full-content {
         grid-area: content;
     }
-    
+
     .full-content p {
         text-align: justify;
     }
@@ -700,35 +706,36 @@ Styles for user header on account page
     .image-box-container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-areas: 
-        "current"
-        "new";
+        grid-template-areas:
+            "current"
+            "new";
 
     }
-    
+
     .existing-image-container {
-       grid-area: current;
-       border: #333 solid 1px;
+        grid-area: current;
+        border: #333 solid 1px;
     }
-    
+
     .image-input-container {
         grid-area: new;
     }
 
-    .summary, .card-image {
+    .summary,
+    .card-image {
         display: none;
     }
 
     .summary-card.my-page {
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: 
-        "title read options";
+        grid-template-areas:
+            "title read options";
     }
 
-    .summary-card.my-page .card-content{
+    .summary-card.my-page .card-content {
         grid-area: read;
     }
-    
+
     .card-title {
         padding-left: 2em;
         width: 10em;
@@ -754,7 +761,8 @@ Styles for user header on account page
 
     .user-username h1 {
         text-align: left;
-        font-size: clamp(2em, 10vw, 5em);;
+        font-size: clamp(2em, 10vw, 5em);
+        ;
         margin: 0;
     }
 
@@ -776,10 +784,10 @@ Styles for user header on account page
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 3fr;
-        grid-template-areas: 
-        "avatar name"
-        "content"
-        "content";
+        grid-template-areas:
+            "avatar name"
+            "content"
+            "content";
         height: fit-content;
     }
 
@@ -797,4 +805,3 @@ Styles for user header on account page
         overflow-wrap: break-word;
     }
 }
-
